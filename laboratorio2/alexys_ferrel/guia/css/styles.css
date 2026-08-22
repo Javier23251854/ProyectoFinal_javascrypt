@@ -69,23 +69,6 @@ button, input {
   font-size: 1.08rem;
 }
 
-cat << 'EOF' > css/styles.css
-:root {
-  color-scheme: light;
-  --azul-900: #0b2545;
-  --azul-700: #1f4d78;
-  --azul-500: #2e74b5;
-  --azul-100: #e8f1fb;
-  --rojo-500: #e63b2e;
-  --gris-900: #111827;
-  --gris-600: #5b6472;
-  --gris-300: #cbd5e1;
-  --gris-100: #f3f6fa;
-  --blanco: #ffffff;
-  --verde-700: #13795b;
-  --sombra: 0 16px 36px rgb(11 37 69 / 10%);
-}
-
 * {
   box-sizing: border-box;
 }
