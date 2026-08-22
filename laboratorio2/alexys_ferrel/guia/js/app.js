@@ -32,49 +32,6 @@ const salidas = {
   banderas: document.querySelector("#explicacionBanderas"),
 };
 
-const formateadorMoneda = new Intl.NumberFormat("es-PE", {
-  style: "currency",
-cat << 'EOF' > js/app.js
-"use strict";
-
-const REGLAS_BASE = Object.freeze({
-  igvPorcentaje: 18,
-  descuentoClienteFrecuente: 5,
-  descuentoMaximo: 50,
-  envioExpresCentimos: 1500,
-});
-
-const OPCION_CLIENTE_FRECUENTE = 1 << 0;
-const OPCION_ENVIO_EXPRES = 1 << 1;
-
-const formulario = document.querySelector("#formCotizacion");
-const inputProducto = document.querySelector("#producto");
-const inputPrecio = document.querySelector("#precio");
-const inputCantidad = document.querySelector("#cantidad");
-const inputDescuento = document.querySelector("#descuento");
-const inputClienteFrecuente = document.querySelector("#clienteFrecuente");
-const inputEnvioExpres = document.querySelector("#envioExpres");
-const mensajeError = document.querySelector("#mensajeError");
-const panelResultado = document.querySelector("#panelResultado");
-
-const salidas = {
-  id: document.querySelector("#idOperacion"),
-  producto: document.querySelector("#productoResultado"),
-  subtotal: document.querySelector("#subtotalResultado"),
-  descuento: document.querySelector("#descuentoResultado"),
-  base: document.querySelector("#baseResultado"),
-  igv: document.querySelector("#igvResultado"),
-  envio: document.querySelector("#envioResultado"),
-  total: document.querySelector("#totalResultado"),
-  banderas: document.querySelector("#explicacionBanderas"),
-};
-
-const formateadorMoneda = new Intl.NumberFormat("es-PE", {
-  style: "currency",
-  currency: "PEN",
-  minimumFractionDigits: 2,
-});
-
 let correlativo = 0n;
 
 function crearIdOperacion() {
