@@ -1,425 +1,104 @@
 "use strict";
-
-
-/* ==========================================
-   CONSTANTES
-   ========================================== */
-
 const NOTA_MINIMA = 0;
-
 const NOTA_MAXIMA = 20;
-
 const NOTA_APROBATORIA = 12;
-
-
-/* ==========================================
-   REFERENCIAS AL DOM
-   ========================================== */
-
-const form =
-    document.querySelector("#formNotas");
-
-const inputNombre =
-    document.querySelector("#nombre");
-
-const inputNota1 =
-    document.querySelector("#nota1");
-
-const inputNota2 =
-    document.querySelector("#nota2");
-
-const inputNota3 =
-    document.querySelector("#nota3");
-
-const mensajeError =
-    document.querySelector("#mensajeError");
-
-const panelResultado =
-    document.querySelector("#panelResultado");
-
-const nombreResultado =
-    document.querySelector("#nombreResultado");
-
-const promedioResultado =
-    document.querySelector("#promedioResultado");
-
-const estadoResultado =
-    document.querySelector("#estadoResultado");
-
-const barraProgreso =
-    document.querySelector("#barraProgreso");
-
-
-/* ==========================================
-   ESTADO
-   ========================================== */
-
+const form = document.querySelector("#formNotas");
+const inputNombre = document.querySelector("#nombre");
+const inputNota1 = document.querySelector("#nota1");
+const inputNota2 = document.querySelector("#nota2");
+const inputNota3 = document.querySelector("#nota3");
+const mensajeError = document.querySelector("#mensajeError");
+const panelResultado = document.querySelector("#panelResultado");
+const nombreResultado = document.querySelector("#nombreResultado");
+const promedioResultado = document.querySelector("#promedioResultado");
+const estadoResultado = document.querySelector("#estadoResultado");
+const barraProgreso = document.querySelector("#barraProgreso");
 let numeroIntentos = 0;
-
-
-/* ==========================================
-   CONVERTIR Y VALIDAR NOTA
-   ========================================== */
-
 function convertirNota(input, etiqueta) {
-
     const texto = input.value.trim();
-
     if (texto === "") {
-
-        throw new TypeError(
-            `Ingresa ${etiqueta}.`
-        );
-
+        throw new TypeError(`Ingresa ${etiqueta}.`);
     }
-
-
     const nota = Number(texto);
-
-
     if (!Number.isFinite(nota)) {
-
-        throw new TypeError(
-            `${etiqueta} debe ser un número válido.`
-        );
-
+        throw new TypeError(`${etiqueta} debe ser un número válido.`);
     }
-
-
-    if (
-        nota < NOTA_MINIMA ||
-        nota > NOTA_MAXIMA
-    ) {
-
+    if (nota < NOTA_MINIMA || nota > NOTA_MAXIMA) {
         throw new RangeError(
-            `${etiqueta} debe estar entre ` +
-            `${NOTA_MINIMA} y ${NOTA_MAXIMA}.`
+            `${etiqueta} debe estar entre ${NOTA_MINIMA} y ${NOTA_MAXIMA}.`,
         );
-
     }
-
-
     return nota;
 }
-
-
-/* ==========================================
-   CALCULAR PROMEDIO
-   ========================================== */
-
-function calcularPromedio(
-    nota1,
-    nota2,
-    nota3
-) {
-
-    return (
-        nota1 +
-        nota2 +
-        nota3
-    ) / 3;
-
+function calcularPromedio(nota1, nota2, nota3) {
+    return (nota1 + nota2 + nota3) / 3;
 }
-
-
-/* ==========================================
-   OBTENER ESTADO
-   ========================================== */
-
 function obtenerEstado(promedio) {
-
     if (promedio >= 18) {
-
         return "Excelente";
-
     }
-
-
     if (promedio >= 15) {
-
         return "Logro destacado";
-
     }
-
-
     if (promedio >= NOTA_APROBATORIA) {
-
         return "Aprobado";
-
     }
-
-
     return "Requiere refuerzo";
-
 }
-
-
-/* ==========================================
-   OBTENER CLASE CSS
-   ========================================== */
-
 function obtenerClaseEstado(promedio) {
-
-    if (promedio >= 18) {
-
-        return "estado--excelente";
-
-    }
-
-
-    if (promedio >= 15) {
-
-        return "estado--logrado";
-
-    }
-
-
-    if (promedio >= NOTA_APROBATORIA) {
-
-        return "estado--aprobado";
-
-    }
-
-
+    if (promedio >= 18) return "estado--excelente";
+    if (promedio >= 15) return "estado--logrado";
+    if (promedio >= NOTA_APROBATORIA) return "estado--aprobado";
     return "estado--refuerzo";
-
 }
-
-
-/* ==========================================
-   LIMPIAR MENSAJE DE ERROR
-   ========================================== */
-
 function limpiarMensajeError() {
-
     mensajeError.textContent = "";
-
     mensajeError.hidden = true;
-
 }
-
-
-/* ==========================================
-   MOSTRAR RESULTADO
-   ========================================== */
-
-function mostrarResultado(
-    nombre,
-    promedio,
-    estado
-) {
-
-    nombreResultado.textContent =
-        `Estudiante: ${nombre}`;
-
-
-    promedioResultado.textContent =
-        promedio.toFixed(2);
-
-
-    estadoResultado.textContent =
-        estado;
-
-
-    estadoResultado.className =
-        "resultado__estado";
-
-
-    estadoResultado.classList.add(
-        obtenerClaseEstado(promedio)
-    );
-
-
-    const porcentaje =
-        (promedio / NOTA_MAXIMA) * 100;
-
-
-    barraProgreso.style.width =
-        `${porcentaje}%`;
-
-
+function mostrarResultado(nombre, promedio, estado) {
+    nombreResultado.textContent = `Estudiante: ${nombre}`;
+    promedioResultado.textContent = promedio.toFixed(2);
+    estadoResultado.textContent = estado;
+    estadoResultado.className = "resultado__estado";
+    estadoResultado.classList.add(obtenerClaseEstado(promedio));
+    const porcentaje = (promedio / NOTA_MAXIMA) * 100;
+    barraProgreso.style.width = `${porcentaje}%`;
     panelResultado.hidden = false;
-
 }
-
-
-/* ==========================================
-   MOSTRAR ERROR
-   ========================================== */
-
 function mostrarError(error) {
-
     panelResultado.hidden = true;
-
-    mensajeError.textContent =
-        error.message;
-
+    mensajeError.textContent = error.message;
     mensajeError.hidden = false;
-
     console.error(error);
-
 }
-
-
-/* ==========================================
-   MANEJAR ENVÍO DEL FORMULARIO
-   ========================================== */
-
 function manejarEnvio(evento) {
-
     evento.preventDefault();
-
-
     limpiarMensajeError();
-
-
     numeroIntentos += 1;
-
-
     try {
-
-        /* ------------------------------
-           NOMBRE
-           ------------------------------ */
-
-        const nombre =
-            inputNombre.value.trim();
-
-
+        const nombre = inputNombre.value.trim();
         if (nombre === "") {
-
-            throw new TypeError(
-                "Ingresa el nombre del estudiante."
-            );
-
+            throw new TypeError("Ingresa el nombre del estudiante.");
         }
-
-
-        /* ------------------------------
-           NOTAS
-           ------------------------------ */
-
-        const nota1 =
-            convertirNota(
-                inputNota1,
-                "la nota 1"
-            );
-
-
-        const nota2 =
-            convertirNota(
-                inputNota2,
-                "la nota 2"
-            );
-
-
-        const nota3 =
-            convertirNota(
-                inputNota3,
-                "la nota 3"
-            );
-
-
-        /* ------------------------------
-           CÁLCULO
-           ------------------------------ */
-
-        const promedio =
-            calcularPromedio(
-                nota1,
-                nota2,
-                nota3
-            );
-
-
-        /* ------------------------------
-           CLASIFICACIÓN
-           ------------------------------ */
-
-        const estado =
-            obtenerEstado(promedio);
-
-
-        /* ------------------------------
-           MOSTRAR RESULTADO
-           ------------------------------ */
-
-        mostrarResultado(
-            nombre,
-            promedio,
-            estado
-        );
-
-
-        /* ------------------------------
-           CONSOLA
-           ------------------------------ */
-
-        console.table({
-
-            nombre,
-
-            nota1,
-
-            nota2,
-
-            nota3,
-
-            promedio,
-
-            estado
-
-        });
-
-    }
-
-    catch (error) {
-
+        const nota1 = convertirNota(inputNota1, "la nota 1");
+        const nota2 = convertirNota(inputNota2, "la nota 2");
+        const nota3 = convertirNota(inputNota3, "la nota 3");
+        const promedio = calcularPromedio(nota1, nota2, nota3);
+        const estado = obtenerEstado(promedio);
+        mostrarResultado(nombre, promedio, estado);
+        console.table({ nombre, nota1, nota2, nota3, promedio, estado });
+    } catch (error) {
         mostrarError(error);
-
+    } finally {
+        console.info(`Intento de cálculo número ${numeroIntentos}.`);
     }
-
-    finally {
-
-        console.info(
-            `Intento de cálculo número ${numeroIntentos}.`
-        );
-
-    }
-
 }
-
-
-/* ==========================================
-   MANEJAR REINICIO
-   ========================================== */
-
 function manejarReinicio() {
-
     numeroIntentos = 0;
-
     limpiarMensajeError();
-
     panelResultado.hidden = true;
-
     barraProgreso.style.width = "0%";
-
     inputNombre.focus();
-
 }
-
-
-/* ==========================================
-   EVENTOS
-   ========================================== */
-
-form.addEventListener(
-    "submit",
-    manejarEnvio
-);
-
-
-form.addEventListener(
-    "reset",
-    manejarReinicio
-);
+form.addEventListener("submit", manejarEnvio);
+form.addEventListener("reset", manejarReinicio);
