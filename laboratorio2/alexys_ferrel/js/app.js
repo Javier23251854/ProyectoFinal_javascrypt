@@ -32,6 +32,12 @@ const salidas = {
   banderas: document.querySelector("#explicacionBanderas"),
 };
 
+const formateadorMoneda = new Intl.NumberFormat("es-PE", {
+  style: "currency",
+  currency: "PEN",
+  minimumFractionDigits: 2,
+});
+
 let correlativo = 0n;
 
 function crearIdOperacion() {
@@ -47,21 +53,27 @@ function convertirImporteACentimos(texto) {
   }
   const parteEntera = partes[0];
   const parteDecimal = partes[1] ?? "";
+
   if (parteEntera === "" || parteDecimal.length > 2) {
     throw new RangeError("El precio admite como máximo dos decimales.");
   }
+
   const enteros = Number(parteEntera);
   const decimales = Number(parteDecimal.padEnd(2, "0") || "0");
+
   if (
     !Number.isInteger(enteros) || enteros < 0 ||
     !Number.isInteger(decimales) || decimales < 0 || decimales > 99
   ) {
     throw new TypeError("El precio contiene caracteres o signos no válidos.");
   }
+
   const centimos = enteros * 100 + decimales;
+
   if (!Number.isSafeInteger(centimos) || centimos <= 0) {
     throw new RangeError("El precio debe ser mayor que 0 y estar dentro del rango permitido.");
   }
+
   return centimos;
 }
 
@@ -100,15 +112,19 @@ function calcularCotizacion(datos, opciones = {}) {
   const reglas = { ...REGLAS_BASE, ...opciones };
   const banderas = reglas.banderas ?? 0;
   const subtotalCentimos = datos.precioCentimos * datos.cantidad;
+
   if (!Number.isSafeInteger(subtotalCentimos)) {
     throw new RangeError("El subtotal excede el rango de enteros seguros.");
   }
+
   const esFrecuente = tieneOpcion(banderas, OPCION_CLIENTE_FRECUENTE);
   const descuentoMinimo = esFrecuente ? reglas.descuentoClienteFrecuente : 0;
+
   const descuentoAplicado = Math.min(
     Math.max(datos.descuento, descuentoMinimo),
     reglas.descuentoMaximo
   );
+
   const descuentoCentimos = Math.round(
     (subtotalCentimos * descuentoAplicado) / 100
   );
@@ -119,6 +135,7 @@ function calcularCotizacion(datos, opciones = {}) {
   const envioCentimos = tieneOpcion(banderas, OPCION_ENVIO_EXPRES)
     ? reglas.envioExpresCentimos
     : 0;
+
   const componentes = [baseImponibleCentimos, igvCentimos, envioCentimos];
   const totalCentimos = sumarCentimos(...componentes);
 
@@ -161,13 +178,16 @@ function mostrarResultado(resultado) {
 
   const frecuente = tieneOpcion(resultado.banderas, OPCION_CLIENTE_FRECUENTE);
   const expres = tieneOpcion(resultado.banderas, OPCION_ENVIO_EXPRES);
+
   salidas.banderas.textContent = `Banderas ${resultado.banderas.toString(2).padStart(2, "0")}: cliente frecuente ${frecuente ? "sí" : "no"}, envío express ${expres ? "sí" : "no"}.`;
+
   panelResultado.hidden = false;
 }
 
 function manejarEnvio(evento) {
   evento.preventDefault();
   limpiarError();
+
   try {
     const producto = inputProducto.value.trim();
     if (producto === "") {
@@ -184,6 +204,7 @@ function manejarEnvio(evento) {
 
     const datos = { producto, precioCentimos, cantidad, descuento };
     const resultado = calcularCotizacion(datos, { banderas });
+
     mostrarResultado(resultado);
   } catch (error) {
     panelResultado.hidden = true;
