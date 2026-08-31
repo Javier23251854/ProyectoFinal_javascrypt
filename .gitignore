@@ -1,0 +1,6 @@
+# Ignorar todas las imágenes del proyecto para que no inflen las líneas
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
