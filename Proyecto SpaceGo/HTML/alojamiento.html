@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalle del Alojamiento | SpaceGo</title>
+
+    <!-- CSS Global e Index -->
+    <link rel="stylesheet" href="../CSS/css_global.css">
+    <link rel="stylesheet" href="../CSS/index.css">
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+        <div class="navbar container">
+            <div class="logo">
+                <a href="../HTML/index.html"><img src="../Imagenes/logo cuarto.png" alt="Logo SpaceGo"></a>
+            </div>
+            <button type="button" class="menu-icon" id="boton-menu"> &#9776; </button>
+            <nav class="menu" id="menu-principal">
+                <ul>
+                    <li><a href="../HTML/index.html">Inicio</a></li>
+                    <li><a href="../HTML/buscar.html"><i class="fa-solid fa-magnifying-glass"></i>Buscar alojamiento</a></li>
+                    <li><a href="../HTML/alojamiento.html" class="activo"><i class="fa-solid fa-house"></i>Alojamiento</a></li>
+                    <li><a href="../HTML/publicar.html"><i class="fa-solid fa-plus"></i>Publicar alojamiento</a></li>
+                    <li><a href="../HTML/favoritos.html"><i class="fa-regular fa-heart"></i>Favoritos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ================= CONTENIDO DETALLE ================= -->
+    <main class="container my-5">
+        <div id="contenedor-detalle" class="row g-4">
+            <!-- JavaScript inyectará dinámicamente todo el detalle aquí -->
+        </div>
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="footer-container container">
+            <div class="footer-box">
+                <div class="footer-logo"><img src="../Imagenes/logo cuarto.png" alt="Logo SpaceGo"></div>
+                <p>Una plataforma pensada para ayudarte a encontrar el espacio que necesitas.</p>
+            </div>
+            <div class="footer-box">
+                <h3>Contacto</h3>
+                <p><i class="fa-solid fa-phone"></i>+51 987 654 321</p>
+                <p><i class="fa-solid fa-envelope"></i>contacto@spacego.pe</p>
+                <p><i class="fa-solid fa-location-dot"></i>Perú</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 SpaceGo - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="../JS/alojamiento.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
