@@ -1,10 +1,3 @@
-/* ==================================================================
-   BUSCAR ALOJAMIENTO — buscar.js
-   Página encargada de mostrar, filtrar y ordenar los alojamientos
-   a partir de un array de objetos (simulando una base de datos).
-   ================================================================== */
-
-
 /* ============ 1. UBICACIONES (Departamento > Provincia > Distrito) ============ */
 
 const ubicaciones = {
