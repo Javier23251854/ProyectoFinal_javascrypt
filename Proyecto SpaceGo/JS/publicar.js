@@ -1,6 +1,6 @@
 
  
-/* ============ 1. TIPOS DE DATOS, VARIABLES Y CONSTANTES ============ */
+/* 1. TIPOS DE DATOS, VARIABLES Y CONSTANTES*/
  
 const NOMBRE_PLATAFORMA = "SpaceGo";      // string
 const MAX_FOTOS = 3;                      // number
@@ -20,7 +20,7 @@ console.log("Tipos de datos de ejemplo:", {
 });
  
  
-/* ============ 2. UBICACIONES (mismo dataset que buscar.js) ============ */
+/*  2. UBICACIONES (mismo dataset que buscar.js para no hacer tana vueltas :V) */
  
 const ubicaciones = {
     "Lima": {
@@ -34,7 +34,7 @@ const ubicaciones = {
     }
 };
  
-/* ============ 3. ETIQUETAS E ICONOS DE TIPO (mismos que buscar.js) ============ */
+/*  3. ETIQUETAS E ICONOS DE TIPO */
  
 const etiquetasTipo = {
     individual: "Habitación individual",
@@ -50,7 +50,7 @@ const iconosTipo = {
     departamento: "fa-building"
 };
  
-/* ============ 4. EXPRESIONES REGULARES Y COLECCIONES (Set) ============ */
+/*   4. EXPRESIONES REGULARES Y COLECCIONE  */
  
 const regexValidacion = {
     correo: /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/,
@@ -62,7 +62,7 @@ const regexValidacion = {
 const extensionesPermitidas = new Set([".jpg", ".jpeg", ".png", ".webp"]);
  
  
-/* ============ 5. CLASE Alojamiento (objetos y clases) ============ */
+/* 5. CLASE Alojamiento */
  
 class Alojamiento {
     constructor(datos) {
@@ -89,12 +89,12 @@ class Alojamiento {
  
     // Método que convierte la instancia en un objeto plano (para guardar como JSON)
     aObjetoPlano() {
-        return { ...this }; // operador Spread: copia todas las propiedades de la instancia
+        return { ...this }; 
     }
 }
  
  
-/* ============ 6. ESTADO DEL FORMULARIO ============ */
+/*  6. ESTADO DEL FORMULARIO */
  
 const estadoFormulario = {
     pasoActual: 1,
@@ -103,7 +103,8 @@ const estadoFormulario = {
     fotos: [null, null, null] // arreglo lineal de hasta 3 fotos
 };
  
-/* ============ 7. ELEMENTOS DEL DOM (salida: document) ============ */
+ 
+/*  7. ELEMENTOS DEL DOM (salida: document)*/
  
 const formPublicar = document.getElementById("form-publicar");
 const itemsPaso = Array.from(document.querySelectorAll(".paso-item"));
@@ -127,7 +128,8 @@ const campo = {
     fotos: document.getElementById("fotos")
 };
  
-/* ============ 8. UTILIDADES DE VALIDACIÓN / ERRORES (funciones) ============ */
+ 
+/*  8. UTILIDADES DE VALIDACIÓN */
  
 function mostrarError(idCampo, mensaje) {
     const spanError = document.getElementById("error-" + idCampo);
@@ -144,7 +146,8 @@ function esObligatorio(valor, idCampo, mensaje) {
     return valido;
 }
  
-/* ============ 9. PASO 1: VALIDAR INFORMACIÓN (condicional if/else) ============ */
+ 
+/*  9. PASO 1: VALIDAR INFORMACIÓN*/
  
 function validarPaso1() {
     let valido = true;
@@ -222,7 +225,7 @@ campo.descripcion.addEventListener("input", () => {
     elemento.addEventListener("blur", () => validarPaso1());
 });
  
-/* ============ 9.1 ESTRUCTURA switch: recomendación según el tipo ============ */
+/* 9.1 ESTRUCTURA del switch q recomendación según el tipo */
  
 function obtenerRecomendacionPorTipo(tipo) {
     let mensaje = "";
@@ -247,13 +250,13 @@ function obtenerRecomendacionPorTipo(tipo) {
     return mensaje;
 }
  
-// onChange: al cambiar el tipo, se actualiza la recomendación (switch) y la vista previa
+
 campo.tipo.addEventListener("change", () => {
     document.getElementById("recomendacion-tipo").textContent = obtenerRecomendacionPorTipo(campo.tipo.value);
     if (estadoFormulario.pasoActual === 5) actualizarVistaPrevia();
 });
  
-/* ============ 10. PASO 2: UBICACIÓN EN CASCADA ============ */
+/*  10. PASO 2: UBICACIÓN EN CASCADA  */
  
 function llenarSelect(select, opciones, textoPlaceholder) {
     select.innerHTML = "";
@@ -262,7 +265,7 @@ function llenarSelect(select, opciones, textoPlaceholder) {
     placeholder.textContent = textoPlaceholder;
     select.appendChild(placeholder);
  
-    // for...of: recorre el arreglo de opciones
+    
     for (const opcion of opciones) {
         const option = document.createElement("option");
         option.value = opcion;
@@ -323,7 +326,7 @@ function validarPaso2() {
     return valido;
 }
  
-/* ============ 11. PASO 3: CARACTERÍSTICAS (opcional) ============ */
+/* 11. PASO 3: CARACTERÍSTICAS */
  
 function validarPaso3() {
     return true;
@@ -338,9 +341,9 @@ function obtenerCaracteristicas() {
     return [...sinDuplicados]; // Spread: convierte el Set de vuelta a un arreglo
 }
  
-/* ============ 12. PASO 4: FOTOS (for, while, try/catch) ============ */
+/* 12. PASO 4: FOTOS  */
  
-// for clásico: cuenta cuántos espacios de foto ya están ocupados
+
 function contarFotosSubidas() {
     let contador = 0;
     for (let i = 0; i < estadoFormulario.fotos.length; i++) {
@@ -349,7 +352,7 @@ function contarFotosSubidas() {
     return contador;
 }
  
-// while: busca el primer espacio vacío disponible para la siguiente foto
+
 function obtenerSiguienteSlotVacio() {
     let indice = 0;
     while (indice < estadoFormulario.fotos.length && estadoFormulario.fotos[indice] !== null) {
@@ -372,7 +375,7 @@ campo.fotos.addEventListener("change", (evento) => {
             const nombre = archivo.name.toLowerCase();
             const extension = nombre.slice(nombre.lastIndexOf("."));
  
-            // Set.has() valida que la extensión esté permitida
+           
             if (!archivo.type.includes("image/") || !extensionesPermitidas.has(extension)) {
                 mostrarError("fotos", "Solo se aceptan imágenes JPG, PNG o WEBP.");
                 return;
@@ -400,13 +403,13 @@ campo.fotos.addEventListener("change", (evento) => {
             lector.readAsDataURL(archivo);
  
         } catch (error) {
-            // try/catch: evita que un archivo dañado detenga todo el formulario
+        
             console.error("Error procesando la imagen:", error);
             mostrarError("fotos", "Ocurrió un problema al procesar una de las imágenes.");
         }
     });
  
-    campo.fotos.value = ""; // permite volver a seleccionar el mismo archivo si se quita
+    campo.fotos.value = ""; 
 });
  
 function pintarFotoSlot(indice, dataUrl) {
@@ -435,10 +438,10 @@ document.querySelectorAll(".foto-slots").forEach((contenedor) => {
 });
  
 function validarPaso4() {
-    return true; // las fotos son opcionales
+    return true; 
 }
  
-/* ============ 13. PASO 5: RESUMEN (arreglo bidimensional + Map) Y VISTA PREVIA ============ */
+/* 13. PASO 5: RESUMEN  Y VISTA PREVIA  */
  
 // Arreglo bidimensional: cada fila es un par [etiqueta, valor]
 function construirResumenBidimensional() {
@@ -457,11 +460,11 @@ function construirResumenBidimensional() {
  
 function renderizarResumen() {
     const filas = construirResumenBidimensional();
-    const mapaResumen = new Map(filas); // Map construido a partir de un arreglo bidimensional
+    const mapaResumen = new Map(filas); 
     const contenedor = document.getElementById("resumen-campos");
     contenedor.innerHTML = "";
  
-    // for...of: recorre las entradas [clave, valor] del Map
+   
     for (const [etiqueta, valor] of mapaResumen) {
         const fila = document.createElement("div");
         fila.className = "resumen-fila";
@@ -488,7 +491,7 @@ function actualizarVistaPrevia() {
         (partesUbicacion.length ? partesUbicacion.join(", ") : "Ubicación por definir");
  
     const descripcion = campo.descripcion.value.trim();
-    // .slice() recorta la descripción para que la vista previa no sea muy larga
+    
     document.getElementById("vista-previa-descripcion").textContent =
         descripcion ? (descripcion.length > 120 ? descripcion.slice(0, 120) + "…" : descripcion)
                     : "La descripción de tu alojamiento aparecerá aquí.";
@@ -509,9 +512,9 @@ function actualizarVistaPrevia() {
     renderizarResumen();
 }
  
-/* ============ 14. NAVEGACIÓN ENTRE PASOS (Map de validadores) ============ */
+/* 14. NAVEGACIÓN ENTRE PASOS  */
  
-// Map: asocia cada número de paso con su función de validación
+
 const validadoresPorPaso = new Map([
     [1, validarPaso1],
     [2, validarPaso2],
@@ -545,7 +548,7 @@ function irAlPaso(numero) {
     document.getElementById("estado-publicacion").hidden = true;
 }
  
-// Evento onClick: avanzar de paso (validando antes con la función guardada en el Map)
+
 btnSiguiente.addEventListener("click", () => {
     const validador = validadoresPorPaso.get(estadoFormulario.pasoActual);
     if (validador && !validador()) {
@@ -572,7 +575,6 @@ btnSiguiente.addEventListener("click", () => {
     irAlPaso(Math.min(estadoFormulario.pasoActual + 1, estadoFormulario.totalPasos));
 });
  
-// Evento onClick: retroceder de paso
 btnAtras.addEventListener("click", () => {
     irAlPaso(Math.max(estadoFormulario.pasoActual - 1, 1));
 });
@@ -585,30 +587,28 @@ itemsPaso.forEach((item) => {
     });
 });
  
-/* ============ 15. NÚMEROS EN JAVASCRIPT (IEEE 754, BigInt) Y BITS ============ */
+/* 15. NÚMEROS */
  
-// Los números en JS siguen el estándar de punto flotante IEEE 754, por eso
-// se redondea a 2 decimales antes de guardar el precio (evita errores como 0.1 + 0.2).
+
 function normalizarPrecio(precioTexto) {
     return Number(Number(precioTexto).toFixed(2));
 }
  
-// BigInt: se usa para crear un código de anuncio más grande de lo que
-// Number puede representar con precisión exacta.
+
 function generarCodigoAnuncio() {
     const marcaDeTiempo = BigInt(Date.now());
     const aleatorio = BigInt(Math.floor(Math.random() * 1000));
     return (marcaDeTiempo * 1000n + aleatorio).toString();
 }
  
-// Operadores de desplazamiento de bits: generan un código corto legible en hexadecimal
+
 function generarCodigoCorto(id) {
-    const truncado = (id | 0) >>> 0;   // OR con 0 y desplazamiento sin signo: fuerza un entero de 32 bits
-    const reducido = truncado >> 4;    // desplazamiento a la derecha: acorta el número
+    const truncado = (id | 0) >>> 0;   
+    const reducido = truncado >> 4;    
     return reducido.toString(16).toUpperCase();
 }
  
-/* ============ 16. ENVÍO FINAL: VALIDAR TODO Y GUARDAR COMO JSON (try/catch) ============ */
+/*  VALIDAR TODO Y GUARDAR */
  
 function guardarAlojamiento(objetoPlano) {
     try {
@@ -617,7 +617,7 @@ function guardarAlojamiento(objetoPlano) {
         localStorage.setItem("alojamientosPublicados", JSON.stringify(guardados));
         return guardados;
     } catch (error) {
-        // catch: si el almacenamiento local falla (por ejemplo, está lleno o bloqueado)
+       
         console.error("No se pudo guardar el alojamiento:", error);
         alert("Ocurrió un problema al guardar tu alojamiento. Intenta nuevamente.");
         return null;
@@ -677,12 +677,12 @@ formPublicar.addEventListener("submit", (evento) => {
     console.log("Todos los alojamientos publicados (JSON.parse):", guardados);
 });
  
-/* ============ 17. INICIO ============ */
+/* 17. INICIO */
  
 inicializarUbicaciones();
 irAlPaso(1);
  
-/* ============ 18. MENÚ RESPONSIVE (mismo comportamiento que las demás páginas) ============ */
+/* 18. MENÚ RESPONSIVE  */
  
 const menuIcon = document.querySelector(".menu-icon");
 const menu = document.querySelector(".menu");
@@ -692,13 +692,13 @@ if (menuIcon && menu) {
     });
 }
  
-/* =========================================================
+/*
    19. DEMOSTRACIÓN ADICIONAL DE OPERADORES Y SINTAXIS
    (bloque independiente, no altera el formulario; queda
    registrado en la consola para fines del curso)
-   ========================================================= */
+   */
  
-// ---- Operadores matemáticos y de asignación ----
+
 const numeroA = 10;
 const numeroB = 3;
 console.log("Suma:", numeroA + numeroB);
@@ -709,22 +709,22 @@ console.log("Módulo:", numeroA % numeroB);
 console.log("Potencia:", numeroA ** numeroB);
  
 let contadorDemo = 0;
-contadorDemo += 5;   // operador de asignación con suma
-contadorDemo *= 2;   // operador de asignación con multiplicación
+contadorDemo += 5;   
+contadorDemo *= 2;   
 console.log("Contador con operadores de asignación:", contadorDemo);
  
-// ---- Operadores lógicos ----
+
 console.log("AND lógico:", true && false);
 console.log("OR lógico:", true || false);
 console.log("NOT lógico:", !true);
  
-// ---- Operadores de desplazamiento de bits ----
+
 console.log("Desplazamiento a la izquierda (2 << 1):", 2 << 1);
 console.log("Desplazamiento a la derecha (8 >> 2):", 8 >> 2);
 console.log("AND bit a bit (6 & 3):", 6 & 3);
 console.log("OR bit a bit (6 | 3):", 6 | 3);
  
-// ---- Sintaxis Spread ----
+
 const caracteristicasBase = ["Wifi de cortesía"];
 const caracteristicasCompletas = [...caracteristicasBase, ...obtenerCaracteristicas()];
 console.log("Características completas (spread):", caracteristicasCompletas);
@@ -735,7 +735,7 @@ console.log("Math.round(649.6):", Math.round(649.6));
 console.log("Math.max(0, 100, 650):", Math.max(0, 100, 650));
 console.log("Math.abs(-25):", Math.abs(-25));
  
-// ---- Cadenas: comillas, plantillas, multilínea, búsqueda ----
+
 const comillaSimple = 'Alojamiento cómodo';
 const comillaDoble = "Cerca de la universidad";
 const plantilla = `Aviso: ${comillaSimple} - ${comillaDoble}`;
@@ -746,7 +746,7 @@ console.log(textoMultilinea);
 console.log("Concatenación con +:", comillaSimple + " / " + comillaDoble);
 console.log("Búsqueda con indexOf:", plantilla.indexOf("universidad"));
  
-// ---- Arreglos: map, filter, reduce ----
+
 const preciosEjemplo = [650, 950, 480, 1800];
 const preciosConDescuento = preciosEjemplo.map((precio) => precio * 0.9);
 const preciosAccesibles = preciosEjemplo.filter((precio) => precio < 1000);
@@ -755,7 +755,7 @@ console.log("Precios con descuento:", preciosConDescuento);
 console.log("Precios accesibles:", preciosAccesibles);
 console.log("Suma total:", totalPrecios);
  
-// ---- for...in: recorre las llaves de un objeto ----
+
 for (const departamentoClave in ubicaciones) {
     console.log("Departamento disponible:", departamentoClave);
 }
