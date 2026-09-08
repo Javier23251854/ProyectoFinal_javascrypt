@@ -1,23 +1,4 @@
 
-/* =========================================================
-   4. PUBLICAR ALOJAMIENTO - publicar.js
- 
-   Este archivo cubre los temas de las unidades del curso:
-   - Tipos de datos, variables, constantes, sintaxis
-   - Estructuras de control: condicional (if/else, switch),
-     repetitivo (for, while), manejo de errores (try/catch)
-   - Funciones (declaradas y flecha) y eventos (onClick, onChange,
-     onFocus, onBlur, onSubmit)
-   - Salidas: document (DOM), alert, console
-   - Operadores matemáticos, de bits, lógicos, de asignación y Spread
-   - Números en JavaScript (IEEE 754, BigInt) y objeto Math
-   - Cadenas: concatenación, plantillas, comillas, multilínea,
-     interpolación, extracción, búsqueda y expresiones regulares
-   - Arreglos (lineales y bidimensionales), iteraciones (map,
-     filter, reduce, for...of, for...in), objetos, clases, JSON,
-     colecciones (Map y Set) y funciones flecha
-   ========================================================= */
- 
  
 /* ============ 1. TIPOS DE DATOS, VARIABLES Y CONSTANTES ============ */
  
