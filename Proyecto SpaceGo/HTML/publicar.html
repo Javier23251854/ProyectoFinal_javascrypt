@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="es">
+ 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ 
+    <title>Publicar alojamiento | SpaceGo</title>
+ 
+    <!-- CSS -->
+    <link rel="stylesheet" href="../CSS/css_global.css">
+    <link rel="stylesheet" href="../CSS/publicar.css">
+ 
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+ 
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+</head>
+ 
+<body>
+ 
+    <!-- ================= HEADER ================= -->
+ 
+    <header class="header">
+        <div class="navbar container">
+            <div class="logo">
+                <a href="../HTML/index.html"><img src="../Imagenes/logo cuarto.png" alt="Logo SpaceGo"></a>
+            </div>
+            <button type="button" class="menu-icon" id="boton-menu"> &#9776; </button>
+            <nav class="menu" id="menu-principal">
+                <ul>
+                    <li><a href="../HTML/index.html">Inicio</a></li>
+                    <li><a href="../HTML/buscar.html"><i class="fa-solid fa-magnifying-glass"></i>Buscar alojamiento</a></li>
+                    <li><a href="../HTML/alojamiento.html"><i class="fa-solid fa-house"></i>Alojamiento</a></li>
+                    <li><a href="../HTML/publicar.html" class="activo"><i class="fa-solid fa-plus"></i>Publicar alojamiento</a></li>
+                    <li><a href="../HTML/favoritos.html"><i class="fa-regular fa-heart"></i>Favoritos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+ 
+    <!-- ================= ENCABEZADO DE LA PÁGINA ================= -->
+ 
+    <section class="publicar-hero">
+        <div class="container">
+            <span class="hero-etiqueta">PUBLICA TU ESPACIO</span>
+            <h1>Publica tu alojamiento</h1>
+            <p>Completa estos 5 pasos y tu anuncio quedará listo para que otros lo encuentren.</p>
+        </div>
+    </section>
+ 
+    <main class="contenedor-principal container">
+ 
+        <section class="publicar-section">
+ 
+            <!-- ================= PASOS (STEPPER) ================= -->
+            <ol class="stepper-publicar" id="stepper-publicar">
+                <li class="paso-item is-activo" data-paso="1">
+                    <button type="button" class="paso-btn" data-ir-a="1">
+                        <span class="paso-num">1</span>
+                        <span class="paso-label">Información</span>
+                    </button>
+                </li>
+                <li class="paso-item" data-paso="2">
+                    <button type="button" class="paso-btn" data-ir-a="2">
+                        <span class="paso-num">2</span>
+                        <span class="paso-label">Ubicación</span>
+                    </button>
+                </li>
+                <li class="paso-item" data-paso="3">
+                    <button type="button" class="paso-btn" data-ir-a="3">
+                        <span class="paso-num">3</span>
+                        <span class="paso-label">Características</span>
+                    </button>
+                </li>
+                <li class="paso-item" data-paso="4">
+                    <button type="button" class="paso-btn" data-ir-a="4">
+                        <span class="paso-num">4</span>
+                        <span class="paso-label">Fotos</span>
+                    </button>
+                </li>
+                <li class="paso-item" data-paso="5">
+                    <button type="button" class="paso-btn" data-ir-a="5">
+                        <span class="paso-num">5</span>
+                        <span class="paso-label">Publicar</span>
+                    </button>
+                </li>
+            </ol>
+ 
+            <!-- ================= FORMULARIO ================= -->
+            <form id="form-publicar" class="form-publicar" novalidate>
+ 
+                <!-- Paso 1 — Información -->
+                <div class="paso-panel is-activo" data-paso="1" id="paso-1">
+                    <h2>Información del alojamiento</h2>
+ 
+                    <div class="campo">
+                        <label for="titulo">Título del alojamiento</label>
+                        <input type="text" id="titulo" placeholder="Ej. Habitación amoblada en San Miguel" maxlength="60">
+                        <div class="campo-pie">
+                            <span class="campo-error" id="error-titulo"></span>
+                            <span class="campo-contador" id="contador-titulo">0/60</span>
+                        </div>
+                    </div>
+ 
+                    <div class="campo-grid">
+                        <div class="campo">
+                            <label for="tipo">Tipo de alojamiento</label>
+                            <select id="tipo">
+                                <option value="">Selecciona una opción</option>
+                                <option value="individual">Habitación individual</option>
+                                <option value="pareja">Espacio para pareja</option>
+                                <option value="minidepa">Minidepartamento</option>
+                                <option value="departamento">Departamento</option>
+                            </select>
+                            <span class="campo-error" id="error-tipo"></span>
+                            <p class="campo-recomendacion" id="recomendacion-tipo"></p>
+                        </div>
+ 
+                        <div class="campo">
+                            <label for="precio">Precio mensual</label>
+                            <div class="campo-prefijo">
+                                <span>S/</span>
+                                <input type="text" inputmode="decimal" id="precio" placeholder="650">
+                            </div>
+                            <span class="campo-error" id="error-precio"></span>
+                        </div>
+                    </div>
+ 
+                    <div class="campo">
+                        <label for="descripcion">Descripción</label>
+                        <textarea id="descripcion" rows="4" placeholder="Cuenta cómo es el ambiente, el barrio y a quién le viene bien."></textarea>
+                        <div class="campo-pie">
+                            <span class="campo-error" id="error-descripcion"></span>
+                            <span class="campo-contador" id="contador-descripcion">0/300</span>
+                        </div>
+                    </div>
+ 
+                    <fieldset class="campo-fieldset">
+                        <legend>Datos de contacto</legend>
+                        <p class="campo-nota">Solo los verá alguien interesado en escribirte.</p>
+                        <div class="campo-grid">
+                            <div class="campo">
+                                <label for="correo">Correo</label>
+                                <input type="text" id="correo" placeholder="usuario@gmail.com">
+                                <span class="campo-error" id="error-correo"></span>
+                            </div>
+                            <div class="campo">
+                                <label for="telefono">Teléfono</label>
+                                <input type="text" id="telefono" maxlength="9" placeholder="9XXXXXXXX">
+                                <span class="campo-error" id="error-telefono"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+ 
+                <!-- Paso 2 — Ubicación -->
+                <div class="paso-panel" data-paso="2" id="paso-2" hidden>
+                    <h2>Ubicación</h2>
+ 
+                    <div class="campo-grid campo-grid-3">
+                        <div class="campo">
+                            <label for="departamento">Departamento</label>
+                            <select id="departamento">
+                                <option value="">Selecciona</option>
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label for="provincia">Provincia</label>
+                            <select id="provincia" disabled>
+                                <option value="">Elige un departamento primero</option>
+                            </select>
+                        </div>
+                        <div class="campo">
+                            <label for="distrito">Distrito</label>
+                            <select id="distrito" disabled>
+                                <option value="">Elige una provincia primero</option>
+                            </select>
+                        </div>
+                    </div>
+                    <span class="campo-error" id="error-ubicacion"></span>
+ 
+                    <div class="campo">
+                        <label for="referencia">Referencia</label>
+                        <input type="text" id="referencia" placeholder="Ej. Cerca de la universidad, a 5 minutos caminando">
+                        <span class="campo-error" id="error-referencia"></span>
+                    </div>
+                </div>
+ 
+                <!-- Paso 3 — Características -->
+                <div class="paso-panel" data-paso="3" id="paso-3" hidden>
+                    <h2>¿Qué incluye?</h2>
+                    <p class="paso-nota">Marca todo lo que ya está incluido en el precio.</p>
+ 
+                    <div class="caracteristicas-grid">
+                        <label class="caracteristica"><input type="checkbox" name="caracteristicas" value="Internet"><span><i class="fa-solid fa-wifi"></i>Internet</span></label>
+                        <label class="caracteristica"><input type="checkbox" name="caracteristicas" value="Agua"><span><i class="fa-solid fa-droplet"></i>Agua</span></label>
+                        <label class="caracteristica"><input type="checkbox" name="caracteristicas" value="Luz"><span><i class="fa-solid fa-bolt"></i>Luz</span></label>
+                        <label class="caracteristica"><input type="checkbox" name="caracteristicas" value="Cocina"><span><i class="fa-solid fa-utensils"></i>Cocina</span></label>
+                        <label class="caracteristica"><input type="checkbox" name="caracteristicas" value="Baño privado"><span><i class="fa-solid fa-shower"></i>Baño privado</span></label>
+                        <label class="caracteristica"><input type="checkbox" name="caracteristicas" value="Lavandería"><span><i class="fa-solid fa-shirt"></i>Lavandería</span></label>
+                        <label class="caracteristica"><input type="checkbox" name="caracteristicas" value="Estacionamiento"><span><i class="fa-solid fa-square-parking"></i>Estacionamiento</span></label>
+                        <label class="caracteristica"><input type="checkbox" name="caracteristicas" value="Amoblado"><span><i class="fa-solid fa-couch"></i>Amoblado</span></label>
+                    </div>
+                </div>
+ 
+                <!-- Paso 4 — Imágenes -->
+                <div class="paso-panel" data-paso="4" id="paso-4" hidden>
+                    <h2>Sube fotos</h2>
+                    <p class="paso-nota">Hasta 3 imágenes. La primera será la portada del anuncio.</p>
+ 
+                    <label class="btn-subir-foto" for="fotos">
+                        <i class="fa-solid fa-camera"></i> Seleccionar imágenes
+                        <input type="file" id="fotos" accept="image/*" multiple hidden>
+                    </label>
+                    <span class="campo-error" id="error-fotos"></span>
+ 
+                    <div class="foto-slots">
+                        <div class="foto-slot" id="slot-0" data-index="0"><span class="foto-slot-label">Foto 1</span></div>
+                        <div class="foto-slot" id="slot-1" data-index="1"><span class="foto-slot-label">Foto 2</span></div>
+                        <div class="foto-slot" id="slot-2" data-index="2"><span class="foto-slot-label">Foto 3</span></div>
+                    </div>
+                </div>
+ 
+                <!-- Paso 5 — Publicar -->
+                <div class="paso-panel" data-paso="5" id="paso-5" hidden>
+                    <h2>Revisa antes de publicar</h2>
+                    <p class="paso-nota">Así se verá tu anuncio para quien lo encuentre.</p>
+ 
+                    <div class="resumen-campos" id="resumen-campos"></div>
+ 
+                    <article class="vista-previa" id="vista-previa">
+                        <div class="vista-previa-foto" id="vista-previa-foto">
+                            <span>Sin foto todavía</span>
+                        </div>
+                        <div class="vista-previa-info">
+                            <span class="vista-previa-tipo" id="vista-previa-tipo"><i class="fa-solid fa-house"></i> Tipo de alojamiento</span>
+                            <h3 id="vista-previa-titulo">Título del alojamiento</h3>
+                            <p class="vista-previa-ubicacion" id="vista-previa-ubicacion"><i class="fa-solid fa-location-dot"></i> Ubicación por definir</p>
+                            <p class="vista-previa-descripcion" id="vista-previa-descripcion">La descripción de tu alojamiento aparecerá aquí.</p>
+                            <ul class="vista-previa-tags" id="vista-previa-caracteristicas"></ul>
+                            <div class="vista-previa-footer">
+                                <span class="vista-previa-precio" id="vista-previa-precio">S/ — <small>/ mes</small></span>
+                            </div>
+                        </div>
+                    </article>
+ 
+                    <p class="estado-publicacion" id="estado-publicacion" hidden></p>
+                </div>
+ 
+                <!-- ================= ACCIONES ================= -->
+                <div class="acciones-formulario">
+                    <p class="mensaje-validacion" id="mensaje-validacion" role="alert" hidden></p>
+                    <button type="button" class="btn btn-secundario" id="btn-atras" hidden>Atrás</button>
+                    <button type="button" class="btn btn-principal" id="btn-siguiente">Siguiente</button>
+                    <button type="submit" class="btn btn-principal" id="btn-publicar" hidden>
+                        <i class="fa-solid fa-check"></i> Guardar y publicar
+                    </button>
+                </div>
+ 
+            </form>
+        </section>
+ 
+    </main>
+ 
+    <!-- ================= FOOTER ================= -->
+ 
+    <footer class="footer">
+        <div class="footer-container container">
+            <div class="footer-box">
+                <div class="footer-logo"><img src="../Imagenes/logo cuarto.png" alt="Logo SpaceGo"></div>
+                <p>Una plataforma pensada para ayudarte a encontrar el espacio que necesitas.</p>
+            </div>
+            <div class="footer-box">
+                <h3>Contacto</h3>
+                <p><i class="fa-solid fa-phone"></i>+51 987 654 321</p>
+                <p><i class="fa-solid fa-envelope"></i>contacto@spacego.pe</p>
+                <p><i class="fa-solid fa-location-dot"></i>Perú</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 SpaceGo - Todos los derechos reservados</p>
+        </div>
+    </footer>
+ 
+    <!-- ================= JAVASCRIPT ================= -->
+    <script src="../JS/publicar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+ 
+</html>
+ 

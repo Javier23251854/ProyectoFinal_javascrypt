@@ -190,6 +190,46 @@ let alojamientos = [
     }
 ];
 
+
+
+
+
+
+
+
+/* para el uso de la pagina de publicar */
+
+
+/* ============ 3.1 SUMAR LOS ALOJAMIENTOS PUBLICADOS DESDE "Publicar alojamiento" ============ */
+/* Esos anuncios se guardan en localStorage (ver publicar.js) con push(),
+   sin tocar el array fijo de arriba. */
+
+function cargarAlojamientosPublicados() {
+    const publicados = JSON.parse(localStorage.getItem("alojamientosPublicados") || "[]");
+    return publicados.map((item) => ({
+        id: item.id,
+        titulo: item.titulo,
+        tipo: item.tipo,
+        precio: item.precio,
+        departamento: item.departamento,
+        provincia: item.provincia,
+        distrito: item.distrito,
+        imagen: item.imagen || "../Imagenes/alojamiento.jpg",
+        descripcion: item.descripcion,
+        fecha: item.fecha
+    }));
+}
+
+alojamientos = alojamientos.concat(cargarAlojamientosPublicados());
+
+
+
+
+
+
+/* fin del uso de lal funcion para la pagina de publicar */
+
+
 /* Con push() se podrían agregar nuevos alojamientos publicados
    por otros usuarios sin tocar el resto del código. */
 // alojamientos.push({ id: 14, titulo: "...", ... });

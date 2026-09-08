@@ -1,0 +1,629 @@
+
+/* ---------- ENCABEZADO DE LA PÁGINA ---------- */
+ 
+.publicar-hero {
+    padding: 45px 0;
+    background: linear-gradient(90deg, #751126, #9d1730);
+    color: #ffffff;
+}
+ 
+.publicar-hero .hero-etiqueta {
+    display: block;
+    margin-bottom: 6px;
+    color: #f2cbd2;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+ 
+.publicar-hero h1 {
+    margin: 0 0 8px;
+    font-size: 34px;
+    font-weight: 800;
+}
+ 
+.publicar-hero p {
+    margin: 0;
+    max-width: 560px;
+    color: #f5e3e6;
+    font-size: 14px;
+}
+ 
+/* ---------- SECCIÓN / TARJETA PRINCIPAL ---------- */
+ 
+.publicar-section {
+    margin-top: -25px;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+ 
+/* ---------- STEPPER ---------- */
+ 
+.stepper-publicar {
+    display: flex;
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 10px;
+    background: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+    overflow-x: auto;
+}
+ 
+.paso-item {
+    flex: 1;
+    min-width: 130px;
+}
+ 
+.paso-btn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 8px;
+    background: none;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: inherit;
+}
+ 
+.paso-btn:hover {
+    background: #f8f7f6;
+}
+ 
+.paso-num {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1.5px solid var(--borde);
+    background: #ffffff;
+    color: var(--gris);
+    font-weight: 700;
+    font-size: 13px;
+}
+ 
+.paso-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gris);
+    text-align: center;
+}
+ 
+.paso-item.is-activo .paso-num {
+    background: var(--vino);
+    border-color: var(--vino);
+    color: #ffffff;
+}
+ 
+.paso-item.is-activo .paso-label {
+    color: var(--vino);
+}
+ 
+.paso-item.is-completo .paso-num {
+    background: #ffffff;
+    border-color: var(--vino);
+    color: var(--vino);
+}
+ 
+.paso-item.is-completo .paso-num::after {
+    content: "\2713";
+}
+ 
+/* ---------- FORMULARIO / PANELES ---------- */
+ 
+.form-publicar {
+    background: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 16px;
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
+    padding: 28px;
+}
+ 
+.paso-panel h2 {
+    margin: 0 0 4px;
+    color: var(--negro);
+    font-size: 22px;
+    font-weight: 800;
+}
+ 
+.paso-nota {
+    margin: 0 0 20px;
+    color: var(--gris);
+    font-size: 13px;
+}
+ 
+/* ---------- CAMPOS ---------- */
+ 
+.campo {
+    margin-bottom: 18px;
+}
+ 
+.campo-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+ 
+.campo-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+ 
+.campo label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--negro);
+    font-size: 13px;
+    font-weight: 600;
+}
+ 
+.campo input[type="text"],
+.campo select,
+.campo textarea {
+    width: 100%;
+    padding: 10px 12px;
+    background: #f8f7f6;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    color: var(--negro);
+    font-size: 14px;
+    font-family: inherit;
+}
+ 
+.campo textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+ 
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    outline: none;
+    border-color: var(--vino);
+    background: #ffffff;
+}
+ 
+.campo input.campo-invalido,
+.campo select.campo-invalido,
+.campo textarea.campo-invalido {
+    border-color: #c0392b;
+    background: #fdf1ef;
+}
+ 
+.campo-prefijo {
+    display: flex;
+    align-items: center;
+    background: #f8f7f6;
+    border: 1px solid var(--borde);
+    border-radius: 8px;
+    overflow: hidden;
+}
+ 
+.campo-prefijo span {
+    padding: 10px 4px 10px 12px;
+    color: var(--gris);
+    font-size: 14px;
+}
+ 
+.campo-prefijo input {
+    border: none !important;
+    background: transparent !important;
+    padding-left: 4px !important;
+}
+ 
+.campo-prefijo:focus-within {
+    border-color: var(--vino);
+}
+ 
+.campo-pie {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 4px;
+}
+ 
+.campo-contador {
+    font-size: 11px;
+    color: var(--gris);
+}
+ 
+.campo-error {
+    display: block;
+    min-height: 15px;
+    font-size: 12px;
+    color: #c0392b;
+}
+ 
+.campo-recomendacion {
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: var(--vino);
+    min-height: 15px;
+}
+ 
+.campo-fieldset {
+    margin-top: 22px;
+    padding: 16px 16px 2px;
+    border: 1px dashed var(--borde);
+    border-radius: 10px;
+}
+ 
+.campo-fieldset legend {
+    padding: 0 6px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--negro);
+}
+ 
+.campo-nota {
+    margin: -4px 0 14px;
+    font-size: 12px;
+    color: var(--gris);
+}
+ 
+/* ---------- CARACTERÍSTICAS ---------- */
+ 
+.caracteristicas-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+ 
+.caracteristica {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background: #f8f7f6;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--negro);
+    cursor: pointer;
+}
+ 
+.caracteristica i {
+    color: var(--vino);
+    width: 16px;
+}
+ 
+.caracteristica input {
+    accent-color: var(--vino);
+    width: 15px;
+    height: 15px;
+}
+ 
+.caracteristica:has(input:checked) {
+    background: #fbeef0;
+    border-color: var(--vino);
+    font-weight: 700;
+}
+ 
+/* ---------- FOTOS ---------- */
+ 
+.btn-subir-foto {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    margin-bottom: 16px;
+    background: #ffffff;
+    color: var(--vino);
+    border: 1px solid var(--vino);
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+}
+ 
+.btn-subir-foto:hover {
+    background: var(--vino);
+    color: #ffffff;
+}
+ 
+.foto-slots {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+ 
+.foto-slot {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f7f6;
+    border: 1px dashed var(--borde);
+    border-radius: 10px;
+    overflow: hidden;
+}
+ 
+.foto-slot-label {
+    font-size: 12px;
+    color: var(--gris);
+}
+ 
+.foto-slot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+ 
+.foto-slot.tiene-imagen {
+    border-style: solid;
+}
+ 
+.foto-slot.tiene-imagen .foto-slot-label {
+    display: none;
+}
+ 
+.foto-quitar {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    width: 22px;
+    height: 22px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(36, 36, 36, 0.72);
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    font-size: 12px;
+    cursor: pointer;
+}
+ 
+.foto-slot.tiene-imagen .foto-quitar {
+    display: flex;
+}
+ 
+/* ---------- RESUMEN (arreglo bidimensional + Map) ---------- */
+ 
+.resumen-campos {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 18px;
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+}
+ 
+.resumen-fila {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px dashed var(--borde);
+    font-size: 13px;
+}
+ 
+.resumen-fila:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+ 
+.resumen-fila strong {
+    color: var(--negro);
+}
+ 
+.resumen-fila span {
+    color: var(--gris);
+    text-align: right;
+}
+ 
+/* ---------- VISTA PREVIA (PASO 5) ---------- */
+ 
+.vista-previa {
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: 20px;
+    margin-bottom: 18px;
+    padding: 18px;
+    background: #f8f7f6;
+    border: 1px solid var(--borde);
+    border-radius: 13px;
+}
+ 
+.vista-previa-foto {
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #eeeeee;
+    border-radius: 10px;
+    overflow: hidden;
+    color: var(--gris);
+    font-size: 12px;
+}
+ 
+.vista-previa-foto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+ 
+.vista-previa-tipo {
+    display: inline-block;
+    margin-bottom: 6px;
+    color: var(--vino);
+    font-size: 12px;
+    font-weight: 700;
+}
+ 
+.vista-previa-tipo i {
+    margin-right: 4px;
+}
+ 
+.vista-previa-info h3 {
+    margin: 0 0 6px;
+    color: var(--negro);
+    font-size: 18px;
+    font-weight: 800;
+}
+ 
+.vista-previa-ubicacion {
+    margin: 0 0 10px;
+    color: var(--gris);
+    font-size: 13px;
+}
+ 
+.vista-previa-ubicacion i {
+    color: var(--vino);
+    margin-right: 4px;
+}
+ 
+.vista-previa-descripcion {
+    margin: 0 0 12px;
+    color: var(--gris);
+    font-size: 13px;
+    line-height: 1.55;
+}
+ 
+.vista-previa-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 14px;
+    padding: 0;
+    list-style: none;
+}
+ 
+.vista-previa-tags li {
+    padding: 4px 10px;
+    background: #fbeef0;
+    color: var(--vino);
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+}
+ 
+.vista-previa-precio {
+    color: var(--negro);
+    font-size: 20px;
+    font-weight: 800;
+}
+ 
+.vista-previa-precio small {
+    color: var(--gris);
+    font-size: 12px;
+    font-weight: 400;
+}
+ 
+.estado-publicacion {
+    padding: 12px 16px;
+    background: #eefaf1;
+    border: 1px solid #bfe8cb;
+    border-radius: 8px;
+    color: #1e7a3c;
+    font-size: 13px;
+    font-weight: 600;
+}
+ 
+.estado-publicacion.es-error {
+    background: #fdf1ef;
+    border-color: #f1c3ba;
+    color: #c0392b;
+}
+ 
+/* ---------- ACCIONES ---------- */
+
+.mensaje-validacion {
+    flex: 1 1 100%;
+    margin: 0;
+    padding: 10px 12px;
+    background: #fdf1ef;
+    border: 1px solid #f1c3ba;
+    border-radius: 8px;
+    color: #c0392b;
+    font-size: 13px;
+}
+ 
+.acciones-formulario {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 26px;
+    padding-top: 20px;
+    border-top: 1px solid var(--borde);
+}
+ 
+.acciones-formulario .btn-secundario {
+    margin-right: auto;
+}
+ 
+/* ---------- RESPONSIVE ---------- */
+ 
+@media (max-width: 991px) {
+    .campo-grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+ 
+    .caracteristicas-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+ 
+    .vista-previa {
+        grid-template-columns: 1fr;
+    }
+}
+ 
+@media (max-width: 767px) {
+    .publicar-hero {
+        padding: 35px 0;
+    }
+ 
+    .publicar-hero h1 {
+        font-size: 27px;
+    }
+ 
+    .publicar-section {
+        margin-top: -15px;
+    }
+ 
+    .form-publicar {
+        padding: 18px;
+    }
+ 
+    .campo-grid,
+    .campo-grid-3 {
+        grid-template-columns: 1fr;
+    }
+ 
+    .caracteristicas-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+ 
+    .paso-label {
+        display: none;
+    }
+}
+ 
+@media (max-width: 575px) {
+    .caracteristicas-grid {
+        grid-template-columns: 1fr;
+    }
+ 
+    .acciones-formulario {
+        flex-direction: column-reverse;
+    }
+ 
+    .acciones-formulario .btn {
+        width: 100%;
+        text-align: center;
+    }
+ 
+    .acciones-formulario .btn-secundario {
+        margin-right: 0;
+    }
+}
+ 

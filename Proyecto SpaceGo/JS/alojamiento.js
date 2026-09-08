@@ -79,6 +79,36 @@ const listaAlojamientos = [
     }
 ];
 
+
+/* ============ uso de la pagina de publicar ============ */
+
+
+// 1.1 SUMAR LOS ALOJAMIENTOS PUBLICADOS DESDE "Publicar alojamiento"
+// Esos anuncios se guardan en localStorage (ver publicar.js); aquí solo se
+// agregan al array con push(), sin tocar los datos fijos de arriba.
+function cargarAlojamientosPublicados() {
+    const publicados = JSON.parse(localStorage.getItem("alojamientosPublicados") || "[]");
+    return publicados.map((item) => ({
+        id: item.id,
+        titulo: item.titulo,
+        tipo: item.tipo,
+        precio: item.precio,
+        capacidad: "No especificada",
+        ubicacion: `${item.distrito}, ${item.provincia}`,
+        imagenes: [item.imagen || "../Imagenes/alojamiento.jpg"],
+        incluye: item.caracteristicas || [],
+        noIncluye: [],
+        descripcion: item.descripcion
+    }));
+}
+
+listaAlojamientos.push(...cargarAlojamientosPublicados());
+
+
+/* ============ fin del uso de la pagina de publicar ============ */
+
+
+
 // 2. OBTENER ID DE LA URL Y BUSCAR EL OBJETO CON find()
 function obtenerIdURL() {
     const parametros = new URLSearchParams(window.location.search);
