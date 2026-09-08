@@ -2,13 +2,48 @@
 
 const ubicaciones = {
     "Lima": {
-        "Lima": ["San Miguel", "Miraflores", "San Borja", "Surco", "Los Olivos", "Pueblo Libre"]
+        "Lima": [
+            "Lima", "Ancón", "Ate", "Barranco", "Breña", "Carabayllo", "Chaclacayo",
+            "Cieneguilla", "Comas", "El Agustino", "Independencia", "Jesús María",
+            "La Molina", "La Victoria", "Lince", "Los Olivos", "Lurigancho", "Lurín",
+            "Magdalena del Mar", "Pueblo Libre", "Miraflores", "Pachacámac", "Pucusana",
+            "Puente Piedra", "Punta Hermosa", "Punta Negra", "Rímac", "San Bartolo",
+            "San Borja", "San Isidro", "San Juan de Lurigancho", "San Juan de Miraflores",
+            "San Luis", "San Martín de Porres", "San Miguel", "Santa Anita", "Santa María del Mar",
+            "Santa Rosa", "Santiago de Surco", "Surquillo", "Villa El Salvador", "Villa María del Triunfo",
+            "Surco"
+        ]
     },
     "Arequipa": {
         "Arequipa": ["Cercado", "Yanahuara", "Cayma"]
     },
     "Cusco": {
         "Cusco": ["Cusco", "Wanchaq", "San Sebastián"]
+    },
+    "La Libertad": {
+        "Trujillo": ["Trujillo", "Víctor Larco Herrera", "Huanchaco", "La Esperanza", "El Porvenir"]
+    },
+    "Piura": {
+        "Piura": ["Piura", "Castilla", "Veintiséis de Octubre", "Catacaos"]
+    },
+    "Lambayeque": {
+        "Chiclayo": ["Chiclayo", "José Leonardo Ortiz", "La Victoria", "Pimentel"]
+    },
+    "Junín": {
+        "Huancayo": ["Huancayo", "El Tambo", "Chilca", "San Agustín"]
+    },
+    "Ica": {
+        "Ica": ["Ica", "La Tinguiña", "Parcona", "Subtanjalla"]
+    },
+    "Tacna": {
+        "Tacna": ["Tacna", "Alto de la Alianza", "Ciudad Nueva", "Pocollay"]
+    },
+    "Puno": {
+        "Puno": ["Puno", "Acora", "Chucuito", "Capachica"],
+        "San Román": ["Juliaca", "Cabana", "Caracoto"]
+    },
+    "Áncash": {
+        "Huaraz": ["Huaraz", "Independencia", "Olleros", "Taricá"]
     }
 };
 

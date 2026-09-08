@@ -127,7 +127,7 @@
                             <label for="precio">Precio mensual</label>
                             <div class="campo-prefijo">
                                 <span>S/</span>
-                                <input type="text" inputmode="decimal" id="precio" placeholder="650">
+                                <input type="text" inputmode="decimal" id="precio" maxlength="10" placeholder="650">
                             </div>
                             <span class="campo-error" id="error-precio"></span>
                         </div>
@@ -135,7 +135,7 @@
  
                     <div class="campo">
                         <label for="descripcion">Descripción</label>
-                        <textarea id="descripcion" rows="4" placeholder="Cuenta cómo es el ambiente, el barrio y a quién le viene bien."></textarea>
+                        <textarea id="descripcion" rows="4" maxlength="300" placeholder="Cuenta cómo es el ambiente, el barrio y a quién le viene bien."></textarea>
                         <div class="campo-pie">
                             <span class="campo-error" id="error-descripcion"></span>
                             <span class="campo-contador" id="contador-descripcion">0/300</span>
@@ -148,12 +148,12 @@
                         <div class="campo-grid">
                             <div class="campo">
                                 <label for="correo">Correo</label>
-                                <input type="text" id="correo" placeholder="usuario@gmail.com">
+                                <input type="email" id="correo" maxlength="120" placeholder="usuario@gmail.com">
                                 <span class="campo-error" id="error-correo"></span>
                             </div>
                             <div class="campo">
                                 <label for="telefono">Teléfono</label>
-                                <input type="text" id="telefono" maxlength="9" placeholder="9XXXXXXXX">
+                                <input type="tel" id="telefono" inputmode="numeric" maxlength="9" placeholder="9XXXXXXXX">
                                 <span class="campo-error" id="error-telefono"></span>
                             </div>
                         </div>
@@ -188,7 +188,7 @@
  
                     <div class="campo">
                         <label for="referencia">Referencia</label>
-                        <input type="text" id="referencia" placeholder="Ej. Cerca de la universidad, a 5 minutos caminando">
+                        <input type="text" id="referencia" maxlength="120" placeholder="Ej. Cerca de la universidad, a 5 minutos caminando">
                         <span class="campo-error" id="error-referencia"></span>
                     </div>
                 </div>

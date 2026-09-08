@@ -24,13 +24,48 @@ console.log("Tipos de datos de ejemplo:", {
  
 const ubicaciones = {
     "Lima": {
-        "Lima": ["San Miguel", "Miraflores", "San Borja", "Surco", "Los Olivos", "Pueblo Libre"]
+        "Lima": [
+            "Lima", "Ancón", "Ate", "Barranco", "Breña", "Carabayllo", "Chaclacayo",
+            "Cieneguilla", "Comas", "El Agustino", "Independencia", "Jesús María",
+            "La Molina", "La Victoria", "Lince", "Los Olivos", "Lurigancho", "Lurín",
+            "Magdalena del Mar", "Pueblo Libre", "Miraflores", "Pachacámac", "Pucusana",
+            "Puente Piedra", "Punta Hermosa", "Punta Negra", "Rímac", "San Bartolo",
+            "San Borja", "San Isidro", "San Juan de Lurigancho", "San Juan de Miraflores",
+            "San Luis", "San Martín de Porres", "San Miguel", "Santa Anita", "Santa María del Mar",
+            "Santa Rosa", "Santiago de Surco", "Surquillo", "Villa El Salvador", "Villa María del Triunfo",
+            "Surco"
+        ]
     },
     "Arequipa": {
         "Arequipa": ["Cercado", "Yanahuara", "Cayma"]
     },
     "Cusco": {
         "Cusco": ["Cusco", "Wanchaq", "San Sebastián"]
+    },
+    "La Libertad": {
+        "Trujillo": ["Trujillo", "Víctor Larco Herrera", "Huanchaco", "La Esperanza", "El Porvenir"]
+    },
+    "Piura": {
+        "Piura": ["Piura", "Castilla", "Veintiséis de Octubre", "Catacaos"]
+    },
+    "Lambayeque": {
+        "Chiclayo": ["Chiclayo", "José Leonardo Ortiz", "La Victoria", "Pimentel"]
+    },
+    "Junín": {
+        "Huancayo": ["Huancayo", "El Tambo", "Chilca", "San Agustín"]
+    },
+    "Ica": {
+        "Ica": ["Ica", "La Tinguiña", "Parcona", "Subtanjalla"]
+    },
+    "Tacna": {
+        "Tacna": ["Tacna", "Alto de la Alianza", "Ciudad Nueva", "Pocollay"]
+    },
+    "Puno": {
+        "Puno": ["Puno", "Acora", "Chucuito", "Capachica"],
+        "San Román": ["Juliaca", "Cabana", "Caracoto"]
+    },
+    "Áncash": {
+        "Huaraz": ["Huaraz", "Independencia", "Olleros", "Taricá"]
     }
 };
  
@@ -53,7 +88,8 @@ const iconosTipo = {
 /*   4. EXPRESIONES REGULARES Y COLECCIONE  */
  
 const regexValidacion = {
-    correo: /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/,
+    texto: /^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ0-9\s.,'’()\-/#+°]+$/,
+    correo: /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$/,
     telefono: /^9\d{8}$/,
     precio: /^\d+(\.\d{1,2})?$/
 };
@@ -151,10 +187,15 @@ function esObligatorio(valor, idCampo, mensaje) {
  
 function validarPaso1() {
     let valido = true;
+    const titulo = campo.titulo.value.trim();
+    const descripcion = campo.descripcion.value.trim();
  
     valido = esObligatorio(campo.titulo.value, "titulo", "Escribe un título para tu anuncio.") && valido;
-    if (campo.titulo.value.trim().length > 0 && campo.titulo.value.trim().length < 10) {
+    if (titulo.length > 0 && titulo.length < 10) {
         mostrarError("titulo", "El título es muy corto, agrega un poco más de detalle.");
+        valido = false;
+    } else if (titulo.length > 0 && !regexValidacion.texto.test(titulo)) {
+        mostrarError("titulo", "Usa letras, números, espacios y puntuación básica.");
         valido = false;
     }
  
@@ -174,9 +215,12 @@ function validarPaso1() {
         mostrarError("precio", "");
     }
  
-    valido = esObligatorio(campo.descripcion.value, "descripcion", "Cuenta un poco sobre el ambiente.") && valido;
-    if (campo.descripcion.value.trim().length > 0 && campo.descripcion.value.trim().length < 20) {
+    valido = esObligatorio(descripcion, "descripcion", "Cuenta un poco sobre el ambiente.") && valido;
+    if (descripcion.length > 0 && descripcion.length < 20) {
         mostrarError("descripcion", "Agrega un poco más de descripción (mínimo 20 caracteres).");
+        valido = false;
+    } else if (descripcion.length > 0 && !regexValidacion.texto.test(descripcion)) {
+        mostrarError("descripcion", "Usa letras, números, espacios y puntuación básica.");
         valido = false;
     }
  
@@ -200,6 +244,11 @@ function validarPaso1() {
         valido = false;
     } else {
         mostrarError("telefono", "");
+    }
+
+    if (campo.tipo.value && !Object.prototype.hasOwnProperty.call(etiquetasTipo, campo.tipo.value)) {
+        mostrarError("tipo", "Selecciona un tipo de alojamiento válido.");
+        valido = false;
     }
  
     return valido;
@@ -314,22 +363,32 @@ campo.referencia.addEventListener("blur", () => validarPaso2());
  
 function validarPaso2() {
     let valido = true;
+    const departamentoValido = Object.prototype.hasOwnProperty.call(ubicaciones, campo.departamento.value);
+    const provinciaValida = departamentoValido && Object.prototype.hasOwnProperty.call(ubicaciones[campo.departamento.value], campo.provincia.value);
+    const distritoValido = provinciaValida && ubicaciones[campo.departamento.value][campo.provincia.value].includes(campo.distrito.value);
  
-    if (!campo.departamento.value || !campo.provincia.value || !campo.distrito.value) {
+    if (!departamentoValido || !provinciaValida || !distritoValido) {
         mostrarError("ubicacion", "Selecciona departamento, provincia y distrito.");
         valido = false;
     } else {
         mostrarError("ubicacion", "");
     }
  
-    valido = esObligatorio(campo.referencia.value, "referencia", "Agrega una referencia para ubicarlo más fácil.") && valido;
+    const referencia = campo.referencia.value.trim();
+    valido = esObligatorio(referencia, "referencia", "Agrega una referencia para ubicarlo más fácil.") && valido;
+    if (referencia.length > 0 && !regexValidacion.texto.test(referencia)) {
+        mostrarError("referencia", "Usa letras, números, espacios y puntuación básica.");
+        valido = false;
+    }
     return valido;
 }
  
 /* 11. PASO 3: CARACTERÍSTICAS */
  
 function validarPaso3() {
-    return true;
+    const permitidas = new Set(["Internet", "Agua", "Luz", "Cocina", "Baño privado", "Lavandería", "Estacionamiento", "Amoblado"]);
+    const seleccionadas = obtenerCaracteristicas();
+    return seleccionadas.every((caracteristica) => permitidas.has(caracteristica));
 }
  
 function obtenerCaracteristicas() {
@@ -378,6 +437,11 @@ campo.fotos.addEventListener("change", (evento) => {
            
             if (!archivo.type.includes("image/") || !extensionesPermitidas.has(extension)) {
                 mostrarError("fotos", "Solo se aceptan imágenes JPG, PNG o WEBP.");
+                return;
+            }
+
+            if (archivo.size > 5 * 1024 * 1024) {
+                mostrarError("fotos", "Cada imagen debe pesar como máximo 5 MB.");
                 return;
             }
  
@@ -438,7 +502,7 @@ document.querySelectorAll(".foto-slots").forEach((contenedor) => {
 });
  
 function validarPaso4() {
-    return true; 
+    return contarFotosSubidas() <= MAX_FOTOS;
 }
  
 /* 13. PASO 5: RESUMEN  Y VISTA PREVIA  */
@@ -629,9 +693,13 @@ formPublicar.addEventListener("submit", (evento) => {
  
     const paso1Valido = validarPaso1();
     const paso2Valido = validarPaso2();
+    const paso3Valido = validarPaso3();
+    const paso4Valido = validarPaso4();
  
     if (!paso1Valido) { irAlPaso(1); return; }
     if (!paso2Valido) { irAlPaso(2); return; }
+    if (!paso3Valido) { irAlPaso(3); return; }
+    if (!paso4Valido) { irAlPaso(4); return; }
  
     const id = Date.now();
     const codigo = generarCodigoAnuncio();
