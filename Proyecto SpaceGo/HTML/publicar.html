@@ -10,6 +10,12 @@
     <!-- CSS -->
     <link rel="stylesheet" href="../CSS/css_global.css">
     <link rel="stylesheet" href="../CSS/publicar.css">
+
+
+    <!-- Hoja de estilos de Leaflet para mostrar el mapa de ubicación. -->
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
  
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -185,6 +191,22 @@
                         </div>
                     </div>
                     <span class="campo-error" id="error-ubicacion"></span>
+
+                    <!-- El usuario marca aquí la ubicación exacta del alojamiento. -->
+
+
+                    <div class="campo mapa-campo">
+                        <label for="mapa-ubicacion">Ubicación exacta</label>
+                        <p class="campo-nota">Haz clic en el mapa o usa tu ubicación actual para marcar el alojamiento.</p>
+                        <div id="mapa-ubicacion" class="mapa-ubicacion" aria-label="Mapa para seleccionar la ubicación"></div>
+                        <div class="mapa-acciones">
+                            <button type="button" class="btn btn-secundario" id="btn-ubicacion-actual">
+                                <i class="fa-solid fa-location-crosshairs"></i> Usar mi ubicación
+                            </button>
+                            <span class="coordenadas-ubicacion" id="coordenadas-ubicacion">Aún no seleccionada</span>
+                        </div>
+                        <span class="campo-error" id="error-coordenadas"></span>
+                    </div>
  
                     <div class="campo">
                         <label for="referencia">Referencia</label>
@@ -290,6 +312,10 @@
     </footer>
  
     <!-- JAVASCRIPT -->
+    <!-- Leaflet debe cargarse antes de publicar.js, que utiliza la variable L. -->
+
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="../JS/publicar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>

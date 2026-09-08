@@ -95,6 +95,11 @@ function cargarAlojamientosPublicados() {
         precio: item.precio,
         capacidad: "No especificada",
         ubicacion: `${item.distrito}, ${item.provincia}`,
+        // Recupera las coordenadas guardadas para mostrarlas en la ficha.
+
+
+        latitud: Number(item.latitud),
+        longitud: Number(item.longitud),
         imagenes: [item.imagen || "../Imagenes/alojamiento.jpg"],
         incluye: item.caracteristicas || [],
         noIncluye: [],
@@ -154,6 +159,13 @@ if (alojamientoActual) {
             <div class="card p-4 shadow-sm border-0">
                 <h2>🏠 ${alojamientoActual.titulo}</h2>
                 <p class="text-muted mb-2"><i class="fa-solid fa-location-dot text-danger me-1"></i>${alojamientoActual.ubicacion}</p>
+                <!-- El mapa solo aparece si el anuncio tiene coordenadas válidas. -->
+
+
+                ${Number.isFinite(alojamientoActual.latitud) && Number.isFinite(alojamientoActual.longitud) ? `
+                    <div id="mapa-detalle" class="mt-3" style="height: 260px; border-radius: 10px; overflow: hidden;"></div>
+                    <p class="small text-muted mt-2">Ubicación exacta del alojamiento</p>
+                ` : ""}
                 <h3 class="text-primary fw-bold my-3">S/ ${alojamientoActual.precio} <small class="fs-6 text-muted">/ mes</small></h3>
                 
                 <hr>
@@ -191,6 +203,26 @@ if (alojamientoActual) {
             </div>
         </div>
     `;
+
+    // Muestra el mismo punto seleccionado durante la publicación, sin permitir editarlo.
+
+
+    if (Number.isFinite(alojamientoActual.latitud) && Number.isFinite(alojamientoActual.longitud)) {
+        const mapaDetalle = L.map("mapa-detalle", {
+            zoomControl: true,
+            dragging: true,
+            scrollWheelZoom: false
+        }).setView([alojamientoActual.latitud, alojamientoActual.longitud], 16);
+
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+            attribution: "&copy; OpenStreetMap contributors"
+        }).addTo(mapaDetalle);
+
+        L.marker([alojamientoActual.latitud, alojamientoActual.longitud])
+            .addTo(mapaDetalle)
+            .bindPopup(alojamientoActual.titulo)
+            .openPopup();
+    }
 
     // 4. EVENTOS EN LA GALERÍA (onClick, onMouseOver, onMouseOut)
     const fotoPrincipal = document.getElementById("foto-principal");

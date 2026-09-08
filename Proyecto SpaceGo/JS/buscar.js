@@ -249,6 +249,11 @@ function cargarAlojamientosPublicados() {
         departamento: item.departamento,
         provincia: item.provincia,
         distrito: item.distrito,
+        // Conserva la ubicación del mapa al convertir el anuncio para el buscador.
+
+
+        latitud: Number(item.latitud),
+        longitud: Number(item.longitud),
         imagen: item.imagen || "../Imagenes/alojamiento.jpg",
         descripcion: item.descripcion,
         fecha: item.fecha

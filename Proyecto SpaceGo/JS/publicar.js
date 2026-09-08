@@ -70,6 +70,8 @@ const ubicaciones = {
 };
  
 /*  3. ETIQUETAS E ICONOS DE TIPO */
+
+
  
 const etiquetasTipo = {
     individual: "Habitación individual",
@@ -110,6 +112,8 @@ class Alojamiento {
         this.departamento = datos.departamento;
         this.provincia = datos.provincia;
         this.distrito = datos.distrito;
+        this.latitud = datos.latitud;
+        this.longitud = datos.longitud;
         this.referencia = datos.referencia;
         this.descripcion = datos.descripcion;
         this.contacto = datos.contacto;
@@ -161,8 +165,72 @@ const campo = {
     provincia: document.getElementById("provincia"),
     distrito: document.getElementById("distrito"),
     referencia: document.getElementById("referencia"),
-    fotos: document.getElementById("fotos")
+    fotos: document.getElementById("fotos"),
+    mapa: document.getElementById("mapa-ubicacion"),
+    btnUbicacionActual: document.getElementById("btn-ubicacion-actual"),
+    coordenadas: document.getElementById("coordenadas-ubicacion")
 };
+
+let mapa;
+let marcadorUbicacion;
+let coordenadasSeleccionadas = null;
+
+// Guarda la última posición elegida y reemplaza el marcador anterior.
+
+
+function seleccionarUbicacion(lat, lng) {
+    coordenadasSeleccionadas = {
+        latitud: Number(lat.toFixed(6)),
+        longitud: Number(lng.toFixed(6))
+    };
+
+    if (marcadorUbicacion) mapa.removeLayer(marcadorUbicacion);
+    marcadorUbicacion = L.marker([lat, lng]).addTo(mapa);
+    campo.coordenadas.textContent =
+        `Latitud: ${coordenadasSeleccionadas.latitud} | Longitud: ${coordenadasSeleccionadas.longitud}`;
+    mostrarError("coordenadas", "");
+}
+
+// Inicializa el mapa centrado en Lima y permite seleccionar un punto manualmente o por GPS.
+
+
+function inicializarMapa() {
+    mapa = L.map(campo.mapa).setView([-12.0464, -77.0428], 13);
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "&copy; OpenStreetMap contributors"
+    }).addTo(mapa);
+
+    mapa.on("click", (evento) => {
+        seleccionarUbicacion(evento.latlng.lat, evento.latlng.lng);
+    });
+
+    // La geolocalización requiere permiso explícito del navegador.
+
+
+    campo.btnUbicacionActual.addEventListener("click", () => {
+        if (!navigator.geolocation) {
+            mostrarError("coordenadas", "Tu navegador no permite obtener la ubicación actual.");
+            return;
+        }
+
+        campo.btnUbicacionActual.disabled = true;
+        campo.btnUbicacionActual.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Buscando ubicación...';
+        navigator.geolocation.getCurrentPosition(
+            (posicion) => {
+                seleccionarUbicacion(posicion.coords.latitude, posicion.coords.longitude);
+                mapa.setView([posicion.coords.latitude, posicion.coords.longitude], 16);
+                campo.btnUbicacionActual.disabled = false;
+                campo.btnUbicacionActual.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Usar mi ubicación';
+            },
+            () => {
+                mostrarError("coordenadas", "No se pudo obtener tu ubicación. Puedes marcarla haciendo clic en el mapa.");
+                campo.btnUbicacionActual.disabled = false;
+                campo.btnUbicacionActual.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Usar mi ubicación';
+            },
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    });
+}
  
  
 /*  8. UTILIDADES DE VALIDACIÓN */
@@ -380,6 +448,18 @@ function validarPaso2() {
         mostrarError("referencia", "Usa letras, números, espacios y puntuación básica.");
         valido = false;
     }
+
+    // Evita publicar coordenadas vacías o fuera de los rangos geográficos permitidos.
+    const coordenadasValidas = coordenadasSeleccionadas &&
+        Number.isFinite(coordenadasSeleccionadas.latitud) &&
+        Number.isFinite(coordenadasSeleccionadas.longitud) &&
+        coordenadasSeleccionadas.latitud >= -90 && coordenadasSeleccionadas.latitud <= 90 &&
+        coordenadasSeleccionadas.longitud >= -180 && coordenadasSeleccionadas.longitud <= 180;
+
+    if (!coordenadasValidas) {
+        mostrarError("coordenadas", "Selecciona la ubicación en el mapa o usa tu ubicación actual.");
+        valido = false;
+    }
     return valido;
 }
  
@@ -518,6 +598,12 @@ function construirResumenBidimensional() {
         ["Tipo", etiquetasTipo[campo.tipo.value] || "—"],
         ["Precio", campo.precio.value.trim() ? "S/ " + campo.precio.value.trim() : "—"],
         ["Ubicación", ubicacionTexto || "—"],
+        // Se incluyen en el resumen para que el usuario las revise antes de publicar.
+
+
+        ["Coordenadas", coordenadasSeleccionadas
+            ? `${coordenadasSeleccionadas.latitud}, ${coordenadasSeleccionadas.longitud}`
+            : "—"],
         ["Características", obtenerCaracteristicas().join(", ") || "Ninguna"]
     ];
 }
@@ -608,6 +694,12 @@ function irAlPaso(numero) {
     btnPublicar.hidden = numero !== estadoFormulario.totalPasos;
  
     if (numero === estadoFormulario.totalPasos) actualizarVistaPrevia();
+    // Leaflet necesita recalcular sus dimensiones cuando el panel deja de estar oculto.
+
+
+    if (numero === 2 && mapa) {
+        setTimeout(() => mapa.invalidateSize(), 0);
+    }
  
     document.getElementById("estado-publicacion").hidden = true;
 }
@@ -713,6 +805,11 @@ formPublicar.addEventListener("submit", (evento) => {
         departamento: campo.departamento.value,
         provincia: campo.provincia.value,
         distrito: campo.distrito.value,
+        // Las coordenadas viajan con el anuncio y se reutilizan en buscar y alojamiento.
+
+
+        latitud: coordenadasSeleccionadas.latitud,
+        longitud: coordenadasSeleccionadas.longitud,
         referencia: campo.referencia.value.trim(),
         descripcion: campo.descripcion.value.trim(),
         contacto: {
@@ -748,6 +845,7 @@ formPublicar.addEventListener("submit", (evento) => {
 /* 17. INICIO */
  
 inicializarUbicaciones();
+inicializarMapa();
 irAlPaso(1);
  
 /* 18. MENÚ RESPONSIVE  */

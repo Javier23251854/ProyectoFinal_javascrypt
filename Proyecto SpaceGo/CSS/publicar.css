@@ -239,6 +239,34 @@
     font-size: 12px;
     color: #c0392b;
 }
+
+/* Área visible donde Leaflet dibuja el mapa interactivo. */
+
+
+.mapa-ubicacion {
+    width: 100%;
+    height: 360px;
+    border: 1px solid var(--borde);
+    border-radius: 10px;
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* Alinea el botón de geolocalización y las coordenadas seleccionadas. */
+
+
+.mapa-acciones {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+}
+
+.coordenadas-ubicacion {
+    color: var(--gris);
+    font-size: 12px;
+}
  
 .campo-recomendacion {
     margin: 6px 0 0;

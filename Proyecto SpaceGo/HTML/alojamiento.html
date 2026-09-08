@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="../CSS/css_global.css">
     <link rel="stylesheet" href="../CSS/index.css">
 
+
+    <!-- Estilos necesarios para el mapa de solo lectura del detalle. -->
+
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
     <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -70,6 +76,10 @@
     </footer>
 
     <!-- SCRIPTS -->
+    <!-- Leaflet se carga antes del script que dibuja el mapa del alojamiento. -->
+
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="../JS/alojamiento.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
