@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favoritos | SpaceGo</title>
+
+    <!-- CSS Global y de la página -->
+    <link rel="stylesheet" href="../CSS/css_global.css">
+    <link rel="stylesheet" href="../CSS/favoritos.css">
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FONT AWESOME -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+    <header class="header">
+        <div class="navbar container">
+            <div class="logo">
+                <a href="../HTML/index.html"><img src="../Imagenes/logo cuarto.png" alt="Logo SpaceGo"></a>
+            </div>
+            <button type="button" class="menu-icon" id="boton-menu"> &#9776; </button>
+            <nav class="menu" id="menu-principal">
+                <ul>
+                    <li><a href="../HTML/index.html">Inicio</a></li>
+                    <li><a href="../HTML/buscar.html"><i class="fa-solid fa-magnifying-glass"></i>Buscar alojamiento</a></li>
+                    <li><a href="../HTML/alojamiento.html"><i class="fa-solid fa-house"></i>Alojamiento</a></li>
+                    <li><a href="../HTML/publicar.html"><i class="fa-solid fa-plus"></i>Publicar alojamiento</a></li>
+                    <li><a href="../HTML/favoritos.html" class="activo"><i class="fa-regular fa-heart"></i>Favoritos</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ================= ENCABEZADO DE LA PÁGINA ================= -->
+    <section class="favoritos-hero">
+        <div class="container">
+            <span class="hero-etiqueta">TUS ESPACIOS GUARDADOS</span>
+            <h1>Alojamientos Favoritos</h1>
+            <p>Guarda los alojamientos que más te gusten para revisarlos después.</p>
+        </div>
+    </section>
+
+    <main class="contenedor-principal container">
+
+        <!-- ================= FILTROS ================= -->
+        <section class="filtros-section">
+            <div class="filtros-grid">
+                <div class="filtro-campo">
+                    <label for="select-orden-fav">Ordenar por</label>
+                    <select id="select-orden-fav">
+                        <option value="recientes">Más recientes</option>
+                        <option value="precio-asc">Precio: menor a mayor</option>
+                        <option value="precio-desc">Precio: mayor a menor</option>
+                    </select>
+                </div>
+                <div class="filtro-campo">
+                    <label for="select-tipo-fav">Tipo</label>
+                    <select id="select-tipo-fav">
+                        <option value="todos">Todos</option>
+                        <option value="individual">Habitación individual</option>
+                        <option value="pareja">Espacio para pareja</option>
+                        <option value="minidepa">Minidepartamento</option>
+                        <option value="departamento">Departamento</option>
+                    </select>
+                </div>
+                <div class="filtro-campo">
+                    <label for="input-precio-fav">Precio máximo (S/)</label>
+                    <input type="number" id="input-precio-fav" min="0" step="50" placeholder="Ej. 1000">
+                </div>
+            </div>
+            <div class="filtros-acciones">
+                <button type="button" id="btn-aplicar-fav" class="btn btn-principal">
+                    <i class="fa-solid fa-filter"></i> Aplicar filtros
+                </button>
+                <button type="button" id="btn-limpiar-fav" class="btn btn-secundario">
+                    <i class="fa-solid fa-arrow-rotate-left"></i> Limpiar
+                </button>
+            </div>
+        </section>
+
+        <!-- ================= RESULTADOS ================= -->
+        <section class="resultados-section">
+            <div class="resultados-encabezado">
+                <p id="contador-favoritos">0 alojamientos guardados</p>
+            </div>
+
+            <div class="row g-4" id="contenedor-favoritos">
+                <!-- Las cards se generan dinámicamente con JavaScript -->
+            </div>
+
+            <div class="mensaje-vacio" id="mensaje-vacio">
+                <i class="fa-regular fa-heart"></i>
+                <h3>No tienes favoritos guardados</h3>
+                <p>Explora los alojamientos y guarda los que más te gusten.</p>
+                <a href="../HTML/buscar.html" class="btn btn-principal mt-3">
+                    <i class="fa-solid fa-magnifying-glass"></i> Buscar alojamientos
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+        <div class="footer-container container">
+            <div class="footer-box">
+                <div class="footer-logo"><img src="../Imagenes/logo cuarto.png" alt="Logo SpaceGo"></div>
+                <p>Una plataforma pensada para ayudarte a encontrar el espacio que necesitas.</p>
+            </div>
+            <div class="footer-box">
+                <h3>Contacto</h3>
+                <p><i class="fa-solid fa-phone"></i>+51 987 654 321</p>
+                <p><i class="fa-solid fa-envelope"></i>contacto@spacego.pe</p>
+                <p><i class="fa-solid fa-location-dot"></i>Perú</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 SpaceGo - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="../JS/favoritos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
