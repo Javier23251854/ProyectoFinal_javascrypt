@@ -1,103 +1,158 @@
 /* =========================================================
-   3. DETALLE DE ALOJAMIENTO - alojamiento.js
-   Cumple con los temas solicitados en la rúbrica:
-   - Objetos, Arrays, Strings (slice, substring, charAt)
-   - Interpolación (`${precio}`)
-   - Funciones, Eventos (onClick, onMouseOver, onMouseOut)
-   - innerHTML, if/else, find(), includes()
+   DETALLE DE ALOJAMIENTO - alojamiento.js (Adaptado)
    ========================================================= */
 
-// 1. BASE DE DATOS (Simulada con un Array de Objetos)
+// 1. BASE DE DATOS FIJA (Catalogo inicial)
 const listaAlojamientos = [
     {
         id: 1,
-        titulo: "Habitación individual cómoda",
-        tipo: "Cuarto individual",
+        titulo: "Habitación individual amoblada",
+        tipo: "Habitación individual",
         precio: 650,
         capacidad: "1 persona",
         ubicacion: "San Miguel, Lima",
+        latitud: -12.0772,
+        longitud: -77.0921,
         imagenes: [
             "../Imagenes/persona sola.jpg",
-            "../Imagenes/cuarto pareja.jpg",
             "../Imagenes/alojamiento.jpg",
-            "../Imagenes/baner-cuartos.png"
+            "../Imagenes/cuarto pareja.jpg"
         ],
         incluye: ["Internet", "Agua", "Luz", "Baño privado"],
         noIncluye: ["Estacionamiento", "Cocina"],
-        descripcion: "Habitación individual acogedora e independiente. Ubicada a pocos minutos de universidades y transporte público."
+        descripcion: "Habitación privada con baño compartido/privado, wifi de alta velocidad y servicio de limpieza semanal. Ubicada cerca de avenidas principales."
     },
     {
         id: 2,
-        titulo: "Espacio moderno para parejas",
-        tipo: "Cuarto para parejas",
-        precio: 850,
-        capacidad: "2 personas",
-        ubicacion: "Miraflores, Lima",
+        titulo: "Cuarto individual cerca a la universidad",
+        tipo: "Habitación individual",
+        precio: 480,
+        capacidad: "1 persona",
+        ubicacion: "San Miguel, Lima",
+        latitud: -12.0750,
+        longitud: -77.0890,
         imagenes: [
-            "../Imagenes/cuarto pareja.jpg",
-            "../Imagenes/alojamiento.jpg",
-            "../Imagenes/minidepa.jpg",
-            "../Imagenes/persona sola.jpg"
+            "../Imagenes/persona sola.jpg",
+            "../Imagenes/baner-cuartos.png"
         ],
-        incluye: ["Internet", "Agua", "Luz", "Cocina", "Baño privado"],
-        noIncluye: ["Estacionamiento"],
-        descripcion: "Excelente espacio para parejas con amplia ventilación, acabados de primera y zona residencial tranquila."
+        incluye: ["Internet", "Agua", "Luz"],
+        noIncluye: ["Cocina", "Estacionamiento"],
+        descripcion: "Ideal para estudiantes, a 10 minutos caminando de la av. La Marina. Ambiente tranquilo y seguro."
     },
     {
         id: 3,
-        titulo: "Mini departamento moderno",
-        tipo: "Mini departamento",
-        precio: 950,
-        capacidad: "2 personas",
-        ubicacion: "San Miguel, Lima",
+        titulo: "Habitación individual con balcón",
+        tipo: "Habitación individual",
+        precio: 790,
+        capacidad: "1 persona",
+        ubicacion: "Pueblo Libre, Lima",
+        latitud: -12.0715,
+        longitud: -77.0620,
         imagenes: [
-            "../Imagenes/minidepa.jpg",
-            "../Imagenes/alojamiento.jpg",
-            "../Imagenes/departamento.jpg",
-            "../Imagenes/baner-cuartos.png"
+            "../Imagenes/persona sola.jpg",
+            "../Imagenes/alojamiento.jpg"
         ],
-        incluye: ["Internet", "Agua", "Luz", "Cocina", "Baño privado"],
+        incluye: ["Internet", "Agua", "Luz", "Baño privado"],
         noIncluye: ["Estacionamiento"],
-        descripcion: "Mini departamento ubicado cerca de universidades, supermercados y avenidas principales."
+        descripcion: "Espacio amplio, con balcón propio e internet de alta velocidad. Vista exterior a parque."
     },
     {
         id: 4,
-        titulo: "Departamento completo de estreno",
-        tipo: "Departamento",
-        precio: 1800,
-        capacidad: "4 personas",
+        titulo: "Espacio para pareja en San Miguel",
+        tipo: "Espacio para pareja",
+        precio: 950,
+        capacidad: "2 personas",
+        ubicacion: "San Miguel, Lima",
+        latitud: -12.0810,
+        longitud: -77.0950,
+        imagenes: [
+            "../Imagenes/cuarto pareja.jpg",
+            "../Imagenes/alojamiento.jpg"
+        ],
+        incluye: ["Internet", "Agua", "Luz", "Cocina", "Baño privado"],
+        noIncluye: ["Estacionamiento"],
+        descripcion: "Ambiente cómodo con baño propio, acceso a cocina compartida y zona residencial tranquila."
+    },
+    {
+        id: 5,
+        titulo: "Cuarto matrimonial en Miraflores",
+        tipo: "Espacio para pareja",
+        precio: 1300,
+        capacidad: "2 personas",
+        ubicacion: "Miraflores, Lima",
+        latitud: -12.1220,
+        longitud: -77.0305,
+        imagenes: [
+            "../Imagenes/cuarto pareja.jpg",
+            "../Imagenes/baner-cuartos.png"
+        ],
+        incluye: ["Internet", "Agua", "Luz", "Baño privado"],
+        noIncluye: ["Estacionamiento"],
+        descripcion: "A pocas cuadras del malecón de Miraflores. Incluye todos los servicios básicos y seguridad 24h."
+    },
+    {
+        id: 6,
+        titulo: "Minidepartamento independiente",
+        tipo: "Minidepartamento",
+        precio: 1100,
+        capacidad: "2 a 3 personas",
+        ubicacion: "San Miguel, Lima",
+        latitud: -12.0790,
+        longitud: -77.0870,
+        imagenes: [
+            "../Imagenes/minidepa.jpg",
+            "../Imagenes/alojamiento.jpg"
+        ],
+        incluye: ["Internet", "Agua", "Luz", "Cocina", "Baño privado"],
+        noIncluye: ["Estacionamiento"],
+        descripcion: "Sala-comedor, un dormitorio y cocina propia. Ingreso totalmente independiente."
+    },
+    {
+        id: 7,
+        titulo: "Minidepartamento amoblado en Surco",
+        tipo: "Minidepartamento",
+        precio: 1450,
+        capacidad: "2 personas",
         ubicacion: "Surco, Lima",
+        latitud: -12.1380,
+        longitud: -76.9820,
+        imagenes: [
+            "../Imagenes/minidepa.jpg",
+            "../Imagenes/departamento.jpg"
+        ],
+        incluye: ["Internet", "Agua", "Luz", "Cocina", "Baño privado", "Amoblado"],
+        noIncluye: ["Estacionamiento"],
+        descripcion: "Totalmente amoblado con acabados modernos y excelente iluminación natural."
+    },
+    {
+        id: 8,
+        titulo: "Departamento de 2 habitaciones",
+        tipo: "Departamento",
+        precio: 2200,
+        capacidad: "4 personas",
+        ubicacion: "San Borja, Lima",
+        latitud: -12.1070,
+        longitud: -77.0010,
         imagenes: [
             "../Imagenes/departamento.jpg",
-            "../Imagenes/minidepa.jpg",
-            "../Imagenes/alojamiento.jpg",
-            "../Imagenes/baner-cuartos.png"
+            "../Imagenes/minidepa.jpg"
         ],
         incluye: ["Internet", "Agua", "Luz", "Cocina", "Baño privado", "Estacionamiento"],
         noIncluye: [],
-        descripcion: "Departamento amplio con acabados de lujo, sala-comedor, cocina equipada y vista a la ciudad."
+        descripcion: "Departamento completo con dos baños, área de lavandería y espacio de estacionamiento reservado."
     }
 ];
 
-
-/* ============ uso de la pagina de publicar ============ */
-
-
-// 1.1 SUMAR LOS ALOJAMIENTOS PUBLICADOS DESDE "Publicar alojamiento"
-// Esos anuncios se guardan en localStorage (ver publicar.js); aquí solo se
-// agregan al array con push(), sin tocar los datos fijos de arriba.
+// 2. RECUPERAR ALOJAMIENTOS PUBLICADOS DESDE LOCALSTORAGE
 function cargarAlojamientosPublicados() {
     const publicados = JSON.parse(localStorage.getItem("alojamientosPublicados") || "[]");
     return publicados.map((item) => ({
-        id: item.id,
+        id: Number(item.id),
         titulo: item.titulo,
         tipo: item.tipo,
-        precio: item.precio,
-        capacidad: "No especificada",
+        precio: Number(item.precio),
+        capacidad: "Según requerimiento",
         ubicacion: `${item.distrito}, ${item.provincia}`,
-        // Recupera las coordenadas guardadas para mostrarlas en la ficha.
-
-
         latitud: Number(item.latitud),
         longitud: Number(item.longitud),
         imagenes: [item.imagen || "../Imagenes/alojamiento.jpg"],
@@ -107,36 +162,27 @@ function cargarAlojamientosPublicados() {
     }));
 }
 
+// Fusionar catálogo base con anuncios del usuario
 listaAlojamientos.push(...cargarAlojamientosPublicados());
 
-
-/* ============ fin del uso de la pagina de publicar ============ */
-
-
-
-// 2. OBTENER ID DE LA URL Y BUSCAR EL OBJETO CON find()
+// 3. CAPTURAR ID DE LA URL
 function obtenerIdURL() {
     const parametros = new URLSearchParams(window.location.search);
     const id = parseInt(parametros.get("id"));
-    return isNaN(id) ? 3 : id; // Si no hay ID en la URL, carga el ID 3 por defecto
+    return isNaN(id) ? 1 : id; // Carga el ID 1 si no se envía un parámetro válido
 }
 
 const idSeleccionado = obtenerIdURL();
-const alojamientoActual = listaAlojamientos.find(item => item.id === idSeleccionado);
+const alojamientoActual = listaAlojamientos.find(item => Number(item.id) === idSeleccionado);
 
-// 3. RENDERIZADO DINÁMICO
+// 4. RENDERIZADO DINÁMICO
 const contenedorDetalle = document.getElementById("contenedor-detalle");
 
 if (alojamientoActual) {
-    // Uso de Métodos de String exigidos (charAt, slice, substring)
     const tipoFormateado = alojamientoActual.tipo.charAt(0).toUpperCase() + alojamientoActual.tipo.slice(1);
-    const resumenCaja = alojamientoActual.descripcion.substring(0, 30) + "...";
-
-    // Interpolación de String para los elementos de las listas
     const listaIncluye = alojamientoActual.incluye.map(item => `<li><i class="fa-solid fa-check text-success me-2"></i>${item}</li>`).join("");
     const listaNoIncluye = alojamientoActual.noIncluye.map(item => `<li><i class="fa-solid fa-xmark text-danger me-2"></i>${item}</li>`).join("");
 
-    // Inyección de HTML usando innerHTML
     contenedorDetalle.innerHTML = `
         <!-- GALERÍA DE IMÁGENES -->
         <div class="col-12 col-lg-7">
@@ -159,39 +205,31 @@ if (alojamientoActual) {
             <div class="card p-4 shadow-sm border-0">
                 <h2>🏠 ${alojamientoActual.titulo}</h2>
                 <p class="text-muted mb-2"><i class="fa-solid fa-location-dot text-danger me-1"></i>${alojamientoActual.ubicacion}</p>
-                <!-- El mapa solo aparece si el anuncio tiene coordenadas válidas. -->
-
-
+                
                 ${Number.isFinite(alojamientoActual.latitud) && Number.isFinite(alojamientoActual.longitud) ? `
-                    <div id="mapa-detalle" class="mt-3" style="height: 260px; border-radius: 10px; overflow: hidden;"></div>
+                    <div id="mapa-detalle" class="mt-3" style="height: 220px; border-radius: 10px; overflow: hidden;"></div>
                     <p class="small text-muted mt-2">Ubicación exacta del alojamiento</p>
                 ` : ""}
+
                 <h3 class="text-primary fw-bold my-3">S/ ${alojamientoActual.precio} <small class="fs-6 text-muted">/ mes</small></h3>
-                
                 <hr>
 
                 <p><strong>Tipo:</strong> ${tipoFormateado}</p>
                 <p><strong>Capacidad:</strong> ${alojamientoActual.capacidad}</p>
 
-                <!-- Incluye -->
-                <h5 class="mt-3">Incluye</h5>
-                <ul class="list-unstyled">
-                    ${listaIncluye}
-                </ul>
-
-                <!-- No incluye -->
-                ${alojamientoActual.noIncluye.length > 0 ? `
-                    <h5>No incluye</h5>
-                    <ul class="list-unstyled">
-                        ${listaNoIncluye}
-                    </ul>
+                ${alojamientoActual.incluye.length > 0 ? `
+                    <h5 class="mt-3">Incluye</h5>
+                    <ul class="list-unstyled">${listaIncluye}</ul>
                 ` : ""}
 
-                <!-- Descripción -->
+                ${alojamientoActual.noIncluye.length > 0 ? `
+                    <h5>No incluye</h5>
+                    <ul class="list-unstyled">${listaNoIncluye}</ul>
+                ` : ""}
+
                 <h5 class="mt-3">Descripción</h5>
                 <p class="text-secondary">${alojamientoActual.descripcion}</p>
 
-                <!-- BOTONES DE ACCIÓN -->
                 <div class="d-grid gap-2 mt-4">
                     <button id="btn-favoritos" class="btn btn-outline-danger">
                         <i class="fa-regular fa-heart me-2"></i>Agregar a favoritos
@@ -204,87 +242,60 @@ if (alojamientoActual) {
         </div>
     `;
 
-    // Muestra el mismo punto seleccionado durante la publicación, sin permitir editarlo.
-
-
+    // 5. CARGAR MAPA LEAFLET SI TIENE COORDENADAS VÁLIDAS
     if (Number.isFinite(alojamientoActual.latitud) && Number.isFinite(alojamientoActual.longitud)) {
-        const mapaDetalle = L.map("mapa-detalle", {
-            zoomControl: true,
-            dragging: true,
-            scrollWheelZoom: false
-        }).setView([alojamientoActual.latitud, alojamientoActual.longitud], 16);
+        setTimeout(() => {
+            const mapaDetalle = L.map("mapa-detalle", {
+                zoomControl: true,
+                scrollWheelZoom: false
+            }).setView([alojamientoActual.latitud, alojamientoActual.longitud], 15);
 
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-            attribution: "&copy; OpenStreetMap contributors"
-        }).addTo(mapaDetalle);
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: "&copy; OpenStreetMap contributors"
+            }).addTo(mapaDetalle);
 
-        L.marker([alojamientoActual.latitud, alojamientoActual.longitud])
-            .addTo(mapaDetalle)
-            .bindPopup(alojamientoActual.titulo)
-            .openPopup();
+            L.marker([alojamientoActual.latitud, alojamientoActual.longitud])
+                .addTo(mapaDetalle)
+                .bindPopup(alojamientoActual.titulo)
+                .openPopup();
+        }, 100);
     }
 
-    // 4. EVENTOS EN LA GALERÍA (onClick, onMouseOver, onMouseOut)
+    // 6. INTERACCIÓN DE GALERÍA DE FOTOS
     const fotoPrincipal = document.getElementById("foto-principal");
     const miniaturas = document.querySelectorAll(".miniatura-img");
 
     miniaturas.forEach(miniatura => {
-        // Evento onClick: Cambia la imagen principal
         miniatura.addEventListener("click", () => {
             fotoPrincipal.src = miniatura.src;
         });
-
-        // Eventos para efectos visuales (onMouseOver & onMouseOut)
-        miniatura.addEventListener("mouseover", () => {
-            miniatura.style.opacity = "0.7";
-            miniatura.style.transform = "scale(1.05)";
-            miniatura.style.transition = "all 0.2s ease";
-        });
-
-        miniatura.addEventListener("mouseout", () => {
-            miniatura.style.opacity = "1";
-            miniatura.style.transform = "scale(1)";
-        });
     });
 
-    // 5. LÓGICA DE AGREGAR A FAVORITOS
+    // 7. BOTÓN FAVORITOS Y CONTACTO
     const btnFavoritos = document.getElementById("btn-favoritos");
     btnFavoritos.addEventListener("click", () => {
         let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-
         if (favoritos.includes(alojamientoActual.id)) {
             alert("Este alojamiento ya está en tus favoritos.");
         } else {
             favoritos.push(alojamientoActual.id);
             localStorage.setItem("favoritos", JSON.stringify(favoritos));
-            btnFavoritos.classList.remove("btn-outline-danger");
-            btnFavoritos.classList.add("btn-danger");
+            btnFavoritos.className = "btn btn-danger";
             btnFavoritos.innerHTML = '<i class="fa-solid fa-heart me-2"></i>Guardado en favoritos';
             alert("¡Alojamiento agregado a tus favoritos!");
         }
     });
 
-    // Botón de Contacto
     document.getElementById("btn-contacto").addEventListener("click", () => {
-        alert(`Te pondrás en contacto con el propietario del alojamiento: "${alojamientoActual.titulo}".`);
+        alert(`Te pondrás en contacto con el propietario de: "${alojamientoActual.titulo}".`);
     });
 
 } else {
-    // Si el ID no existe en el Array
     contenedorDetalle.innerHTML = `
         <div class="col-12 text-center my-5">
             <h2>Alojamiento no encontrado</h2>
-            <p>El inmueble que buscas no existe o fue retirado.</p>
+            <p>El inmueble solicitado no existe o fue retirado.</p>
             <a href="../HTML/buscar.html" class="btn btn-primary">Volver al buscador</a>
         </div>
     `;
-}
-
-// 6. MENÚ RESPONSIVE (Mantiene la funcionalidad global)
-const menuIcon = document.querySelector(".menu-icon");
-const menu = document.querySelector(".menu");
-if (menuIcon && menu) {
-    menuIcon.addEventListener("click", () => {
-        menu.classList.toggle("activo");
-    });
 }

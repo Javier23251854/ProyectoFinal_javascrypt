@@ -462,39 +462,36 @@ function crearCardHTML(alojamiento) {
 
 /* ============ 11. RENDERIZAR RESULTADOS (FOR + MAP + FOREACH) ============ */
 
+/* Reemplaza la sección del forEach dentro de renderizarResultados() por esta versión */
+
 function renderizarResultados(lista) {
     contenedorResultados.innerHTML = "";
 
-    // Actualiza el contador de resultados
     contadorResultados.textContent =
         `${lista.length} alojamiento${lista.length === 1 ? "" : "s"} encontrado${lista.length === 1 ? "" : "s"}`;
 
-    // Si no hay resultados, mostramos el mensaje vacío
     if (lista.length === 0) {
         mensajeVacio.style.display = "block";
         return;
     }
     mensajeVacio.style.display = "none";
 
-    // map() convierte cada objeto en su bloque HTML
     const tarjetasHTML = lista.map((alojamiento) => crearCardHTML(alojamiento));
 
-    // for clásico para unir todo el HTML en un solo string
     let htmlFinal = "";
     for (let i = 0; i < tarjetasHTML.length; i++) {
         htmlFinal += tarjetasHTML[i];
     }
     contenedorResultados.innerHTML = htmlFinal;
 
-    // forEach para asignar el evento de "favorito" a cada card generada
+    // Asigna el evento de clic a TODA la tarjeta
     const cards = contenedorResultados.querySelectorAll(".resultado-card");
     cards.forEach((card) => {
-        card.addEventListener("click", (evento) => {
-            if (evento.target.closest(".btn-ver")) return; // no interferir con el enlace
-            const id = Number(card.dataset.id);
-            const alojamiento = buscarAlojamientoPorId(id);
-            if (alojamiento) {
-                console.log("Alojamiento seleccionado:", alojamiento);
+        card.addEventListener("click", () => {
+            const id = card.dataset.id;
+            if (id) {
+                // Redirige a la página de detalle con el ID correspondiente
+                window.location.href = `../HTML/alojamiento.html?id=${id}`;
             }
         });
     });
