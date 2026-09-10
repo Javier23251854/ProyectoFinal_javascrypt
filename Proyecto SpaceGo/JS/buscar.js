@@ -75,7 +75,7 @@ let alojamientos = [
         departamento: "Lima",
         provincia: "Lima",
         distrito: "San Miguel",
-        imagen: "../Imagenes/persona sola.jpg",
+        imagen: "../Imagenes/depto01-dormitorio-principal.avif",
         descripcion: "Habitación privada con baño compartido, wifi y limpieza semanal.",
         fecha: "2026-08-25"
     },
@@ -87,7 +87,7 @@ let alojamientos = [
         departamento: "Lima",
         provincia: "Lima",
         distrito: "San Miguel",
-        imagen: "../Imagenes/persona sola.jpg",
+        imagen: "../Imagenes/depto02-dormitorio-secundario.avif",
         descripcion: "Ideal para estudiantes, a 10 minutos caminando de la av. La Marina.",
         fecha: "2026-08-10"
     },
@@ -99,7 +99,7 @@ let alojamientos = [
         departamento: "Lima",
         provincia: "Lima",
         distrito: "Pueblo Libre",
-        imagen: "../Imagenes/persona sola.jpg",
+        imagen: "../Imagenes/depto03-balcon-vista.avif",
         descripcion: "Espacio amplio, con balcón propio e internet de alta velocidad.",
         fecha: "2026-08-28"
     },
@@ -111,7 +111,7 @@ let alojamientos = [
         departamento: "Lima",
         provincia: "Lima",
         distrito: "San Miguel",
-        imagen: "../Imagenes/cuarto pareja.jpg",
+        imagen: "../Imagenes/depto06-dormitorio-matrimonial.avif",
         descripcion: "Ambiente cómodo con baño propio, cocina compartida y cochera.",
         fecha: "2026-08-15"
     },
@@ -123,7 +123,7 @@ let alojamientos = [
         departamento: "Lima",
         provincia: "Lima",
         distrito: "Miraflores",
-        imagen: "../Imagenes/cuarto pareja.jpg",
+        imagen: "../Imagenes/depto09-dormitorio.avif",
         descripcion: "A pocas cuadras del malecón, incluye servicios básicos.",
         fecha: "2026-07-30"
     },
@@ -135,7 +135,7 @@ let alojamientos = [
         departamento: "Lima",
         provincia: "Lima",
         distrito: "San Miguel",
-        imagen: "../Imagenes/minidepa.jpg",
+        imagen: "../Imagenes/depto01-sala-comedor.avif",
         descripcion: "Sala-comedor, un dormitorio y cocina propia. Ingreso independiente.",
         fecha: "2026-08-22"
     },
@@ -147,7 +147,7 @@ let alojamientos = [
         departamento: "Lima",
         provincia: "Lima",
         distrito: "Surco",
-        imagen: "../Imagenes/minidepa.jpg",
+        imagen: "../Imagenes/depto04-sala-estar.avif",
         descripcion: "Totalmente amoblado, con seguridad las 24 horas.",
         fecha: "2026-08-05"
     },
@@ -159,7 +159,7 @@ let alojamientos = [
         departamento: "Lima",
         provincia: "Lima",
         distrito: "San Borja",
-        imagen: "../Imagenes/departamento.jpg",
+        imagen: "../Imagenes/depto06-living-room.avif",
         descripcion: "Departamento completo, dos baños y cochera incluida.",
         fecha: "2026-08-18"
     },
@@ -171,7 +171,7 @@ let alojamientos = [
         departamento: "Lima",
         provincia: "Lima",
         distrito: "Los Olivos",
-        imagen: "../Imagenes/departamento.jpg",
+        imagen: "../Imagenes/depto07-sala-amplia.avif",
         descripcion: "Tres dormitorios, ideal para compartir entre varias personas.",
         fecha: "2026-06-12"
     },
@@ -183,7 +183,7 @@ let alojamientos = [
         departamento: "Arequipa",
         provincia: "Arequipa",
         distrito: "Cercado",
-        imagen: "../Imagenes/persona sola.jpg",
+        imagen: "../Imagenes/depto08-dormitorio-visitas.avif",
         descripcion: "Cerca a la plaza de armas, incluye agua y luz.",
         fecha: "2026-07-20"
     },
@@ -195,7 +195,7 @@ let alojamientos = [
         departamento: "Arequipa",
         provincia: "Arequipa",
         distrito: "Yanahuara",
-        imagen: "../Imagenes/minidepa.jpg",
+        imagen: "../Imagenes/depto05-cocina-lineal.avif",
         descripcion: "Vista a la campiña, cocina y baño propios.",
         fecha: "2026-08-01"
     },
@@ -207,7 +207,7 @@ let alojamientos = [
         departamento: "Cusco",
         provincia: "Cusco",
         distrito: "Wanchaq",
-        imagen: "../Imagenes/cuarto pareja.jpg",
+        imagen: "../Imagenes/depto04-dormitorio.avif",
         descripcion: "Habitación amplia con calefacción y baño privado.",
         fecha: "2026-06-28"
     },
@@ -219,7 +219,7 @@ let alojamientos = [
         departamento: "Cusco",
         provincia: "Cusco",
         distrito: "Cusco",
-        imagen: "../Imagenes/persona sola.jpg",
+        imagen: "../Imagenes/depto09-principal.avif",
         descripcion: "A dos cuadras de la plaza principal, agua caliente todo el día.",
         fecha: "2026-08-30"
     }
