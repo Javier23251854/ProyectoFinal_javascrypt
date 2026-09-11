@@ -2,13 +2,13 @@
  
 /* 1. TIPOS DE DATOS, VARIABLES Y CONSTANTES*/
  
-const NOMBRE_PLATAFORMA = "SpaceGo";      // string
-const MAX_FOTOS = 3;                      // number
-let borrador = true;                      // boolean: el formulario aún no se publicó
-let ultimoCodigoGenerado;                 // undefined hasta que se publique un anuncio
-const sinUbicacionSeleccionada = null;    // null: representa "todavía no elegido"
-const idInternoFormulario = Symbol("formulario-publicar"); // symbol: identificador único interno
-const limiteSeguroDeNumero = 9007199254740993n; // bigint: entero mayor al límite seguro de Number
+const NOMBRE_PLATAFORMA = "SpaceGo";      
+const MAX_FOTOS = 3;                      
+let borrador = true;                   
+let ultimoCodigoGenerado;                 
+const sinUbicacionSeleccionada = null;   
+const idInternoFormulario = Symbol("formulario-publicar"); 
+const limiteSeguroDeNumero = 9007199254740993n; 
  
 console.log("Tipos de datos de ejemplo:", {
     NOMBRE_PLATAFORMA, tipo1: typeof NOMBRE_PLATAFORMA,
@@ -87,7 +87,7 @@ const iconosTipo = {
     departamento: "fa-building"
 };
  
-/*   4. EXPRESIONES REGULARES Y COLECCIONE  */
+
  
 const regexValidacion = {
     texto: /^[A-Za-zÁÉÍÓÚáéíóúÜüÑñ0-9\s.,'’()\-/#+°]+$/,
@@ -96,7 +96,7 @@ const regexValidacion = {
     precio: /^\d+(\.\d{1,2})?$/
 };
  
-// Set: colección de valores únicos, sin duplicados
+
 const extensionesPermitidas = new Set([".jpg", ".jpeg", ".png", ".webp"]);
  
  
@@ -122,12 +122,12 @@ class Alojamiento {
         this.fecha = datos.fecha;
     }
  
-    // Método de la clase: arma la ubicación completa como una sola cadena
+    // armado  la ubicación completa como una sola ps
     obtenerUbicacionCompleta() {
         return `${this.distrito}, ${this.provincia}, ${this.departamento}`;
     }
  
-    // Método que convierte la instancia en un objeto plano (para guardar como JSON)
+    // Método que convierte la instancia en un objeto plano (para guardar como JSON) ;V
     aObjetoPlano() {
         return { ...this }; 
     }
@@ -140,11 +140,11 @@ const estadoFormulario = {
     pasoActual: 1,
     totalPasos: 5,
     pasoMaximo: 1,
-    fotos: [null, null, null] // arreglo lineal de hasta 3 fotos
+    fotos: [null, null, null] // para agregarle  hasta 3 fotos no mas xd 
 };
  
  
-/*  7. ELEMENTOS DEL DOM (salida: document)*/
+/*  7. ELEMENTOS DEL DOM */
  
 const formPublicar = document.getElementById("form-publicar");
 const itemsPaso = Array.from(document.querySelectorAll(".paso-item"));
@@ -244,7 +244,7 @@ function mostrarError(idCampo, mensaje) {
 }
  
 function esObligatorio(valor, idCampo, mensaje) {
-    // .length permite comprobar que el campo no esté vacío
+    // .length  para permitir comprobar que el campo no esté vacío PD: ultimas correecciones de validadcion 
     const valido = valor.trim().length > 0;
     mostrarError(idCampo, valido ? "" : mensaje);
     return valido;
@@ -342,7 +342,7 @@ campo.descripcion.addEventListener("input", () => {
     elemento.addEventListener("blur", () => validarPaso1());
 });
  
-/* 9.1 ESTRUCTURA del switch q recomendación según el tipo */
+/* recomendación se|gún el tipo que eliga el depa  */
  
 function obtenerRecomendacionPorTipo(tipo) {
     let mensaje = "";
@@ -587,7 +587,7 @@ function validarPaso4() {
  
 /* 13. PASO 5: RESUMEN  Y VISTA PREVIA  */
  
-// Arreglo bidimensional: cada fila es un par [etiqueta, valor]
+// Arreglo bidimensional: cada fila es un par 
 function construirResumenBidimensional() {
     const ubicacionTexto = [campo.distrito.value, campo.provincia.value, campo.departamento.value]
         .filter(Boolean)
