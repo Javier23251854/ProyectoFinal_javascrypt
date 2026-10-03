@@ -1,0 +1,35 @@
+<section class="panel">
+  <h1>Resumen académico</h1>
+
+  <p>
+    Consulta local del {{ fecha | date: 'dd/MM/yyyy' }}.
+  </p>
+
+  <div class="row g-3">
+    <div class="col-12 col-md-6">
+      <section class="panel h-100">
+        <h2 class="h5">Estudiantes registrados</h2>
+        <p class="display-6 mb-0">
+          {{ store.total() }}
+        </p>
+      </section>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <section class="panel h-100">
+        <h2 class="h5">Promedio general</h2>
+        <p class="display-6 mb-0">
+          {{ store.promedio() | number: '1.2-2' }}
+        </p>
+      </section>
+    </div>
+  </div>
+
+  <p class="mt-4">
+    Los registros se conservan al navegar y se reinician al recargar.
+  </p>
+
+  <a class="btn btn-primary" routerLink="/estudiantes">
+    Consultar estudiantes
+  </a>
+</section>
