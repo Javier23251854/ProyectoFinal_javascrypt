@@ -1,0 +1,164 @@
+
+<section class="panel">
+  <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+    <div>
+      <h1 class="h3 mb-1">Estudiantes</h1>
+      <p class="text-body-secondary mb-0">
+        Consulta y administra los registros académicos.
+      </p>
+    </div>
+
+    <div class="d-flex gap-2">
+      <button
+        type="button"
+        class="btn btn-outline-primary"
+        (click)="cargar()"
+        [disabled]="cargando() || eliminando()"
+      >
+        Actualizar
+      </button>
+
+      <a routerLink="/registro" class="btn btn-primary">
+        Registrar estudiante
+      </a>
+    </div>
+  </div>
+
+  @if (mensaje()) {
+    <div class="alert alert-success" role="status">
+      {{ mensaje() }}
+    </div>
+  }
+
+  @if (errorCarga()) {
+    <div class="alert alert-danger" role="alert">
+      {{ errorCarga() }}
+    </div>
+  }
+
+  @if (errorAccion()) {
+    <div class="alert alert-danger" role="alert">
+      {{ errorAccion() }}
+    </div>
+  }
+
+  <!-- Filtros locales -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h2 class="h5 mb-3">Filtrar estudiantes</h2>
+
+      <div class="row g-3 align-items-end">
+        <div class="col-12 col-md-5">
+          <label for="filtro-nombre" class="form-label">
+            Buscar por nombre
+          </label>
+          <input
+            id="filtro-nombre"
+            type="search"
+            class="form-control"
+            placeholder="Escribe un nombre..."
+            [value]="filtroNombre()"
+            (input)="filtroNombre.set($any($event.target).value)"
+          />
+        </div>
+
+        <div class="col-12 col-md-4">
+          <label for="filtro-programa" class="form-label">
+            Programa académico
+          </label>
+          <select
+            id="filtro-programa"
+            class="form-select"
+            [value]="filtroPrograma()"
+            (change)="filtroPrograma.set($any($event.target).value)"
+          >
+            <option value="">Todos los programas</option>
+            <option value="Software">Software</option>
+            <option value="Sistemas">Sistemas</option>
+          </select>
+        </div>
+
+        <div class="col-12 col-md-3">
+          <button
+            type="button"
+            class="btn btn-outline-secondary w-100"
+            (click)="limpiarFiltros()"
+            [disabled]="!filtroNombre() && !filtroPrograma()"
+          >
+            Limpiar filtros
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (cargando()) {
+    <p role="status">Cargando estudiantes...</p>
+  } @else if (lista().length === 0 && !errorCarga()) {
+    <p>No hay estudiantes registrados.</p>
+  } @else if (listaFiltrada().length === 0 && !errorCarga()) {
+    <div class="alert alert-info" role="status">
+      No se encontraron estudiantes con los filtros aplicados.
+    </div>
+  } @else {
+    <div class="row g-3">
+      @for (estudiante of listaFiltrada(); track estudiante.id) {
+        <div class="col-12 col-md-6 col-xl-4">
+          <app-tarjeta-estudiante
+            [estudiante]="estudiante"
+            [seleccionado]="seleccionado()?.id === estudiante.id"
+            (seleccionar)="seleccionar($event)"
+          />
+
+          <div class="d-flex gap-2 mt-2">
+            <a
+              class="btn btn-sm btn-outline-secondary"
+              [routerLink]="['/registro', estudiante.id]"
+            >
+              Editar
+            </a>
+
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-danger"
+              (click)="pendiente.set(estudiante); errorAccion.set(''); mensaje.set('')"
+              [disabled]="eliminando() || cargando()"
+            >
+              Eliminar
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (pendiente(); as estudiante) {
+    <div class="alert alert-warning mt-4" role="alert">
+      <h2 class="h5">Confirmar eliminación</h2>
+      <p>
+        ¿Deseas eliminar el registro de
+        <strong>{{ estudiante.nombre }}</strong>?
+      </p>
+
+      <div class="d-flex gap-2">
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="confirmarEliminacion()"
+          [disabled]="eliminando() || cargando()"
+        >
+          {{ eliminando() ? 'Eliminando...' : 'Sí, eliminar' }}
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="pendiente.set(null)"
+          [disabled]="eliminando()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  }
+</section>
