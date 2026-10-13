@@ -18,6 +18,8 @@ export const routes: Routes = [
 
   { path: 'buscar', component: Buscar },
 
+  { path: 'alojamiento', component: Alojamiento },
+
   { path: 'alojamiento/:id', component: Alojamiento },
 
   { path: 'favoritos', component: Favoritos },

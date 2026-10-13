@@ -69,8 +69,15 @@ export class Favoritos implements OnInit {
     const filtros = this.formulario.value;
 
     const tipo = filtros.tipo || 'todos';
+    const precioIngresado =
+      filtros.precioMaximo === '' || filtros.precioMaximo === null || filtros.precioMaximo === undefined
+        ? null
+        : Number(filtros.precioMaximo);
+
     const precioMaximo =
-      Number(filtros.precioMaximo) || Infinity;
+      precioIngresado === null || !Number.isFinite(precioIngresado) || precioIngresado < 0
+        ? Infinity
+        : precioIngresado;
 
     this.resultados = this.favoritos.filter(alojamiento => {
 
@@ -113,7 +120,7 @@ export class Favoritos implements OnInit {
     }
   }
 
-  quitarDeFavoritos(id: string): void {
+  quitarDeFavoritos(id: string | number): void {
     this.alojamientoService.obtenerFavoritos().subscribe({
       next: (favoritos) => {
 

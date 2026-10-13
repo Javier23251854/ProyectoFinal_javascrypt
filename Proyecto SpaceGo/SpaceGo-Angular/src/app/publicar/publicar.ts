@@ -410,7 +410,28 @@ export class Publicar {
             respuesta
           );
 
-          this.formulario.reset();
+          this.formulario.reset({
+            titulo: '',
+            tipo: '',
+            precio: '',
+            descripcion: '',
+            correo: '',
+            telefono: '',
+            departamento: '',
+            provincia: '',
+            distrito: '',
+            referencia: '',
+            caracteristicas: [],
+            fotos: null
+          });
+
+          this.caracteristicasSeleccionadas.clear();
+          this.fotosSeleccionadas = [];
+          this.departamentoSeleccionado = '';
+          this.provinciaSeleccionada = '';
+          this.distritoSeleccionado = '';
+          this.provinciasDisponibles = [];
+          this.distritosDisponibles = [];
 
           this.pasoActual = 1;
           this.pasoMaximo = 1;

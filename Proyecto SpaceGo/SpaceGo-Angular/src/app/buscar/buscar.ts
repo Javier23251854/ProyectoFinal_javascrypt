@@ -25,6 +25,9 @@ export class Buscar implements OnInit {
 
   alojamientos: Alojamiento[] = [];
   resultados: Alojamiento[] = [];
+  departamentosDisponibles: string[] = [];
+  provinciasDisponibles: string[] = [];
+  distritosDisponibles: string[] = [];
 
   formularioBusqueda = this.fb.group({
     busqueda: [''],
@@ -43,6 +46,15 @@ export class Buscar implements OnInit {
 
         this.alojamientos = datos;
         this.resultados = [...datos];
+        this.departamentosDisponibles = [
+          ...new Set(datos.map(alojamiento => alojamiento.departamento).filter(Boolean))
+        ].sort();
+        this.provinciasDisponibles = [
+          ...new Set(datos.map(alojamiento => alojamiento.provincia).filter(Boolean))
+        ].sort();
+        this.distritosDisponibles = [
+          ...new Set(datos.map(alojamiento => alojamiento.distrito).filter(Boolean))
+        ].sort();
 
         console.log('RESULTADOS:', this.resultados);
 
@@ -62,7 +74,16 @@ export class Buscar implements OnInit {
     const provincia = filtros.provincia || '';
     const distrito = filtros.distrito || '';
     const tipo = filtros.tipo || '';
-    const precioMaximo = Number(filtros.precioMaximo) || Infinity;
+
+    const precioIngresado =
+      filtros.precioMaximo === '' || filtros.precioMaximo === null || filtros.precioMaximo === undefined
+        ? null
+        : Number(filtros.precioMaximo);
+
+    const precioMaximo =
+      precioIngresado === null || !Number.isFinite(precioIngresado) || precioIngresado < 0
+        ? Infinity
+        : precioIngresado;
 
     this.resultados = this.alojamientos.filter((alojamiento) => {
 

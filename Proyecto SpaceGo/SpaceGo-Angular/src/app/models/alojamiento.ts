@@ -1,5 +1,5 @@
 export interface Alojamiento {
-  id: string;
+  id: number;
   titulo: string;
   tipo: string;
   precio: number;

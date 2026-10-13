@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="/alojamiento" class="activo">
+                    <a routerLink="/alojamiento" class="activo">
                         <i class="fa-solid fa-house"></i>
                         Alojamiento
                     </a>
@@ -94,7 +94,7 @@
                 </p>
 
                 <h3 class="text-primary fw-bold my-3">
-                    {{ 650 | currency:'PEN':'symbol':'1.0-0':'es-PE' }}
+                    {{ 650 | currency:'PEN':'symbol':'1.0-0' }}
                     <small class="fs-6 text-muted">/ mes</small>
                 </h3>
 
@@ -157,7 +157,7 @@
                 <!-- BOTONES -->
                 <div class="d-grid gap-2 mt-4">
 
-                    <button id="btn-favoritos" class="btn btn-outline-danger" type="button">
+                    <button id="btn-favoritos" class="btn btn-outline-danger" type="button" (click)="agregarAFavoritos()">
                         <i class="fa-regular fa-heart me-2"></i>
                         Agregar a favoritos
                     </button>
