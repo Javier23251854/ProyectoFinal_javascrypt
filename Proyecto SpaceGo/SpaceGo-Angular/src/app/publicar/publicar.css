@@ -1,8 +1,67 @@
+@keyframes aparecer-suave {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.publicar-hero .container {
+    animation: aparecer-suave 0.55s ease-out both;
+}
+
+.stepper-publicar {
+    animation: aparecer-suave 0.5s 0.08s ease-out both;
+}
+
+.form-publicar {
+    animation: aparecer-suave 0.5s 0.16s ease-out both;
+}
+
+.paso-panel {
+    animation: aparecer-suave 0.35s ease-out both;
+}
 
 .publicar-hero {
+    position: relative;
+    overflow: hidden;
     padding: 45px 0;
-    background: linear-gradient(90deg, #751126, #9d1730);
+    background:
+        radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.1), transparent 19rem),
+        linear-gradient(110deg, #751126, #9d1730);
     color: #ffffff;
+}
+
+.publicar-hero::before,
+.publicar-hero::after {
+    position: absolute;
+    content: "";
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.publicar-hero::before {
+    width: 310px;
+    height: 310px;
+    top: -210px;
+    right: 8%;
+}
+
+.publicar-hero::after {
+    width: 210px;
+    height: 210px;
+    top: -130px;
+    right: calc(8% + 50px);
+}
+
+.publicar-hero .container {
+    position: relative;
+    z-index: 1;
 }
  
 .publicar-hero .hero-etiqueta {
@@ -15,9 +74,23 @@
 }
  
 .publicar-hero h1 {
+    position: relative;
+    width: fit-content;
     margin: 0 0 8px;
+    padding-bottom: 8px;
     font-size: 34px;
     font-weight: 800;
+}
+
+.publicar-hero h1::after {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 42px;
+    height: 3px;
+    border-radius: 999px;
+    background: #f2cbd2;
+    content: "";
 }
  
 .publicar-hero p {
@@ -43,7 +116,7 @@
     list-style: none;
     margin: 0 0 20px;
     padding: 10px;
-    background: #ffffff;
+    background: linear-gradient(135deg, #ffffff, #fffafa);
     border: 1px solid var(--borde);
     border-radius: 16px;
     box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
@@ -67,10 +140,19 @@
     border-radius: 10px;
     cursor: pointer;
     font-family: inherit;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
  
 .paso-btn:hover {
     background: #f8f7f6;
+    transform: translateY(-2px);
+}
+
+.paso-btn:focus-visible,
+.btn-subir-foto:focus-visible,
+.acciones-formulario .btn:focus-visible {
+    outline: 3px solid rgba(157, 23, 48, 0.28);
+    outline-offset: 3px;
 }
  
 .paso-num {
@@ -85,6 +167,7 @@
     color: var(--gris);
     font-weight: 700;
     font-size: 13px;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
  
 .paso-label {
@@ -98,8 +181,13 @@
     background: var(--vino);
     border-color: var(--vino);
     color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(157, 23, 48, 0.1);
 }
- 
+
+.paso-item.is-activo .paso-btn {
+    background: linear-gradient(180deg, #ffffff, #fff7f8);
+}
+
 .paso-item.is-activo .paso-label {
     color: var(--vino);
 }
@@ -117,18 +205,42 @@
 /* ---------- FORMULARIO / PANELES ---------- */
  
 .form-publicar {
+    position: relative;
     background: #ffffff;
     border: 1px solid var(--borde);
     border-radius: 16px;
     box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
     padding: 28px;
 }
- 
+
+.form-publicar::before {
+    position: absolute;
+    top: 0;
+    left: 28px;
+    right: 28px;
+    height: 3px;
+    border-radius: 0 0 999px 999px;
+    background: linear-gradient(90deg, var(--vino), rgba(157, 23, 48, 0.08));
+    content: "";
+}
+
 .paso-panel h2 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     margin: 0 0 4px;
     color: var(--negro);
     font-size: 22px;
     font-weight: 800;
+}
+
+.paso-panel h2::before {
+    width: 4px;
+    height: 20px;
+    flex: 0 0 4px;
+    border-radius: 999px;
+    background: var(--vino);
+    content: "";
 }
  
 .paso-nota {
@@ -172,11 +284,18 @@
     color: var(--negro);
     font-size: 14px;
     font-family: inherit;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
  
 .campo textarea {
     resize: vertical;
     min-height: 90px;
+}
+
+.campo input:focus,
+.campo select:focus,
+.campo textarea:focus {
+    box-shadow: 0 0 0 3px rgba(157, 23, 48, 0.1);
 }
  
 .campo input:focus,
@@ -312,6 +431,12 @@
     font-size: 13px;
     color: var(--negro);
     cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.caracteristica:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.06);
 }
  
 .caracteristica i {
@@ -346,11 +471,14 @@
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
  
 .btn-subir-foto:hover {
     background: var(--vino);
     color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(117, 17, 38, 0.16);
 }
  
 .foto-slots {
@@ -369,6 +497,12 @@
     border: 1px dashed var(--borde);
     border-radius: 10px;
     overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.foto-slot:hover {
+    border-color: var(--vino);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
 }
  
 .foto-slot-label {
@@ -457,6 +591,14 @@
     background: #f8f7f6;
     border: 1px solid var(--borde);
     border-radius: 13px;
+    box-shadow: 0 4px 14px rgba(36, 36, 36, 0.03);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.vista-previa:hover {
+    transform: translateY(-2px);
+    border-color: rgba(157, 23, 48, 0.28);
+    box-shadow: 0 10px 24px rgba(36, 36, 36, 0.08);
 }
  
 .vista-previa-foto {
@@ -475,6 +617,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.vista-previa:hover .vista-previa-foto img {
+    transform: scale(1.03);
 }
  
 .vista-previa-tipo {
@@ -531,8 +678,13 @@
     font-size: 11px;
     font-weight: 700;
 }
- 
+
 .vista-previa-precio {
+    display: inline-block;
+    padding: 7px 12px;
+    background: #ffffff;
+    border: 1px solid var(--borde);
+    border-radius: 9px;
     color: var(--negro);
     font-size: 20px;
     font-weight: 800;
@@ -581,6 +733,19 @@
     margin-top: 26px;
     padding-top: 20px;
     border-top: 1px solid var(--borde);
+}
+
+.acciones-formulario .btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.acciones-formulario .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(117, 17, 38, 0.14);
+}
+
+.acciones-formulario .btn:active {
+    transform: translateY(0);
 }
  
 .acciones-formulario .btn-secundario {
@@ -683,5 +848,37 @@
 
 .publicar-section {
     z-index: 2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .publicar-hero .container,
+    .stepper-publicar,
+    .form-publicar,
+    .paso-panel {
+        animation: none;
+    }
+
+    .paso-btn,
+    .paso-num,
+    .campo input,
+    .campo select,
+    .campo textarea,
+    .caracteristica,
+    .btn-subir-foto,
+    .foto-slot,
+    .vista-previa-foto img,
+    .vista-previa,
+    .acciones-formulario .btn {
+        transition: none;
+    }
+
+    .paso-btn:hover,
+    .caracteristica:hover,
+    .btn-subir-foto:hover,
+    .vista-previa:hover,
+    .vista-previa:hover .vista-previa-foto img,
+    .acciones-formulario .btn:hover {
+        transform: none;
+    }
 }
  

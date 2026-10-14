@@ -1,6 +1,33 @@
 
 
- 
+@keyframes aparecer-suave {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.publicar-hero .container {
+    animation: aparecer-suave 0.55s ease-out both;
+}
+
+.stepper-publicar {
+    animation: aparecer-suave 0.5s 0.08s ease-out both;
+}
+
+.form-publicar {
+    animation: aparecer-suave 0.5s 0.16s ease-out both;
+}
+
+.paso-panel.is-activo {
+    animation: aparecer-suave 0.35s ease-out both;
+}
+
 .publicar-hero {
     padding: 45px 0;
     background: linear-gradient(90deg, #751126, #9d1730);
@@ -69,10 +96,12 @@
     border-radius: 10px;
     cursor: pointer;
     font-family: inherit;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
  
 .paso-btn:hover {
     background: #f8f7f6;
+    transform: translateY(-2px);
 }
  
 .paso-num {
@@ -87,6 +116,7 @@
     color: var(--gris);
     font-weight: 700;
     font-size: 13px;
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
 }
  
 .paso-label {
@@ -174,6 +204,7 @@
     color: var(--negro);
     font-size: 14px;
     font-family: inherit;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
  
 .campo textarea {
@@ -187,6 +218,7 @@
     outline: none;
     border-color: var(--vino);
     background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(157, 23, 48, 0.1);
 }
  
 .campo input.campo-invalido,
@@ -314,6 +346,12 @@
     font-size: 13px;
     color: var(--negro);
     cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.caracteristica:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.06);
 }
  
 .caracteristica i {
@@ -348,11 +386,14 @@
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
+    transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
  
 .btn-subir-foto:hover {
     background: var(--vino);
     color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(117, 17, 38, 0.16);
 }
  
 .foto-slots {
@@ -371,6 +412,12 @@
     border: 1px dashed var(--borde);
     border-radius: 10px;
     overflow: hidden;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.foto-slot:hover {
+    border-color: var(--vino);
+    box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
 }
  
 .foto-slot-label {
@@ -459,6 +506,14 @@
     background: #f8f7f6;
     border: 1px solid var(--borde);
     border-radius: 13px;
+}
+
+.vista-previa-foto img {
+    transition: transform 0.35s ease;
+}
+
+.vista-previa:hover .vista-previa-foto img {
+    transform: scale(1.03);
 }
  
 .vista-previa-foto {
@@ -584,6 +639,19 @@
     padding-top: 20px;
     border-top: 1px solid var(--borde);
 }
+
+.acciones-formulario .btn {
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.acciones-formulario .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 12px rgba(117, 17, 38, 0.14);
+}
+
+.acciones-formulario .btn:active {
+    transform: translateY(0);
+}
  
 .acciones-formulario .btn-secundario {
     margin-right: auto;
@@ -652,6 +720,24 @@
  
     .acciones-formulario .btn-secundario {
         margin-right: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
+
+    .paso-btn:hover,
+    .caracteristica:hover,
+    .btn-subir-foto:hover,
+    .acciones-formulario .btn:hover {
+        transform: none;
     }
 }
  
