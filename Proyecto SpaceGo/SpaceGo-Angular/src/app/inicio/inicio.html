@@ -27,12 +27,7 @@
                     </a>
                 </li>
 
-                <li>
-                    <a routerLink="/alojamiento">
-                        <i class="fa-solid fa-house"></i>
-                        Alojamiento
-                    </a>
-                </li>
+
 
                 <li>
                     <a routerLink="/publicar">
@@ -126,7 +121,7 @@
                                     <small>/ mes</small>
                                 </strong>
 
-                                <a routerLink="/alojamiento/1" class="btn-ver-alojamiento">
+                                <a routerLink="/alojamiento/1" [queryParams]="{volver: '/'}" [state]="{spacegoOrigen: '/'}" class="btn-ver-alojamiento">
                                     Ver alojamiento
                                 </a>
                             </div>
@@ -172,7 +167,7 @@
                                     <small>/ mes</small>
                                 </strong>
 
-                                <a routerLink="/alojamiento/2" class="btn-ver-alojamiento">
+                                <a routerLink="/alojamiento/2" [queryParams]="{volver: '/'}" [state]="{spacegoOrigen: '/'}" class="btn-ver-alojamiento">
                                     Ver alojamiento
                                 </a>
                             </div>
@@ -218,7 +213,7 @@
                                     <small>/ mes</small>
                                 </strong>
 
-                                <a routerLink="/alojamiento/3" class="btn-ver-alojamiento">
+                                <a routerLink="/alojamiento/3" [queryParams]="{volver: '/'}" [state]="{spacegoOrigen: '/'}" class="btn-ver-alojamiento">
                                     Ver alojamiento
                                 </a>
                             </div>

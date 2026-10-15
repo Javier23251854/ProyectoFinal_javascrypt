@@ -9,7 +9,7 @@ import { AlojamientoService } from '../core/services/alojamiento.service';
 
 /** Modelo de presentación: evita depender de campos opcionales del modelo del backend. */
 interface AlojamientoFavorito {
-  id: number;
+  id: string | number;
   titulo: string;
   tipo: string;
   precio: number;
@@ -98,7 +98,7 @@ export class Favoritos implements OnInit {
   readonly cargando = signal(true);
   readonly errorCarga = signal('');
   readonly errorAccion = signal('');
-  readonly eliminandoIds = signal<ReadonlySet<number>>(new Set<number>());
+  readonly eliminandoIds = signal<ReadonlySet<string | number>>(new Set<string | number>());
   readonly climaPorZona = signal<Record<string, EstadoClima>>({});
   readonly menuAbierto = signal(false);
   readonly cantidadFavoritos = computed(() => this.favoritos().length);
@@ -133,12 +133,12 @@ export class Favoritos implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: ({ alojamientos, registros }) => {
-          const ids = new Set(registros.map(registro => Number(registro.alojamientoId)));
+          const ids = new Set(registros.map(registro => String(registro.alojamientoId)));
           const alojamientosNormalizados = alojamientos
             .map((alojamiento: unknown) => this.normalizarAlojamiento(alojamiento))
             .filter((item): item is AlojamientoFavorito => item !== null);
 
-          this.favoritos.set(alojamientosNormalizados.filter(item => ids.has(item.id)));
+          this.favoritos.set(alojamientosNormalizados.filter(item => ids.has(String(item.id))));
           this.cargando.set(false);
           this.aplicarFiltros();
         },
@@ -179,14 +179,8 @@ export class Favoritos implements OnInit {
     // valueChanges aplica automáticamente el filtro después de resetear.
   }
 
-  /**
-   * Elimina el registro favorito, NO el alojamiento.
-   *
-   * Importante: el AlojamientoService actual devuelve `of(undefined)` cuando
-   * DELETE falla (catchError). Por ello no debemos asumir que un `next`
-   * significa que se eliminó: confirmamos el resultado con otra lectura.
-   */
-  quitarDeFavoritos(id: number): void {
+  /** Elimina el registro favorito y verifica la respuesta del servidor. */
+  quitarDeFavoritos(id: string | number): void {
     if (this.eliminandoIds().has(id)) return;
 
     this.errorAccion.set('');
@@ -196,7 +190,7 @@ export class Favoritos implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: registros => {
-          const registro = registros.find(item => Number(item.alojamientoId) === id);
+          const registro = registros.find(item => String(item.alojamientoId) === String(id));
 
           if (!registro) {
             this.errorAccion.set('Este alojamiento ya no aparece entre los favoritos. Recarga la lista.');
@@ -234,13 +228,13 @@ export class Favoritos implements OnInit {
   }
 
   /** Verifica que el servidor ya no devuelva el favorito antes de retirar la tarjeta. */
-  private verificarEliminacion(id: number): void {
+  private verificarEliminacion(id: string | number): void {
     this.alojamientoService.obtenerFavoritos()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: registrosActualizados => {
           const sigueGuardado = registrosActualizados.some(
-            item => Number(item.alojamientoId) === id
+            item => String(item.alojamientoId) === String(id)
           );
 
           if (sigueGuardado) {
@@ -261,7 +255,7 @@ export class Favoritos implements OnInit {
       });
   }
 
-  private finalizarEliminacion(id: number): void {
+  private finalizarEliminacion(id: string | number): void {
     this.eliminandoIds.update(actual => {
       const copia = new Set(actual);
       copia.delete(id);
@@ -295,8 +289,8 @@ export class Favoritos implements OnInit {
   private normalizarAlojamiento(item: unknown): AlojamientoFavorito | null {
     if (!item || typeof item !== 'object') return null;
     const datos = item as Record<string, unknown>;
-    const id = Number(datos['id']);
-    if (!Number.isFinite(id)) return null;
+    const id = datos['id'];
+    if ((typeof id !== 'string' && typeof id !== 'number') || String(id).trim() === '') return null;
 
     const texto = (clave: string): string =>
       typeof datos[clave] === 'string' ? String(datos[clave]).trim() : '';

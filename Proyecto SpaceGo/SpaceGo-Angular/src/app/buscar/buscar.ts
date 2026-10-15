@@ -5,7 +5,7 @@ import {
   FormBuilder,
   ReactiveFormsModule
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { AlojamientoService } from '../core/services/alojamiento.service';
 import { Alojamiento } from '../models/alojamiento';
@@ -18,6 +18,11 @@ import { Alojamiento } from '../models/alojamiento';
   styleUrl: './buscar.css'
 })
 export class Buscar implements OnInit {
+
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  menuAbierto = false;
+  get urlBusqueda(): string { return this.router.url; }
 
   private fb = inject(FormBuilder);
   private alojamientoService = inject(AlojamientoService);
@@ -40,6 +45,12 @@ export class Buscar implements OnInit {
   });
 
   ngOnInit(): void {
+    const query = this.route.snapshot.queryParamMap;
+    const valores: Record<string, string> = {};
+    for (const clave of Object.keys(this.formularioBusqueda.controls)) {
+      valores[clave] = query.get(clave) ?? (clave === 'ordenar' ? 'recientes' : '');
+    }
+    this.formularioBusqueda.patchValue(valores);
     this.alojamientoService.obtenerAlojamientos().subscribe({
       next: (datos) => {
         console.log('ALOJAMIENTOS RECIBIDOS:', datos);
@@ -56,7 +67,7 @@ export class Buscar implements OnInit {
           ...new Set(datos.map(alojamiento => alojamiento.distrito).filter(Boolean))
         ].sort();
 
-        console.log('RESULTADOS:', this.resultados);
+        this.aplicarFiltros(false);
 
         this.cdr.detectChanges();
       },
@@ -66,7 +77,7 @@ export class Buscar implements OnInit {
     });
   }
 
-  aplicarFiltros(): void {
+  aplicarFiltros(actualizarUrl = true): void {
     const filtros = this.formularioBusqueda.value;
 
     const texto = (filtros.busqueda || '').trim().toLowerCase();
@@ -121,10 +132,15 @@ export class Buscar implements OnInit {
       );
     });
 
-    this.ordenarResultados();
+    this.ordenarResultados(actualizarUrl);
   }
 
-  ordenarResultados(): void {
+  ordenarResultados(actualizarUrl = true): void {
+    if (actualizarUrl) {
+      const queryParams = Object.fromEntries(Object.entries(this.formularioBusqueda.getRawValue())
+        .filter(([, valor]) => valor !== '' && valor !== null));
+      void this.router.navigate([], { relativeTo: this.route, queryParams, replaceUrl: true });
+    }
     const criterio = this.formularioBusqueda.value.ordenar;
 
     if (criterio === 'precio-asc') {

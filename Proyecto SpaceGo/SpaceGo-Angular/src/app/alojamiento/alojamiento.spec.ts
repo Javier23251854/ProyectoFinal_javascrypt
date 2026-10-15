@@ -77,4 +77,23 @@ describe('Alojamiento - detalles dinámicos', () => {
     expect(texto).toContain('Alojamiento no disponible');
     expect(texto).not.toContain('Habitación individual amoblada');
   });
+  it('conserva el destino de búsqueda con sus filtros', async () => {
+    consulta$.next(convertToParamMap({id: '7', volver: '/buscar?tipo=minidepa&precioMaximo=1500'}));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.volverUrl).toBe('/buscar?tipo=minidepa&precioMaximo=1500');
+    expect(fixture.nativeElement.textContent).toContain('Volver a resultados');
+  });
+
+  it('rechaza un destino externo para el botón volver', () => {
+    consulta$.next(convertToParamMap({id: '7', volver: 'https://example.com'}));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.volverUrl).toBe('/buscar');
+  });
+
+  it('identifica el regreso desde favoritos', () => {
+    consulta$.next(convertToParamMap({id: '7', volver: '/favoritos'}));
+    fixture.detectChanges();
+    expect(fixture.componentInstance.textoVolver).toBe('Volver a favoritos');
+  });
+
 });

@@ -6,9 +6,9 @@
             </a>
         </div>
 
-        <button type="button" class="menu-icon">&#9776;</button>
+        <button type="button" class="menu-icon" (click)="menuAbierto = !menuAbierto" [attr.aria-expanded]="menuAbierto" aria-label="Abrir o cerrar menú">&#9776;</button>
 
-        <nav class="menu">
+        <nav class="menu" [class.activo]="menuAbierto">
             <ul>
                 <li><a routerLink="/">Inicio</a></li>
                 <li>
@@ -17,12 +17,7 @@
                         Buscar alojamiento
                     </a>
                 </li>
-                <li>
-                    <a routerLink="/alojamiento">
-                        <i class="fa-solid fa-house"></i>
-                        Alojamiento
-                    </a>
-                </li>
+
                 <li>
                     <a routerLink="/publicar">
                         <i class="fa-solid fa-plus"></i>
@@ -232,7 +227,7 @@
                             <span>/mes</span>
                         </div>
 
-                        <a [routerLink]="['/alojamiento', alojamiento.id]" class="btn btn-principal">
+                        <a [routerLink]="['/alojamiento', alojamiento.id]" [queryParams]="{volver: urlBusqueda}" [state]="{spacegoOrigen: urlBusqueda}" class="btn btn-principal">
                             Ver alojamiento
                         </a>
 

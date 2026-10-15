@@ -18,7 +18,7 @@
         <ul>
           <li><a routerLink="/" (click)="cerrarMenu()">Inicio</a></li>
           <li><a routerLink="/buscar" (click)="cerrarMenu()"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>Buscar alojamiento</a></li>
-          <li><a routerLink="/alojamiento" (click)="cerrarMenu()"><i class="fa-solid fa-house" aria-hidden="true"></i>Alojamiento</a></li>
+
           <li><a routerLink="/publicar" (click)="cerrarMenu()"><i class="fa-solid fa-plus" aria-hidden="true"></i>Publicar alojamiento</a></li>
           <li><a routerLink="/favoritos" class="activo" aria-current="page" (click)="cerrarMenu()"><i class="fa-solid fa-heart" aria-hidden="true"></i>Favoritos</a></li>
           <li><a routerLink="/login" class="btn-login-nav" (click)="cerrarMenu()"><i class="fa-solid fa-user" aria-hidden="true"></i>Iniciar sesión</a></li>
@@ -165,7 +165,7 @@
                     <span class="resultado-precio">S/ {{ alojamiento.precio | number:'1.0-0' }}<small>/mes</small></span>
                   </div>
                   <div class="resultado-acciones">
-                    <a class="btn-ver" [routerLink]="['/alojamiento']" [queryParams]="{ id: alojamiento.id }">
+                    <a class="btn-ver" [routerLink]="['/alojamiento']" [queryParams]="{ id: alojamiento.id, volver: '/favoritos' }" [state]="{spacegoOrigen: '/favoritos'}">
                       Ver detalles <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                     </a>
                     <button type="button" class="btn-quitar-favorito"

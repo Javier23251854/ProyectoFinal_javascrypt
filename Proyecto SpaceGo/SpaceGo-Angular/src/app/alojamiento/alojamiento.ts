@@ -1,4 +1,4 @@
-import { CurrencyPipe } from '@angular/common';
+import { CurrencyPipe, Location } from '@angular/common';
 import { ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
@@ -8,18 +8,7 @@ import { catchError, distinctUntilChanged, map, switchMap, tap } from 'rxjs/oper
 import { AlojamientoService } from '../core/services/alojamiento.service';
 import { Alojamiento as AlojamientoModel } from '../models/alojamiento';
 
-// Campos adicionales opcionales: el db.json actual no incluye todos estos datos.
-// Solo se muestran cuando el anuncio realmente los proporciona.
-type DetalleAlojamiento = AlojamientoModel & {
-  imagenes?: string[];
-  latitud?: number | string | null;
-  longitud?: number | string | null;
-  capacidad?: string;
-  incluye?: string[];
-  noIncluye?: string[];
-  caracteristicas?: string[];
-  contacto?: { telefono?: string; correo?: string };
-};
+type DetalleAlojamiento = AlojamientoModel;
 
 @Component({
   selector: 'app-alojamiento',
@@ -29,6 +18,7 @@ type DetalleAlojamiento = AlojamientoModel & {
   templateUrl: './alojamiento.html'
 })
 export class Alojamiento implements OnInit {
+  private readonly location = inject(Location);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly alojamientoService = inject(AlojamientoService);
@@ -45,6 +35,24 @@ export class Alojamiento implements OnInit {
   mapaTieneCoordenadas = false;
   agregandoFavorito = false;
   menuAbierto = false;
+  favoritoGuardado = false;
+  errorFavorito = '';
+  volverUrl = '/buscar';
+
+  get textoVolver(): string {
+    return this.volverUrl.startsWith('/favoritos') ? 'Volver a favoritos' :
+      this.volverUrl === '/' ? 'Volver al inicio' : 'Volver a resultados';
+  }
+
+  volver(): void {
+    if (history.state?.spacegoOrigen === this.volverUrl) this.location.back();
+    else void this.router.navigateByUrl(this.volverUrl);
+  }
+
+  imagenFallida(event: Event): void {
+    const imagen = event.target as HTMLImageElement;
+    if (!imagen.src.endsWith('/Imagenes/alojamiento.jpg')) imagen.src = '/Imagenes/alojamiento.jpg';
+  }
 
   readonly nombresTipo: Record<string, string> = {
     individual: 'Habitación individual',
@@ -57,9 +65,17 @@ export class Alojamiento implements OnInit {
     // Acepta tanto /alojamiento/7 como /alojamiento?id=7 (ruta usada por Favoritos).
     // La suscripción también actualiza el detalle si cambia el ID sin recrear el componente.
     combineLatest([this.route.paramMap, this.route.queryParamMap]).pipe(
-      map(([params, query]) => params.get('id') ?? query.get('id') ?? '1'),
+      map(([params, query]) => {
+        const regreso = query.get('volver') ?? '/buscar';
+        this.volverUrl = /^\/(buscar|favoritos)(\?.*)?$/.test(regreso) || regreso === '/' ? regreso : '/buscar';
+        const id = params.get('id') ?? query.get('id');
+        if (!id) void this.router.navigate(['/buscar'], { replaceUrl: true });
+        return id;
+      }),
       distinctUntilChanged(),
       tap(() => {
+        this.favoritoGuardado = false;
+        this.errorFavorito = '';
         this.cargando = true;
         this.error = '';
         this.alojamiento = null;
@@ -69,7 +85,7 @@ export class Alojamiento implements OnInit {
         // Marca el componente para actualizar la vista, también en modo zoneless.
         this.cdr.markForCheck();
       }),
-      switchMap(id => this.alojamientoService.obtenerAlojamientoPorId(id).pipe(
+      switchMap(id => id ? this.alojamientoService.obtenerAlojamientoPorId(id).pipe(
         // La implementación actual del servicio puede devolver el alojamiento 1
         // cuando el ID solicitado no existe. No se debe mostrar ese dato equivocado.
         map(datos => datos && String(datos.id) === id ? datos as DetalleAlojamiento : null),
@@ -77,7 +93,7 @@ export class Alojamiento implements OnInit {
           console.error('Error al cargar el alojamiento:', err);
           return of(null);
         })
-      )),
+      ) : of(null)),
       takeUntilDestroyed(this.destroyRef)
     ).subscribe(datos => {
       this.cargando = false;
@@ -135,8 +151,9 @@ export class Alojamiento implements OnInit {
 
   agregarAFavoritos(): void {
     if (!this.alojamiento || this.agregandoFavorito) return;
-    const id = Number(this.alojamiento.id);
-    if (!Number.isFinite(id)) return;
+    const id = this.alojamiento.id;
+    if (this.favoritoGuardado) return;
+    this.errorFavorito = "";
 
     this.agregandoFavorito = true;
     this.cdr.markForCheck();
@@ -146,13 +163,13 @@ export class Alojamiento implements OnInit {
         next: () => {
           this.agregandoFavorito = false;
           this.cdr.markForCheck();
-          void this.router.navigate(['/favoritos']);
+          this.favoritoGuardado = true;
         },
         error: error => {
           this.agregandoFavorito = false;
           this.cdr.markForCheck();
           console.error('Error al agregar favorito:', error);
-          alert('No se pudo guardar el alojamiento como favorito.');
+          this.errorFavorito = 'No se pudo guardar. Comprueba que el servicio esté disponible e inténtalo otra vez.';
         }
       });
   }

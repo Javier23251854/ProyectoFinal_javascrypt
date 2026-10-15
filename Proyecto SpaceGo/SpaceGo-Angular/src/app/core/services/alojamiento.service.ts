@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { Alojamiento } from '../../models/alojamiento';
 
@@ -173,7 +173,7 @@ export class AlojamientoService {
     }
   ];
 
-  private fallbackFavoritos = [{ id: 1, alojamientoId: 1 }];
+
 
   obtenerAlojamientos(): Observable<Alojamiento[]> {
     return this.http.get<Alojamiento[]>(this.apiUrl).pipe(
@@ -184,39 +184,24 @@ export class AlojamientoService {
     );
   }
 
-  obtenerFavoritos(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiFavoritosUrl).pipe(
-      catchError(() => {
-        console.warn('No se pudo cargar favoritos. Usando datos locales.');
-        return of(this.fallbackFavoritos);
-      })
-    );
+  obtenerFavoritos(): Observable<{ id: string | number; alojamientoId: string | number }[]> {
+    return this.http.get<{ id: string | number; alojamientoId: string | number }[]>(this.apiFavoritosUrl);
   }
 
-  agregarFavorito(alojamientoId: number): Observable<any> {
+  agregarFavorito(alojamientoId: string | number): Observable<any> {
     return this.obtenerFavoritos().pipe(
       switchMap((favoritos) => {
         const yaExiste = favoritos.some(
-          favorito => Number(favorito.alojamientoId) === Number(alojamientoId)
+          favorito => String(favorito.alojamientoId) === String(alojamientoId)
         );
 
         if (yaExiste) {
           return of(favoritos.find(
-            favorito => Number(favorito.alojamientoId) === Number(alojamientoId)
+            favorito => String(favorito.alojamientoId) === String(alojamientoId)
           ));
         }
 
-        return this.http.post<any>(this.apiFavoritosUrl, { alojamientoId }).pipe(
-          catchError(() => {
-            const nuevoFavorito = {
-              id: Date.now(),
-              alojamientoId
-            };
-
-            this.fallbackFavoritos = [...this.fallbackFavoritos, nuevoFavorito];
-            return of(nuevoFavorito);
-          })
-        );
+        return this.http.post(this.apiFavoritosUrl, { alojamientoId });
       })
     );
   }
@@ -231,12 +216,13 @@ export class AlojamientoService {
 
   obtenerAlojamientoPorId(id: string): Observable<Alojamiento> {
     return this.http.get<Alojamiento>(`${this.apiUrl}/${id}`).pipe(
-      catchError(() => {
+      catchError(error => {
+        if (error.status !== 0 && error.status < 500) return throwError(() => error);
         const alojamiento = this.fallbackAlojamientos.find(
           item => String(item.id) === String(id)
         );
 
-        return of(alojamiento ?? this.fallbackAlojamientos[0]);
+        return alojamiento ? of(alojamiento) : throwError(() => new Error("Alojamiento no disponible"));
       })
     );
   }

@@ -1,4 +1,3 @@
-<!-- Estructura original de SpaceGo, ahora enlazada a los datos reales del alojamiento. -->
 <header class="header">
   <div class="navbar container">
     <div class="logo">
@@ -9,8 +8,8 @@
     <nav class="menu" id="menu-principal" [class.activo]="menuAbierto" aria-label="Navegación principal">
       <ul>
         <li><a routerLink="/" (click)="menuAbierto = false">Inicio</a></li>
-        <li><a routerLink="/buscar" (click)="menuAbierto = false"><i class="fa-solid fa-magnifying-glass"></i>Buscar alojamiento</a></li>
-        <li><a routerLink="/alojamiento" class="activo" (click)="menuAbierto = false"><i class="fa-solid fa-house"></i>Alojamiento</a></li>
+        <li><a routerLink="/buscar" class="activo" (click)="menuAbierto = false"><i class="fa-solid fa-magnifying-glass"></i>Buscar alojamiento</a></li>
+
         <li><a routerLink="/publicar" (click)="menuAbierto = false"><i class="fa-solid fa-plus"></i>Publicar alojamiento</a></li>
         <li><a routerLink="/favoritos" (click)="menuAbierto = false"><i class="fa-regular fa-heart"></i>Favoritos</a></li>
       </ul>
@@ -18,115 +17,101 @@
   </div>
 </header>
 
-<main class="container my-5">
+<main class="detalle container">
+  <button class="volver" type="button" (click)="volver()">← {{ textoVolver }}</button>
   @if (cargando) {
-    <div class="text-center py-5" role="status">
-      <i class="fa-solid fa-spinner fa-spin me-2" aria-hidden="true"></i>Cargando alojamiento...
-    </div>
+    <section class="estado" role="status">Cargando los detalles del alojamiento…</section>
   } @else if (error) {
-    <div class="alert alert-warning text-center py-4" role="alert">
-      <h2 class="h5">Alojamiento no disponible</h2>
-      <p>{{ error }}</p>
-      <a routerLink="/buscar" class="btn btn-principal">Volver a buscar</a>
-    </div>
+    <section class="estado" role="alert">
+      <h1>Alojamiento no disponible</h1><p>{{ error }}</p>
+      <button class="accion principal" type="button" (click)="volver()">{{ textoVolver }}</button>
+    </section>
   } @else if (alojamiento) {
-    <div id="contenedor-detalle" class="row g-4">
-      <!-- GALERÍA. Solo muestra las imágenes asociadas al alojamiento elegido. -->
-      <div class="col-12 col-lg-7">
-        <div class="card p-3 shadow-sm border-0 h-100">
+    <div class="encabezado-detalle">
+      <span class="etiqueta">{{ obtenerNombreTipo(alojamiento.tipo) }}</span>
+      <h1>{{ alojamiento.titulo }}</h1>
+      <p class="ubicacion"><i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+        {{ alojamiento.distrito }} · {{ alojamiento.provincia }} · {{ alojamiento.departamento }}</p>
+    </div>
+    <div class="detalle-grid">
+      <div class="contenido-detalle">
+        <section class="galeria" aria-label="Fotografías del alojamiento">
           @if (imagenes.length) {
-            <div class="galeria-principal">
+            <div class="foto-contenedor">
+              <img class="foto-principal" [src]="imagenes[indiceImagen]" [alt]="alojamiento.titulo + ', foto ' + (indiceImagen + 1)" (error)="imagenFallida($event)">
+              <span class="contador" aria-live="polite">{{ indiceImagen + 1 }} / {{ imagenes.length }}</span>
               @if (imagenes.length > 1) {
-                <button type="button" class="galeria-btn galeria-anterior" (click)="imagenAnterior()"
-                  aria-label="Imagen anterior">‹</button>
-              }
-              <img [src]="imagenes[indiceImagen]" [alt]="alojamiento.titulo"
-                id="foto-principal" class="img-fluid w-100">
-              @if (imagenes.length > 1) {
-                <button type="button" class="galeria-btn galeria-siguiente" (click)="imagenSiguiente()"
-                  aria-label="Imagen siguiente">›</button>
+                <button class="flecha anterior" type="button" (click)="imagenAnterior()" aria-label="Foto anterior">‹</button>
+                <button class="flecha siguiente" type="button" (click)="imagenSiguiente()" aria-label="Foto siguiente">›</button>
               }
             </div>
-          } @else {
-            <div class="p-5 text-center text-muted">Este alojamiento aún no tiene fotografías.</div>
-          }
-        </div>
-      </div>
-
-      <!-- DATOS DINÁMICOS DEL MISMO ID QUE SE ABRIÓ EN FAVORITOS. -->
-      <div class="col-12 col-lg-5">
-        <div class="card p-4 shadow-sm border-0">
-          <h2>🏠 {{ alojamiento.titulo }}</h2>
-          <p class="text-muted mb-2">
-            <i class="fa-solid fa-location-dot text-danger me-1"></i>
-            {{ alojamiento.distrito }}, {{ alojamiento.provincia }}, {{ alojamiento.departamento }}
-          </p>
-
-          @if (mapaUrl) {
-            <div id="mapa-detalle" class="mt-3">
-              <iframe [src]="mapaUrl" width="100%" height="220" style="border:0; border-radius:10px"
-                title="Mapa de ubicación del alojamiento" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
-            </div>
-            <p class="small text-muted mt-2">
-              {{ mapaTieneCoordenadas ? 'Ubicación indicada en el anuncio' : 'Zona aproximada del alojamiento' }}
-            </p>
-          }
-
-          <h3 class="fw-bold my-3" style="color:#9d1730">
-            {{ alojamiento.precio | currency:'PEN':'symbol':'1.0-0' }}
-            <small class="fs-6 text-muted">/ mes</small>
-          </h3>
-          <hr>
-          <p><strong>Tipo:</strong> {{ obtenerNombreTipo(alojamiento.tipo) }}</p>
-          @if (alojamiento.capacidad) {
-            <p><strong>Capacidad:</strong> {{ alojamiento.capacidad }}</p>
-          }
-          @if (serviciosIncluidos.length) {
-            <h5 class="mt-3">Incluye</h5>
-            <ul class="list-unstyled">
-              @for (servicio of serviciosIncluidos; track servicio) {
-                <li><i class="fa-solid fa-check text-success me-2"></i>{{ servicio }}</li>
-              }
-            </ul>
-          }
-          @if (serviciosNoIncluidos.length) {
-            <h5>No incluye</h5>
-            <ul class="list-unstyled">
-              @for (servicio of serviciosNoIncluidos; track servicio) {
-                <li><i class="fa-solid fa-xmark text-danger me-2"></i>{{ servicio }}</li>
-              }
-            </ul>
-          }
-          <h5 class="mt-3">Descripción</h5>
-          <p class="text-secondary">{{ alojamiento.descripcion }}</p>
-          <div class="d-grid gap-2 mt-4">
-            <button type="button" id="btn-favoritos" class="btn btn-outline-danger"
-              [disabled]="agregandoFavorito" (click)="agregarAFavoritos()">
-              <i class="fa-regular fa-heart me-2"></i>
-              {{ agregandoFavorito ? 'Guardando...' : 'Agregar a favoritos' }}
-            </button>
-            @if (alojamiento.contacto?.telefono) {
-              <a class="btn btn-success" [href]="'tel:' + alojamiento.contacto?.telefono">
-                <i class="fa-solid fa-phone me-2"></i>Contactar propietario
-              </a>
-            } @else if (alojamiento.contacto?.correo) {
-              <a class="btn btn-success" [href]="'mailto:' + alojamiento.contacto?.correo">
-                <i class="fa-solid fa-envelope me-2"></i>Contactar propietario
-              </a>
-            } @else {
-              <button class="btn btn-outline-secondary" type="button" disabled
-                title="El anuncio todavía no tiene datos de contacto">
-                <i class="fa-solid fa-phone me-2"></i>Contacto no disponible
-              </button>
+            @if (imagenes.length > 1) {
+              <div class="miniaturas">
+                @for (foto of imagenes; track foto; let i = $index) {
+                  <button type="button" [class.seleccionada]="indiceImagen === i" (click)="indiceImagen = i" [attr.aria-label]="'Ver foto ' + (i + 1)" [attr.aria-pressed]="indiceImagen === i">
+                    <img [src]="foto" alt="" (error)="imagenFallida($event)">
+                  </button>
+                }
+              </div>
             }
-          </div>
-        </div>
+          } @else {
+            <div class="estado">Este anuncio aún no tiene fotografías.</div>
+          }
+        </section>
+        <section class="panel">
+          <span class="subtitulo">CONOCE EL ESPACIO</span><h2>Sobre este alojamiento</h2>
+          <p class="descripcion">{{ alojamiento.descripcion || 'El propietario aún no ha añadido una descripción.' }}</p>
+          <dl class="datos">
+            <div><dt>Tipo de espacio</dt><dd>{{ obtenerNombreTipo(alojamiento.tipo) }}</dd></div>
+            <div><dt>Distrito</dt><dd>{{ alojamiento.distrito }}</dd></div>
+            @if (alojamiento.capacidad) { <div><dt>Capacidad</dt><dd>{{ alojamiento.capacidad }}</dd></div> }
+            @if (alojamiento.referencia) { <div><dt>Referencia</dt><dd>{{ alojamiento.referencia }}</dd></div> }
+          </dl>
+        </section>
+        <section class="panel">
+          <span class="subtitulo">ANTES DE ELEGIR</span><h2>Servicios y características</h2>
+          @if (serviciosIncluidos.length) {
+            <ul class="servicios">@for (servicio of serviciosIncluidos; track $index) { <li><span aria-hidden="true">✓</span> {{ servicio }}</li> }</ul>
+          } @else { <p class="nota">El anuncio no detalla los servicios incluidos. Confírmalos con el propietario antes de acordar el alquiler.</p> }
+          @if (serviciosNoIncluidos.length) {
+            <h3>No incluidos</h3><ul class="servicios">@for (servicio of serviciosNoIncluidos; track $index) { <li>— {{ servicio }}</li> }</ul>
+          }
+        </section>
+        <section class="panel">
+          <span class="subtitulo">EXPLORA LA ZONA</span><h2>Ubicación</h2>
+          <p>{{ alojamiento.distrito }}, {{ alojamiento.provincia }}, {{ alojamiento.departamento }}</p>
+          @if (mapaUrl) {
+            <iframe class="mapa" [src]="mapaUrl" title="Mapa del alojamiento" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          }
+          <p class="nota">{{ mapaTieneCoordenadas ? 'Ubicación indicada en el anuncio.' : 'El mapa muestra una zona aproximada. Solicita la dirección exacta al propietario.' }}</p>
+        </section>
       </div>
+      <aside class="resumen" aria-label="Precio y contacto">
+        <span class="subtitulo">ALQUILER MENSUAL</span>
+        <p class="precio">{{ alojamiento.precio | currency:'PEN':'S/ ':'1.2-2' }} <span>/ mes</span></p>
+        <p class="nota">Consulta las condiciones de alquiler y los gastos adicionales con el propietario.</p>
+        <hr>
+        <h2>¿Te interesa este espacio?</h2>
+        <p>Guárdalo para comparar o contacta al propietario para conocer más.</p>
+        <button class="accion principal" type="button" (click)="agregarAFavoritos()" [disabled]="agregandoFavorito || favoritoGuardado">
+          {{ agregandoFavorito ? 'Guardando…' : favoritoGuardado ? '✓ Guardado en favoritos' : '♡ Agregar a favoritos' }}
+        </button>
+        @if (favoritoGuardado) { <a class="enlace-favoritos" routerLink="/favoritos">Ver mis favoritos →</a> }
+        @if (errorFavorito) { <p class="error" role="alert">{{ errorFavorito }}</p> }
+        @if (alojamiento.contacto?.telefono) {
+          <a class="accion secundaria" [href]="'tel:' + alojamiento.contacto?.telefono">Llamar al propietario</a>
+        }
+        @if (alojamiento.contacto?.correo) {
+          <a class="accion secundaria" [href]="'mailto:' + alojamiento.contacto?.correo">Escribir por correo</a>
+        }
+        @if (!alojamiento.contacto?.telefono && !alojamiento.contacto?.correo) {
+          <p class="sin-contacto">Este anuncio aún no incluye datos de contacto.</p>
+        }
+        <div class="consejo"><strong>Organiza una visita</strong><p>Conoce el espacio y confirma sus condiciones antes de realizar un pago.</p></div>
+      </aside>
     </div>
   }
 </main>
-
 <footer class="footer">
   <div class="footer-container container">
     <div class="footer-box">
