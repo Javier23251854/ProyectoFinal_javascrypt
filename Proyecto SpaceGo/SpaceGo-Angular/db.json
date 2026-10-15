@@ -173,6 +173,10 @@
     {
       "alojamientoId": 3,
       "id": "e1Nko4yowzo"
+    },
+    {
+      "alojamientoId": "6",
+      "id": "XOj9trnDDUc"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

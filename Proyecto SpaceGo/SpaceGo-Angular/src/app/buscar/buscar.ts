@@ -44,6 +44,17 @@ export class Buscar implements OnInit {
     ordenar: ['recientes']
   });
 
+  readonly nombresTipo: Record<string, string> = {
+    individual: 'Habitación individual',
+    pareja: 'Espacio para pareja',
+    minidepa: 'Minidepartamento',
+    departamento: 'Departamento'
+  };
+
+  obtenerNombreTipo(tipo: string): string {
+    return this.nombresTipo[tipo] ?? tipo;
+  }
+
   ngOnInit(): void {
     const query = this.route.snapshot.queryParamMap;
     const valores: Record<string, string> = {};

@@ -225,7 +225,7 @@
 /* ---------- ETIQUETA DEL TIPO ---------- */
 
 #contenedor-resultados .badge {
-    align-self: center;
+    align-self: flex-start;
     width: fit-content;
     padding: 5px 10px;
     font-size: 11px;
