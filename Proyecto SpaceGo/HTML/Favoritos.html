@@ -1,118 +1,162 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favoritos | SpaceGo</title>
+    <meta name="theme-color" content="#9d1730">
+    <title>Mis favoritos | SpaceGo</title>
 
-    <!-- CSS Global y de la página -->
-    <link rel="stylesheet" href="../CSS/css_global.css">
-    <link rel="stylesheet" href="../CSS/favoritos.css">
-
-    <!-- BOOTSTRAP -->
+   
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- FONT AWESOME -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+
+    
+    <link rel="stylesheet" href="../CSS/css_global.css">
+    <link rel="stylesheet" href="../CSS/login.css">
+    <link rel="stylesheet" href="../CSS/favoritos.css">
 </head>
+<body class="favoritos-page">
 
-<body>
-
-    <!-- ================= HEADER ================= -->
+   
     <header class="header">
         <div class="navbar container">
             <div class="logo">
-                <a href="../HTML/index.html"><img src="../Imagenes/logo cuarto.png" alt="Logo SpaceGo"></a>
+                <a href="../HTML/index.html" aria-label="Ir al inicio de SpaceGo">
+                    <img src="../Imagenes/logo cuarto.png" alt="SpaceGo">
+                </a>
             </div>
-            <button type="button" class="menu-icon" id="boton-menu"> &#9776; </button>
-            <nav class="menu" id="menu-principal">
+
+            <button type="button" class="menu-icon" id="boton-menu" aria-label="Abrir menú" aria-controls="menu-principal" aria-expanded="false">
+                <i class="fa-solid fa-bars" aria-hidden="true"></i>
+            </button>
+
+            <nav class="menu" id="menu-principal" aria-label="Navegación principal">
                 <ul>
                     <li><a href="../HTML/index.html">Inicio</a></li>
-                    <li><a href="../HTML/buscar.html"><i class="fa-solid fa-magnifying-glass"></i>Buscar alojamiento</a></li>
-                    <li><a href="../HTML/alojamiento.html"><i class="fa-solid fa-house"></i>Alojamiento</a></li>
-                    <li><a href="../HTML/publicar.html"><i class="fa-solid fa-plus"></i>Publicar alojamiento</a></li>
-                    <li><a href="../HTML/favoritos.html" class="activo"><i class="fa-regular fa-heart"></i>Favoritos</a></li>
+                    <li><a href="../HTML/buscar.html"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>Buscar alojamiento</a></li>
+                    <li><a href="../HTML/alojamiento.html"><i class="fa-solid fa-house" aria-hidden="true"></i>Alojamiento</a></li>
+                    <li><a href="../HTML/publicar.html"><i class="fa-solid fa-plus" aria-hidden="true"></i>Publicar alojamiento</a></li>
+                    <li><a href="../HTML/favoritos.html" class="activo" aria-current="page"><i class="fa-solid fa-heart" aria-hidden="true"></i>Favoritos</a></li>
+                    <li><a href="../HTML/login.html" class="btn-login-nav"><i class="fa-solid fa-user" aria-hidden="true"></i>Iniciar Sesión</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- ================= ENCABEZADO DE LA PÁGINA ================= -->
-    <section class="favoritos-hero">
-        <div class="container">
-            <span class="hero-etiqueta">TUS ESPACIOS GUARDADOS</span>
-            <h1>Alojamientos Favoritos</h1>
-            <p>Guarda los alojamientos que más te gusten para revisarlos después.</p>
+    
+    <section class="favoritos-hero" aria-labelledby="titulo-favoritos">
+        <div class="container favoritos-hero-contenido">
+            <div class="favoritos-hero-texto">
+                <span class="hero-etiqueta"><i class="fa-solid fa-heart me-2" aria-hidden="true"></i>TU SELECCIÓN PERSONAL</span>
+                <h1 id="titulo-favoritos">Tus alojamientos <em>favoritos</em></h1>
+                <p>Todos los espacios que te gustaron, reunidos en un solo lugar para que encuentres el indicado para ti.</p>
+            </div>
+            <div class="favoritos-hero-decoracion" aria-hidden="true"><i class="fa-regular fa-heart"></i></div>
         </div>
     </section>
 
     <main class="contenedor-principal container">
 
-        <!-- ================= FILTROS ================= -->
-        <section class="filtros-section">
+        
+        <section class="filtros-section" aria-labelledby="titulo-filtros">
+            <div class="filtros-encabezado">
+                <div class="filtros-identidad">
+                    <span class="filtros-icono" aria-hidden="true"><i class="fa-solid fa-sliders"></i></span>
+                    <div>
+                        <h2 id="titulo-filtros">Organiza tus favoritos</h2>
+                        <p>Encuentra más rápido el alojamiento que guardaste.</p>
+                    </div>
+                </div>
+                <span class="filtros-ayuda"><i class="fa-solid fa-circle-check" aria-hidden="true"></i> Tu lista, a tu manera</span>
+            </div>
+
             <div class="filtros-grid">
                 <div class="filtro-campo">
                     <label for="select-orden-fav">Ordenar por</label>
-                    <select id="select-orden-fav">
-                        <option value="recientes">Más recientes</option>
-                        <option value="precio-asc">Precio: menor a mayor</option>
-                        <option value="precio-desc">Precio: mayor a menor</option>
-                    </select>
+                    <div class="campo-control">
+                        <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                        <select id="select-orden-fav">
+                            <option value="recientes">Más recientes</option>
+                            <option value="precio-asc">Precio: menor a mayor</option>
+                            <option value="precio-desc">Precio: mayor a menor</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="filtro-campo">
-                    <label for="select-tipo-fav">Tipo</label>
-                    <select id="select-tipo-fav">
-                        <option value="todos">Todos</option>
-                        <option value="individual">Habitación individual</option>
-                        <option value="pareja">Espacio para pareja</option>
-                        <option value="minidepa">Minidepartamento</option>
-                        <option value="departamento">Departamento</option>
-                    </select>
+                    <label for="select-tipo-fav">Tipo de alojamiento</label>
+                    <div class="campo-control">
+                        <i class="fa-solid fa-house" aria-hidden="true"></i>
+                        <select id="select-tipo-fav">
+                            <option value="todos">Todos los tipos</option>
+                            <option value="individual">Habitación individual</option>
+                            <option value="pareja">Espacio para pareja</option>
+                            <option value="minidepa">Minidepartamento</option>
+                            <option value="departamento">Departamento</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="filtro-campo">
                     <label for="input-precio-fav">Precio máximo (S/)</label>
-                    <input type="number" id="input-precio-fav" min="0" step="50" placeholder="Ej. 1000">
+                    <div class="campo-control">
+                        <i class="fa-solid fa-tag" aria-hidden="true"></i>
+                        <input type="number" id="input-precio-fav" min="0" step="50" placeholder="Ej. 1000">
+                    </div>
                 </div>
             </div>
+
             <div class="filtros-acciones">
-                <button type="button" id="btn-aplicar-fav" class="btn btn-principal">
-                    <i class="fa-solid fa-filter"></i> Aplicar filtros
-                </button>
-                <button type="button" id="btn-limpiar-fav" class="btn btn-secundario">
-                    <i class="fa-solid fa-arrow-rotate-left"></i> Limpiar
-                </button>
+                <button type="button" id="btn-aplicar-fav" class="btn btn-principal"><i class="fa-solid fa-filter" aria-hidden="true"></i> Aplicar filtros</button>
+                <button type="button" id="btn-limpiar-fav" class="btn btn-secundario"><i class="fa-solid fa-arrow-rotate-left" aria-hidden="true"></i> Limpiar filtros</button>
             </div>
         </section>
 
-        <!-- ================= RESULTADOS ================= -->
-        <section class="resultados-section">
+        
+        <section class="resultados-section" aria-labelledby="titulo-resultados">
             <div class="resultados-encabezado">
-                <p id="contador-favoritos">0 alojamientos guardados</p>
+                <div>
+                    <span class="titulo-etiqueta">MI COLECCIÓN</span>
+                    <h2 id="titulo-resultados">Espacios que te encantan</h2>
+                    <p id="contador-favoritos" aria-live="polite">0 alojamientos guardados</p>
+                </div>
+                <a class="enlace-explorar" href="../HTML/buscar.html">Seguir explorando <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
             </div>
 
             <div class="row g-4" id="contenedor-favoritos">
-                <!-- Las cards se generan dinámicamente con JavaScript -->
+                
             </div>
 
+            
+            <p class="favoritos-clima-nota" id="nota-clima-fav" hidden>
+                <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+                El clima es una estimación de la zona, no del interior del alojamiento.
+                Datos de <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a>.
+            </p>
+
+            <!-- Se muestra con la misma lógica original al no haber resultados -->
             <div class="mensaje-vacio" id="mensaje-vacio">
-                <i class="fa-regular fa-heart"></i>
-                <h3>No tienes favoritos guardados</h3>
-                <p>Explora los alojamientos y guarda los que más te gusten.</p>
-                <a href="../HTML/buscar.html" class="btn btn-principal mt-3">
-                    <i class="fa-solid fa-magnifying-glass"></i> Buscar alojamientos
-                </a>
+                <div class="vacio-icono" aria-hidden="true"><i class="fa-regular fa-heart"></i></div>
+                <span class="vacio-etiqueta">TU LISTA DE FAVORITOS</span>
+                <h3>No hay favoritos para mostrar</h3>
+                <p>Guarda los alojamientos que te gusten o prueba ajustando los filtros de tu lista.</p>
+                <a href="../HTML/buscar.html" class="btn btn-principal"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Buscar alojamientos</a>
             </div>
         </section>
 
+        
+        <section class="favoritos-cta" aria-label="Descubrir más alojamientos">
+            <div class="favoritos-cta-texto">
+                <span class="cta-etiqueta">TU PRÓXIMO ESPACIO TE ESPERA</span>
+                <h2>¿Aún buscas el lugar ideal?</h2>
+                <p>Explora más alternativas y sigue guardando las que más te gusten.</p>
+            </div>
+            <a href="../HTML/buscar.html" class="btn btn-blanco-fav">Explorar alojamientos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        </section>
     </main>
 
-    <!-- ================= FOOTER ================= -->
+   
     <footer class="footer">
         <div class="footer-container container">
             <div class="footer-box">
@@ -120,20 +164,26 @@
                 <p>Una plataforma pensada para ayudarte a encontrar el espacio que necesitas.</p>
             </div>
             <div class="footer-box">
+                <h3>Información</h3>
+                <p>SpaceGo es una plataforma creada para facilitar la búsqueda de espacios de alojamiento de manera sencilla, clara y práctica.</p>
+                <p>Conectamos a personas que buscan un lugar donde vivir con propietarios que desean publicar sus espacios.</p>
+            </div>
+            <div class="footer-box">
                 <h3>Contacto</h3>
-                <p><i class="fa-solid fa-phone"></i>+51 987 654 321</p>
-                <p><i class="fa-solid fa-envelope"></i>contacto@spacego.pe</p>
-                <p><i class="fa-solid fa-location-dot"></i>Perú</p>
+                <p><i class="fa-solid fa-phone" aria-hidden="true"></i>+51 987 654 321</p>
+                <p><i class="fa-solid fa-envelope" aria-hidden="true"></i>contacto@spacego.pe</p>
+                <p><i class="fa-solid fa-location-dot" aria-hidden="true"></i>Perú</p>
+                <div class="redes">
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2026 SpaceGo - Todos los derechos reservados</p>
-        </div>
+        <div class="footer-bottom"><p>© 2026 SpaceGo - Todos los derechos reservados</p></div>
     </footer>
 
-    <!-- SCRIPTS -->
     <script src="../JS/favoritos.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
