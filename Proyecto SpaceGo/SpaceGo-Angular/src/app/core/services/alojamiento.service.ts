@@ -221,14 +221,11 @@ export class AlojamientoService {
     );
   }
 
-  eliminarFavorito(id: number): Observable<void> {
+  eliminarFavorito(id: string | number): Observable<void> {
+    // El ID del registro favorito puede ser alfanumérico en JSON Server.
+    // Propagamos errores HTTP para que Favoritos no confunda un fallo con éxito.
     return this.http.delete<void>(
-      `${this.apiFavoritosUrl}/${id}`
-    ).pipe(
-      catchError(() => {
-        console.warn('No se pudo eliminar favorito. Se ignora la operación.');
-        return of(undefined);
-      })
+      `${this.apiFavoritosUrl}/${encodeURIComponent(String(id))}`
     );
   }
 
