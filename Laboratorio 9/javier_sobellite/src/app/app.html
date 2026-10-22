@@ -1,0 +1,34 @@
+<a class="saltar" href="#contenido">
+  Saltar al contenido principal
+</a>
+
+<header class="cabecera">
+  <div class="container py-3">
+    <h1 class="h3 mb-3">Portal académico</h1>
+
+    <nav
+      class="d-flex flex-wrap gap-2"
+      aria-label="Navegación principal"
+    >
+      <a
+        routerLink="/resumen"
+        routerLinkActive="activo"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        Resumen
+      </a>
+
+      <a routerLink="/estudiantes" routerLinkActive="activo">
+        Estudiantes
+      </a>
+
+      <a routerLink="/registro" routerLinkActive="activo">
+        Registrar estudiante
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenido" class="container py-4">
+  <router-outlet />
+</main>
