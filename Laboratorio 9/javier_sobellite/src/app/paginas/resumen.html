@@ -1,0 +1,52 @@
+<section class="panel">
+  <h1 class="h3 mb-2">Resumen académico</h1>
+  <p class="text-body-secondary">
+    Vista general del rendimiento de los estudiantes.
+  </p>
+
+  @if (cargando()) {
+    <p role="status">Cargando resumen...</p>
+  }
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">{{ error() }}</div>
+  }
+
+  <div class="row g-3 mt-2">
+    <div class="col-12 col-md-6 col-xl-3">
+      <article class="card h-100">
+        <div class="card-body">
+          <h2 class="h6">Total de estudiantes</h2>
+          <p class="display-6">{{ total() }}</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="col-12 col-md-6 col-xl-3">
+      <article class="card h-100">
+        <div class="card-body">
+          <h2 class="h6">Promedio general</h2>
+          <p class="display-6">{{ promedioGeneral() | number: '1.2-2' }}</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="col-12 col-md-6 col-xl-3">
+      <article class="card h-100">
+        <div class="card-body">
+          <h2 class="h6">Destacados</h2>
+          <p class="display-6">{{ destacados() }}</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="col-12 col-md-6 col-xl-3">
+      <article class="card h-100">
+        <div class="card-body">
+          <h2 class="h6">En riesgo</h2>
+          <p class="display-6">{{ enRiesgo() }}</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
