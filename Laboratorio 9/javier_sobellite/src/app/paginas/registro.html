@@ -1,0 +1,103 @@
+<section class="panel formulario">
+  <h1 class="h3 mb-2">
+    {{ id() ? 'Editar estudiante' : 'Registrar estudiante' }}
+  </h1>
+
+  <p class="text-body-secondary">
+    Completa los datos académicos del estudiante.
+  </p>
+
+  @if (cargando()) {
+    <p role="status">Cargando datos del estudiante...</p>
+  }
+
+  @if (error()) {
+    <div class="alert alert-danger" role="alert">
+      {{ error() }}
+    </div>
+  }
+
+  <form (ngSubmit)="guardar()">
+    <div class="mb-3">
+      <label for="nombre" class="form-label">Nombre completo</label>
+      <input
+        id="nombre"
+        name="nombre"
+        type="text"
+        class="form-control"
+        [(ngModel)]="nombre"
+        required
+        minlength="3"
+        maxlength="80"
+        [disabled]="cargando() || guardando()"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="programa" class="form-label">Programa académico</label>
+      <select
+        id="programa"
+        name="programa"
+        class="form-select"
+        [(ngModel)]="programa"
+        required
+        [disabled]="cargando() || guardando()"
+      >
+        @for (opcion of programas; track opcion) {
+          <option [value]="opcion">{{ opcion }}</option>
+        }
+      </select>
+    </div>
+
+    <div class="mb-3">
+      <label for="promedio" class="form-label">Promedio (0 a 20)</label>
+      <input
+        id="promedio"
+        name="promedio"
+        type="number"
+        class="form-control"
+        [(ngModel)]="promedio"
+        required
+        min="0"
+        max="20"
+        step="0.1"
+        [disabled]="cargando() || guardando()"
+      />
+    </div>
+
+    <div class="mb-3">
+      <label for="asistencia" class="form-label">
+        Asistencia (0 a 100 %)
+      </label>
+      <input
+        id="asistencia"
+        name="asistencia"
+        type="number"
+        class="form-control"
+        [(ngModel)]="asistencia"
+        required
+        min="0"
+        max="100"
+        step="1"
+        [disabled]="cargando() || guardando()"
+      />
+    </div>
+
+    <div class="d-flex flex-wrap gap-2">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="cargando() || guardando()"
+      >
+        {{ guardando() ? 'Guardando...' : 'Guardar' }}
+      </button>
+
+      <a
+        routerLink="/estudiantes"
+        class="btn btn-outline-secondary"
+      >
+        Cancelar
+      </a>
+    </div>
+  </form>
+</section>
