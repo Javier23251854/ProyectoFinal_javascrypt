@@ -1,0 +1,159 @@
+
+/* ESTILOS GENERALES */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f8f6f5;
+  color: #292326;
+}
+
+/* BARRA DE NAVEGACIÓN */
+.navbar {
+  background-color: #ffffff;
+  padding: 16px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.navbar h2 {
+  color: #81152e;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.navbar a {
+  color: #81152e;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* CONTENEDOR DEL PERFIL */
+.perfil-container {
+  max-width: 850px;
+  margin: 55px auto;
+  padding: 20px;
+}
+
+/* ENCABEZADO */
+.perfil-header {
+  margin-bottom: 30px;
+}
+
+.perfil-container h1 {
+  color: #81152e;
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+.perfil-container p {
+  color: #777078;
+  font-size: 15px;
+  margin-bottom: 25px;
+}
+
+/* TARJETA DE INFORMACIÓN */
+.perfil-card {
+  background-color: #ffffff;
+  padding: 35px;
+  border-radius: 14px;
+  border: 1px solid #eee4dc;
+  box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+}
+
+.perfil-card h2 {
+  color: #81152e;
+  font-size: 22px;
+  margin-bottom: 28px;
+}
+
+/* FORMULARIO */
+.perfil-card label {
+  display: block;
+  margin-bottom: 9px;
+  color: #41383c;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.perfil-card input {
+  width: 100%;
+  padding: 13px 15px;
+  margin-bottom: 22px;
+  border: 1px solid #ded8d8;
+  border-radius: 8px;
+  background-color: #ffffff;
+  color: #292326;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.perfil-card input:focus {
+  border-color: #b58a36;
+}
+
+.perfil-card input:disabled {
+  background-color: #f7f5f4;
+  color: #696168;
+  cursor: not-allowed;
+}
+
+/* BOTONES */
+.perfil-card button {
+  padding: 12px 22px;
+  margin-right: 10px;
+  border: none;
+  border-radius: 7px;
+  background-color: #94172f;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.perfil-card button:hover {
+  background-color: #701126;
+}
+
+/* BOTÓN CANCELAR */
+.perfil-card form > div button:last-child {
+  background-color: #e9e2df;
+  color: #51474b;
+}
+
+.perfil-card form > div button:last-child:hover {
+  background-color: #d9cfcb;
+}
+
+/* ADAPTACIÓN A CELULARES */
+@media (max-width: 600px) {
+  .navbar {
+    padding: 15px 20px;
+  }
+
+  .perfil-container {
+    margin: 30px auto;
+    padding: 15px;
+  }
+
+  .perfil-container h1 {
+    font-size: 26px;
+  }
+
+  .perfil-card {
+    padding: 22px;
+  }
+
+  .perfil-card button {
+    margin-bottom: 10px;
+  }
+}

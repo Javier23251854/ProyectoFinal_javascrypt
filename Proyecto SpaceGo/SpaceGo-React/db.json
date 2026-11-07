@@ -1,0 +1,12 @@
+{
+  "usuarios": [
+    {
+      "id": "1",
+      "nombre": "Jorge",
+      "correo": "usuario2@gmail.com",
+      "telefono": "913327596",
+      "distrito": "Santa anita"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
