@@ -2,6 +2,6 @@ export interface Usuario {
   id: string;
   nombre: string;
   correo: string;
-  telefono: string;
-  distrito: string;
+  telefono?: string;
+  distrito?: string;
 }

@@ -43,21 +43,23 @@
 
         <div class="form-wrapper">
 
+            <!-- PESTAÑAS -->
             <div class="auth-tabs">
-                <button type="button" class="tab-btn active">
+
+                <button type="button" class="tab-btn" [class.active]="!vistaRegistro" (click)="mostrarLogin()">
                     Iniciar Sesión
                 </button>
 
-                <button type="button" class="tab-btn">
+                <button type="button" class="tab-btn" [class.active]="vistaRegistro" (click)="mostrarRegistro()">
                     Registrarse
                 </button>
+
             </div>
 
-            <!-- LOGIN -->
-            <form
-                [formGroup]="loginForm"
-                (ngSubmit)="iniciarSesion()"
-                class="auth-form active">
+            <!-- FORMULARIO DE LOGIN -->
+            @if (!vistaRegistro) {
+
+            <form [formGroup]="loginForm" (ngSubmit)="iniciarSesion()" class="auth-form active">
 
                 <div class="form-header">
                     <h2>¡Hola de nuevo! 👋</h2>
@@ -82,6 +84,7 @@
                     <span>o continúa con tu correo</span>
                 </div>
 
+                <!-- CORREO -->
                 <div class="input-field">
                     <label for="login-email">
                         Correo electrónico
@@ -90,23 +93,18 @@
                     <div class="input-wrapper">
                         <i class="fa-regular fa-envelope field-icon"></i>
 
-                        <input
-                            type="email"
-                            id="login-email"
-                            formControlName="email"
-                            placeholder="nombre@correo.com"
-                            required>
+                        <input type="email" id="login-email" formControlName="email" placeholder="nombre@correo.com">
                     </div>
 
                     @if (loginForm.controls.email.touched &&
-                         loginForm.controls.email.invalid) {
-
-                        <small class="campo-error">
-                            Ingresa un correo válido.
-                        </small>
+                    loginForm.controls.email.invalid) {
+                    <small class="campo-error">
+                        Ingresa un correo válido.
+                    </small>
                     }
                 </div>
 
+                <!-- CONTRASEÑA -->
                 <div class="input-field">
                     <label for="login-password">
                         Contraseña
@@ -115,28 +113,21 @@
                     <div class="input-wrapper">
                         <i class="fa-solid fa-lock field-icon"></i>
 
-                        <input
-                            type="password"
-                            id="login-password"
-                            formControlName="password"
-                            placeholder="••••••••"
-                            required>
+                        <input type="password" id="login-password" formControlName="password" placeholder="••••••••">
                     </div>
 
                     @if (loginForm.controls.password.touched &&
-                         loginForm.controls.password.invalid) {
-
-                        <small class="campo-error">
-                            La contraseña debe tener al menos 8 caracteres.
-                        </small>
+                    loginForm.controls.password.invalid) {
+                    <small class="campo-error">
+                        La contraseña debe tener al menos 8 caracteres.
+                    </small>
                     }
                 </div>
 
+                <!-- OPCIONES -->
                 <div class="form-options">
                     <label class="remember-me">
-                        <input
-                            type="checkbox"
-                            formControlName="remember">
+                        <input type="checkbox" formControlName="remember">
                         Recordarme
                     </label>
 
@@ -145,6 +136,23 @@
                     </a>
                 </div>
 
+                <!-- MENSAJE DE LOGIN -->
+                @if (mensajeLogin) {
+                <p class="mensaje-exito">{{ mensajeLogin }}</p>
+                }
+
+                <!-- ENLACE A MI PERFIL -->
+                @if (urlMiPerfil) {
+                <a [href]="urlMiPerfil" class="enlace-perfil">
+                    Ir a Mi perfil
+                </a>
+                }
+
+                <!-- ERROR DE LOGIN -->
+                @if (errorLogin) {
+                <p class="mensaje-error">{{ errorLogin }}</p>
+                }
+
                 <button type="submit" class="btn-submit">
                     Iniciar Sesión
                     <i class="fa-solid fa-arrow-right"></i>
@@ -152,11 +160,12 @@
 
             </form>
 
-            <!-- REGISTRO -->
-            <form
-                [formGroup]="registerForm"
-                (ngSubmit)="registrarse()"
-                class="auth-form">
+            }
+
+            <!-- FORMULARIO DE REGISTRO -->
+            @if (vistaRegistro) {
+
+            <form [formGroup]="registerForm" (ngSubmit)="registrarse()" class="auth-form active">
 
                 <div class="form-header">
                     <h2>Crea tu cuenta 🚀</h2>
@@ -165,6 +174,7 @@
                     </p>
                 </div>
 
+                <!-- NOMBRE -->
                 <div class="input-field">
                     <label for="reg-name">
                         Nombre completo
@@ -173,23 +183,18 @@
                     <div class="input-wrapper">
                         <i class="fa-regular fa-user field-icon"></i>
 
-                        <input
-                            type="text"
-                            id="reg-name"
-                            formControlName="name"
-                            placeholder="Tu nombre"
-                            required>
+                        <input type="text" id="reg-name" formControlName="name" placeholder="Tu nombre">
                     </div>
 
                     @if (registerForm.controls.name.touched &&
-                         registerForm.controls.name.invalid) {
-
-                        <small class="campo-error">
-                            Ingresa tu nombre.
-                        </small>
+                    registerForm.controls.name.invalid) {
+                    <small class="campo-error">
+                        Ingresa tu nombre.
+                    </small>
                     }
                 </div>
 
+                <!-- CORREO -->
                 <div class="input-field">
                     <label for="reg-email">
                         Correo electrónico
@@ -198,23 +203,18 @@
                     <div class="input-wrapper">
                         <i class="fa-regular fa-envelope field-icon"></i>
 
-                        <input
-                            type="email"
-                            id="reg-email"
-                            formControlName="email"
-                            placeholder="nombre@correo.com"
-                            required>
+                        <input type="email" id="reg-email" formControlName="email" placeholder="nombre@correo.com">
                     </div>
 
                     @if (registerForm.controls.email.touched &&
-                         registerForm.controls.email.invalid) {
-
-                        <small class="campo-error">
-                            Ingresa un correo válido.
-                        </small>
+                    registerForm.controls.email.invalid) {
+                    <small class="campo-error">
+                        Ingresa un correo válido.
+                    </small>
                     }
                 </div>
 
+                <!-- CONTRASEÑA -->
                 <div class="input-field">
                     <label for="reg-password">
                         Contraseña
@@ -223,31 +223,35 @@
                     <div class="input-wrapper">
                         <i class="fa-solid fa-lock field-icon"></i>
 
-                        <input
-                            type="password"
-                            id="reg-password"
-                            formControlName="password"
-                            placeholder="Mínimo 8 caracteres"
-                            required>
+                        <input type="password" id="reg-password" formControlName="password"
+                            placeholder="Mínimo 8 caracteres">
                     </div>
 
                     @if (registerForm.controls.password.touched &&
-                         registerForm.controls.password.invalid) {
-
-                        <small class="campo-error">
-                            La contraseña debe tener al menos 8 caracteres.
-                        </small>
+                    registerForm.controls.password.invalid) {
+                    <small class="campo-error">
+                        La contraseña debe tener al menos 8 caracteres.
+                    </small>
                     }
                 </div>
 
+                <!-- TÉRMINOS -->
                 <div class="form-options">
                     <label class="remember-me">
-                        <input
-                            type="checkbox"
-                            formControlName="terms">
+                        <input type="checkbox" formControlName="terms">
                         Acepto Términos y Condiciones
                     </label>
                 </div>
+
+                <!-- MENSAJE DE REGISTRO -->
+                @if (mensajeRegistro) {
+                <p class="mensaje-exito">{{ mensajeRegistro }}</p>
+                }
+
+                <!-- ERROR DE REGISTRO -->
+                @if (errorRegistro) {
+                <p class="mensaje-error">{{ errorRegistro }}</p>
+                }
 
                 <button type="submit" class="btn-submit">
                     Crear Cuenta
@@ -255,6 +259,8 @@
                 </button>
 
             </form>
+
+            }
 
         </div>
     </div>

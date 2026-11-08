@@ -60,10 +60,9 @@ function ProfileForm({
         <input
           type="tel"
           name="telefono"
-          value={usuario.telefono}
+          value={usuario.telefono ?? ""}
           onChange={onChange}
           disabled={!editando}
-          required
           pattern="[0-9]{9}"
           title="El teléfono debe tener 9 dígitos."
         />
@@ -72,10 +71,10 @@ function ProfileForm({
         <input
           type="text"
           name="distrito"
-          value={usuario.distrito}
+          value={usuario.distrito ?? ""}
           onChange={onChange}
           disabled={!editando}
-          required
+
         />
 
         {editando ? (

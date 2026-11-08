@@ -29,6 +29,7 @@ img {
     --vino: #9d1730;
     --vino-oscuro: #751126;
     --vino-claro: #b52a45;
+    --dorado: #D9A520;
     --blanco: #ffffff;
     --negro: #242424;
     --gris: #666666;
@@ -141,16 +142,25 @@ img {
 /* ---------- FOOTER ---------- */
 
 .footer {
+    width: 100%;
     background: #211d1e;
     color: #eeeeee;
 }
 
 .footer-container {
-    padding: 50px 0 35px;
+    width: 100%;
+    max-width: 1320px;
+    margin: 0 auto;
+    padding: 50px 20px 35px;
 
     display: grid;
-    grid-template-columns: 1.5fr 1.5fr 1.2fr;
-    gap: 40px;
+    grid-template-columns: 1.1fr 1.5fr 1.5fr 1.1fr;
+    gap: 25px;
+    align-items: start;
+}
+
+.footer-box {
+    min-width: 0;
 }
 
 .footer-logo {
@@ -164,7 +174,7 @@ img {
 
 .footer-box h3 {
     margin: 0 0 15px;
-    color: var(--blanco);
+    color: var(--dorado);
     font-size: 15px;
 }
 
@@ -188,17 +198,26 @@ img {
 .footer-box li a {
     color: #bcb7b7;
     font-size: 13px;
-    transition: 0.3s;
+    transition: color 0.3s ease;
 }
 
 .footer-box li a:hover {
-    color: var(--blanco);
+    color: var(--dorado);
+}
+
+/* Página seleccionada */
+
+.footer-box li a.pagina-activa {
+    color: var(--vino-claro);
+    font-weight: 700;
 }
 
 .footer-box p i {
     width: 20px;
-    color: #e2a8b2;
+    color: var(--dorado);
 }
+
+/* ---------- REDES SOCIALES ---------- */
 
 .redes {
     display: flex;
@@ -224,7 +243,6 @@ img {
     transform: translateY(-2px);
 }
 
-
 /* ---------- FOOTER INFERIOR ---------- */
 
 .footer-bottom {
@@ -239,8 +257,9 @@ img {
     font-size: 12px;
 }
 
-
 /* ---------- RESPONSIVE ---------- */
+
+/* Tablets */
 
 @media (max-width: 991px) {
 
@@ -253,10 +272,12 @@ img {
     }
 
     .footer-container {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 35px;
     }
 }
 
+/* Celulares */
 
 @media (max-width: 767px) {
 
@@ -292,6 +313,7 @@ img {
 
     .footer-container {
         grid-template-columns: 1fr;
+        gap: 30px;
     }
 }
 
@@ -302,6 +324,6 @@ img {
     }
 
     .footer-container {
-        padding: 40px 0 30px;
+        padding: 40px 20px 30px;
     }
 }

@@ -167,5 +167,15 @@
       "id": "uRS8Pga1WB4"
     }
   ],
+  "usuarios": [
+    {
+      "name": "Jorge David",
+      "email": "guti@gmail.com",
+      "password": "gutierrez123",
+      "id": "YTNbTA9q35U",
+      "telefono": "913327596",
+      "distrito": "Santa anita"
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }
