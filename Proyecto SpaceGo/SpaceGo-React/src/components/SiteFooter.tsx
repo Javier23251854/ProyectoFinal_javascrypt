@@ -47,12 +47,6 @@ function SiteFooter() {
             </li>
 
             <li>
-              <NavLink to="/administrar-publicaciones" className={({ isActive }) => isActive ? "pagina-activa" : ""}>
-                Administrar publicaciones
-              </NavLink>
-            </li>
-
-            <li>
               <NavLink to="/centro-ayuda" className={({ isActive }) => isActive ? "pagina-activa" : ""}>
                 Centro de ayuda
               </NavLink>

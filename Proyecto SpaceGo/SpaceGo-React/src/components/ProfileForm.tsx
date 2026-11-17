@@ -1,5 +1,6 @@
 
 import type { ChangeEvent, FormEvent, RefObject } from "react";
+import { Link } from "react-router-dom";
 import type { Usuario } from "../models/usuario";
 
 interface ProfileFormProps {
@@ -85,9 +86,14 @@ function ProfileForm({
             </button>
           </div>
         ) : (
-          <button type="button" onClick={onEditar}>
-            Editar perfil
-          </button>
+          <div className="perfil-acciones">
+            <button type="button" onClick={onEditar}>
+              Editar perfil
+            </button>
+            <Link to="/administrar-publicaciones" className="perfil-btn-admin">
+              Administrar publicaciones
+            </Link>
+          </div>
         )}
 
       </form>

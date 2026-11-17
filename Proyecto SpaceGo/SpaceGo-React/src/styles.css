@@ -242,6 +242,32 @@ img {
   background: #751126;
 }
 
+.perfil-acciones {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.perfil-acciones button {
+  margin: 0;
+}
+
+.perfil-btn-admin {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 7px;
+  background: #9d1730;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+
+.perfil-btn-admin:hover {
+  background: #751126;
+}
+
 /* BOTÓN CANCELAR */
 
 .perfil-card form > div button:last-child {
@@ -491,7 +517,8 @@ img {
     padding: 22px;
   }
 
-  .perfil-card button {
+  .perfil-card button,
+  .perfil-card .perfil-btn-admin {
     margin-bottom: 10px;
   }
 

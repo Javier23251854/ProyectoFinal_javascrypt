@@ -8,9 +8,10 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "json-server db.json --port 3001"
+    "server": "json-server ../SpaceGo-Angular/db.json --port 3000"
   },
   "dependencies": {
+    "axios": "^1.21.1",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-router-dom": "^7.18.5"
