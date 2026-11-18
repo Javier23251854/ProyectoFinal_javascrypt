@@ -1,32 +1,6 @@
 
+
 <div class="favoritos-page">
-  <header class="header">
-    <div class="navbar container">
-      <div class="logo">
-        <a routerLink="/" (click)="cerrarMenu()" aria-label="Ir al inicio de SpaceGo">
-          <img src="/Imagenes/logo cuarto.png" alt="SpaceGo" />
-        </a>
-      </div>
-
-      <button type="button" class="menu-icon" (click)="cambiarMenu()"
-              [attr.aria-expanded]="menuAbierto()" aria-controls="menu-favoritos"
-              [attr.aria-label]="menuAbierto() ? 'Cerrar menú' : 'Abrir menú'">
-        <i class="fa-solid" [class.fa-bars]="!menuAbierto()" [class.fa-xmark]="menuAbierto()" aria-hidden="true"></i>
-      </button>
-
-      <nav id="menu-favoritos" class="menu" [class.activo]="menuAbierto()" aria-label="Navegación principal">
-        <ul>
-          <li><a routerLink="/" (click)="cerrarMenu()">Inicio</a></li>
-          <li><a routerLink="/buscar" (click)="cerrarMenu()"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>Buscar alojamiento</a></li>
-
-          <li><a routerLink="/publicar" (click)="cerrarMenu()"><i class="fa-solid fa-plus" aria-hidden="true"></i>Publicar alojamiento</a></li>
-          <li><a routerLink="/favoritos" class="activo" aria-current="page" (click)="cerrarMenu()"><i class="fa-solid fa-heart" aria-hidden="true"></i>Favoritos</a></li>
-          <li><a routerLink="/login" class="btn-login-nav" (click)="cerrarMenu()"><i class="fa-solid fa-user" aria-hidden="true"></i>Iniciar sesión</a></li>
-        </ul>
-      </nav>
-    </div>
-  </header>
-
   <section class="favoritos-hero" aria-labelledby="titulo-favoritos">
     <div class="container favoritos-hero-contenido">
       <div class="favoritos-hero-texto">
@@ -212,86 +186,5 @@
       <a routerLink="/buscar" class="btn-blanco-fav">Explorar alojamientos <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
     </section>
   </main>
-
-<footer class="footer">
-  <div class="footer-container container">
-
-    <!-- COLUMNA 1: SPACEGO -->
-    <div class="footer-box">
-      <div class="footer-logo">
-        <img src="/Imagenes/logo cuarto.png" alt="Logo SpaceGo">
-      </div>
-      <p>
-        Una plataforma pensada para ayudarte a encontrar
-        el espacio que necesitas.
-      </p>
-    </div>
-
-    <!-- COLUMNA 2: INFORMACIÓN -->
-    <div class="footer-box">
-      <h3>Información</h3>
-      <p>
-        SpaceGo es una plataforma creada para facilitar
-        la búsqueda de espacios de alojamiento de manera
-        sencilla, clara y práctica.
-      </p>
-      <p>
-        Conectamos a personas que buscan un lugar donde vivir
-        con propietarios que desean publicar sus espacios.
-      </p>
-    </div>
-
-    <!-- COLUMNA 3: PÁGINAS -->
-    <div class="footer-box">
-      <h3>Páginas</h3>
-      <ul>
-        <li>
-          <a href="http://localhost:5173/mi-perfil">
-            Mi perfil
-          </a>
-        </li>
-        <li>
-          <a href="http://localhost:5173/administrar-publicaciones">
-            Administrar publicaciones
-          </a>
-        </li>
-        <li>
-          <a href="http://localhost:5173/centro-ayuda">
-            Centro de ayuda
-          </a>
-        </li>
-        <li>
-          <a href="http://localhost:5173/comparar-alojamientos">
-            Comparar alojamientos
-          </a>
-        </li>
-        <li>
-          <a href="http://localhost:5173/mis-solicitudes">
-            Mis solicitudes
-          </a>
-        </li>
-      </ul>
-    </div>
-
-    <!-- COLUMNA 4: CONTACTO -->
-    <div class="footer-box">
-      <h3>Contacto</h3>
-      <p><i class="fa-solid fa-phone"></i> +51 987 654 321</p>
-      <p><i class="fa-solid fa-envelope"></i> contacto@spacego.pe</p>
-      <p><i class="fa-solid fa-location-dot"></i> Perú</p>
-
-      <div class="redes">
-        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook"></i></a>
-        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-        <a href="#" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2026 SpaceGo - Todos los derechos reservados</p>
-  </div>
-</footer>
 
 </div>

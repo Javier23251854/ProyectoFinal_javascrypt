@@ -58,34 +58,17 @@
           </a>
         </li>
 
-        <li>
-          <a routerLink="/publicar"
-             routerLinkActive="pagina-activa">
-            Publicar alojamiento
-          </a>
-        </li>
-
-        <li>
-          <a routerLink="/favoritos"
-             routerLinkActive="pagina-activa">
-            Favoritos
-          </a>
-        </li>
-
-        <li>
-          <a routerLink="/alojamiento"
-             routerLinkActive="pagina-activa">
-            Alojamientos
-          </a>
-        </li>
-
-        <li>
-          <a routerLink="/login"
-             routerLinkActive="pagina-activa">
-            Iniciar sesión
-          </a>
-        </li>
-
+        @if (auth.usuario()) {
+          <li><a routerLink="/publicar" routerLinkActive="pagina-activa">Publicar alojamiento</a></li>
+          <li><a routerLink="/favoritos" routerLinkActive="pagina-activa">Favoritos</a></li>
+          <li><a href="/mi-perfil">Mi perfil</a></li>
+          <li><a href="/administrar-publicaciones">Administrar publicaciones</a></li>
+          <li><a href="/centro-ayuda">Centro de ayuda</a></li>
+          <li><a href="/comparar-alojamientos">Comparar alojamientos</a></li>
+          <li><a href="/mis-solicitudes">Mis solicitudes</a></li>
+        } @else {
+          <li><a routerLink="/login" routerLinkActive="pagina-activa">Iniciar sesión</a></li>
+        }
       </ul>
 
     </div>

@@ -21,7 +21,6 @@ export class Buscar implements OnInit {
 
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  menuAbierto = false;
   get urlBusqueda(): string { return this.router.url; }
 
   private fb = inject(FormBuilder);

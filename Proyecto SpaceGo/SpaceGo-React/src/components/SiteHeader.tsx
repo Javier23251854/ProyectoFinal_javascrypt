@@ -1,137 +1,49 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { cerrarSesion } from "../services/usuarioService";
 
-function SiteHeader() {
-
+export default function SiteHeader() {
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const [sesionActiva, setSesionActiva] = useState(false);
+  const [saliendo, setSaliendo] = useState(false);
+  const [error, setError] = useState("");
+  const cerrarMenu = () => setMenuAbierto(false);
 
-  const cerrarMenu = () => {
-    setMenuAbierto(false);
-  };
-
-  useEffect(() => {
-
-    const comprobarSesion = () => {
-      const usuarioId = localStorage.getItem("spacego_usuario_id");
-      setSesionActiva(!!usuarioId);
-    };
-
-    comprobarSesion();
-
-    window.addEventListener("spacego-auth-change", comprobarSesion);
-
-    return () => {
-      window.removeEventListener("spacego-auth-change", comprobarSesion);
-    };
-
-  }, []);
-
-  const cerrarSesion = () => {
-
-    localStorage.removeItem("spacego_usuario_id");
-
-    setSesionActiva(false);
-    cerrarMenu();
-
-    window.location.href = "http://localhost:4200/";
-
-  };
+  async function salir() {
+    setSaliendo(true);
+    setError("");
+    try {
+      await cerrarSesion();
+      window.location.replace("/");
+    } catch {
+      setError("No se pudo cerrar la sesión. Inténtalo nuevamente.");
+      setSaliendo(false);
+    }
+  }
 
   return (
     <header className="header">
       <div className="navbar container">
-
-        <div className="logo">
-          <a href="http://localhost:4200/" onClick={cerrarMenu}>
-            <img src="/Imagenes/logo-cuarto.png" alt="Logo SpaceGo" />
-          </a>
-        </div>
-
-        <button
-          type="button"
-          className="menu-icon"
-          aria-label="Abrir menú"
-          aria-expanded={menuAbierto}
-          onClick={() => setMenuAbierto(!menuAbierto)}
-        >
-          &#9776;
-        </button>
-
-        <nav className={`menu ${menuAbierto ? "menu-abierto" : ""}`}>
+        <a className="logo" href="/">
+          <img src="/Imagenes/logo-cuarto.png" alt="SpaceGo, inicio" />
+        </a>
+        <button type="button" className="menu-icon" aria-label="Menú de navegación"
+                aria-controls="menu-principal" aria-expanded={menuAbierto}
+                onClick={() => setMenuAbierto(!menuAbierto)}>☰</button>
+        <nav id="menu-principal" aria-label="Navegación principal"
+             className={`menu ${menuAbierto ? "menu-abierto" : ""}`}>
           <ul>
-
-            <li>
-              <a href="http://localhost:4200/" onClick={cerrarMenu}>
-                Inicio
-              </a>
-            </li>
-
-            <li>
-              <a href="http://localhost:4200/buscar" onClick={cerrarMenu}>
-                <i className="fa-solid fa-magnifying-glass"></i>
-                Buscar alojamiento
-              </a>
-            </li>
-
-            {sesionActiva && (
-              <>
-                <li>
-                  <a href="http://localhost:4200/publicar" onClick={cerrarMenu}>
-                    <i className="fa-solid fa-plus"></i>
-                    Publicar alojamiento
-                  </a>
-                </li>
-
-                <li>
-                  <a href="http://localhost:4200/favoritos" onClick={cerrarMenu}>
-                    <i className="fa-regular fa-heart"></i>
-                    Favoritos
-                  </a>
-                </li>
-
-                <li>
-                  <Link
-                    to="/mi-perfil"
-                    className="btn-login-nav activo"
-                    onClick={cerrarMenu}
-                  >
-                    <i className="fa-solid fa-user"></i>
-                    Mi perfil
-                  </Link>
-                </li>
-
-                <li>
-                  <button
-                    type="button"
-                    onClick={cerrarSesion}
-                    className="btn-cerrar-sesion"
-                  >
-                    Cerrar sesión
-                  </button>
-                </li>
-              </>
-            )}
-
-            {!sesionActiva && (
-              <li>
-                <a
-                  href="http://localhost:4200/login"
-                  className="btn-login-nav"
-                  onClick={cerrarMenu}
-                >
-                  <i className="fa-solid fa-user"></i>
-                  Iniciar sesión
-                </a>
-              </li>
-            )}
-
+            <li><a href="/">Inicio</a></li>
+            <li><a href="/buscar">Buscar alojamiento</a></li>
+            <li><a href="/publicar">Publicar alojamiento</a></li>
+            <li><a href="/favoritos">Favoritos</a></li>
+            <li><NavLink to="/mi-perfil" className={({ isActive }) => isActive ? "activo" : ""}
+                         onClick={cerrarMenu}>Mi perfil</NavLink></li>
+            <li><button type="button" onClick={salir} disabled={saliendo}
+                        className="btn-cerrar-sesion">Cerrar sesión</button></li>
           </ul>
         </nav>
-
       </div>
+      {error && <p className="container" role="alert">{error}</p>}
     </header>
   );
 }
-
-export default SiteHeader;

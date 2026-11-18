@@ -16,34 +16,18 @@ import type { Alojamiento, CamposEditables } from "../models/alojamiento";
 
 type FiltroEstado = "todas" | "activas" | "desactivadas";
 
-// Recuperar el usuario con sesión iniciada (igual que Mi perfil)
-const obtenerUsuarioId = (): string | null => {
-  const parametros = new URLSearchParams(window.location.search);
-  const idRecibido = parametros.get("usuarioId");
-
-  if (idRecibido) {
-    localStorage.setItem("spacego_usuario_id", idRecibido);
-    window.dispatchEvent(new Event("spacego-auth-change"));
-  }
-
-  return idRecibido || localStorage.getItem("spacego_usuario_id");
-};
-
 function PanelPublicaciones() {
   const { notificar } = useNotificacion();
-
-  const [usuarioId] = useState<string | null>(obtenerUsuarioId);
 
   const {
     publicaciones,
     cargando,
     error,
-    modoDemostracion,
     recargar,
     editar,
     cambiarEstado,
     eliminar
-  } = usePublicaciones(usuarioId);
+  } = usePublicaciones();
 
   const [busqueda, setBusqueda] = useState("");
   const [filtro, setFiltro] = useState<FiltroEstado>("todas");
@@ -132,16 +116,6 @@ function PanelPublicaciones() {
   };
 
   // Estados de la pantalla
-  if (!usuarioId) {
-    return (
-      <section className="admin-pagina">
-        <div className="admin-estado">
-          <p>Inicia sesión en SpaceGo para administrar tus publicaciones.</p>
-        </div>
-      </section>
-    );
-  }
-
   if (cargando) {
     return (
       <section className="admin-pagina">
@@ -171,12 +145,6 @@ function PanelPublicaciones() {
         <h1>Administrar publicaciones</h1>
         <p>Visualiza, edita, desactiva o elimina los alojamientos que publicaste.</p>
       </header>
-
-      {modoDemostracion && (
-        <div className="admin-aviso">
-          Las publicaciones aún no tienen propietario asignado, por eso se muestran todas.
-        </div>
-      )}
 
       <div className="admin-resumen">
         <div className="admin-resumen-item">

@@ -1,4 +1,31 @@
+<header class="header">
+  <div class="navbar container">
+    <a routerLink="/" class="logo" (click)="cerrarMenu()">
+      <img src="/Imagenes/logo cuarto.png" alt="SpaceGo, inicio">
+    </a>
+    <button type="button" class="menu-icon" aria-label="Menú de navegación"
+            aria-controls="menu-principal" [attr.aria-expanded]="menuAbierto"
+            (click)="menuAbierto = !menuAbierto">☰</button>
+    <nav id="menu-principal" class="menu" [class.activo]="menuAbierto" aria-label="Navegación principal">
+      <ul>
+        <li><a routerLink="/" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }"
+               (click)="cerrarMenu()">Inicio</a></li>
+        <li><a routerLink="/buscar" routerLinkActive="activo" (click)="cerrarMenu()">Buscar alojamiento</a></li>
+        @if (auth.usuario()) {
+          <li><a routerLink="/publicar" routerLinkActive="activo" (click)="cerrarMenu()">Publicar alojamiento</a></li>
+          <li><a routerLink="/favoritos" routerLinkActive="activo" (click)="cerrarMenu()">Favoritos</a></li>
+          <li><a href="/mi-perfil" (click)="cerrarMenu()">Mi perfil</a></li>
+          <li><button type="button" class="btn btn-principal" [disabled]="cerrandoSesion"
+                      (click)="cerrarSesion()">Cerrar sesión</button></li>
+        } @else {
+          <li><a routerLink="/login" routerLinkActive="activo" (click)="cerrarMenu()">Iniciar sesión</a></li>
+        }
+      </ul>
+    </nav>
+  </div>
+  @if (errorSesion) { <p class="container" role="alert">{{ errorSesion }}</p> }
+</header>
 <main class="contenido-principal">
   <router-outlet></router-outlet>
 </main>
-
+<app-site-footer />

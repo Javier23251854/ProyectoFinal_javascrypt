@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { UsuarioService } from '../core/services/usuario.service';
+import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,6 +10,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './inicio.css'
 })
 export class Inicio {
+  protected auth = inject(UsuarioService);
 
   faqAbierta: number | null = null;
 

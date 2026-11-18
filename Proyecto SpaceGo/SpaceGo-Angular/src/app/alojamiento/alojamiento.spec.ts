@@ -1,3 +1,4 @@
+import { UsuarioService } from '../core/services/usuario.service';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, convertToParamMap, provideRouter } from '@angular/router';
 import { BehaviorSubject, of } from 'rxjs';
@@ -43,6 +44,7 @@ describe('Alojamiento - detalles dinámicos', () => {
       imports: [Alojamiento],
       providers: [
         provideRouter([]),
+        { provide: UsuarioService, useValue: { usuario: () => null } },
         { provide: ActivatedRoute, useValue: { paramMap: ruta$, queryParamMap: consulta$ } },
         { provide: AlojamientoService, useValue: servicioDePrueba }
       ]

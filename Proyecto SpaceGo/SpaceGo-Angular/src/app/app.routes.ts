@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { requiereSesion } from './core/sesion.guard';
 
 import { Inicio } from './inicio/inicio';
 
@@ -22,9 +23,9 @@ export const routes: Routes = [
 
   { path: 'alojamiento/:id', component: Alojamiento },
 
-  { path: 'favoritos', component: Favoritos },
+  { path: 'favoritos', component: Favoritos, canActivate: [requiereSesion] },
 
-  { path: 'publicar', component: Publicar },
+  { path: 'publicar', component: Publicar, canActivate: [requiereSesion] },
 
   { path: 'login', component: Login },
 

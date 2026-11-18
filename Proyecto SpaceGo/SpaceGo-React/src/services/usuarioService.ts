@@ -1,7 +1,5 @@
 import type { Usuario } from "../models/usuario";
 
-const API_URL = "http://localhost:3000/usuarios";
-
 interface UsuarioAPI {
   id: string;
   name: string;
@@ -10,55 +8,42 @@ interface UsuarioAPI {
   distrito?: string;
 }
 
-// Obtener el usuario registrado en Angular
-export const obtenerUsuario = async (id: string): Promise<Usuario> => {
-
-  const respuesta = await fetch(`${API_URL}/${id}`);
-
-  if (!respuesta.ok) {
-    throw new Error("Error al obtener los datos del usuario");
-  }
-
-  const datos: UsuarioAPI = await respuesta.json();
-
+function convertir(datos: UsuarioAPI): Usuario {
   return {
     id: datos.id,
     nombre: datos.name,
     correo: datos.email,
     telefono: datos.telefono ?? "",
-    distrito: datos.distrito ?? ""
+    distrito: datos.distrito ?? "",
   };
-};
+}
 
-// Actualizar los datos del usuario
-export const actualizarUsuario = async (
-  usuario: Usuario
-): Promise<Usuario> => {
+export async function obtenerSesion(signal: AbortSignal): Promise<Usuario | null> {
+  const respuesta = await fetch("/api/auth/sesion", { signal });
+  if (!respuesta.ok) throw new Error("No se pudo comprobar la sesión.");
+  const { usuario }: { usuario: UsuarioAPI | null } = await respuesta.json();
+  return usuario ? convertir(usuario) : null;
+}
 
-  const respuesta = await fetch(`${API_URL}/${usuario.id}`, {
+export async function cerrarSesion(): Promise<void> {
+  const respuesta = await fetch("/api/auth/salir", { method: "POST" });
+  if (!respuesta.ok) throw new Error("No se pudo cerrar la sesión.");
+}
+
+export async function actualizarUsuario(usuario: Usuario): Promise<Usuario> {
+  const respuesta = await fetch("/api/auth/perfil", {
     method: "PATCH",
-    headers: {
-      "Content-Type": "application/json"
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
       name: usuario.nombre,
       email: usuario.correo,
       telefono: usuario.telefono ?? "",
-      distrito: usuario.distrito ?? ""
-    })
+      distrito: usuario.distrito ?? "",
+    }),
   });
-
   if (!respuesta.ok) {
-    throw new Error("Error al actualizar el usuario");
+    const { mensaje } = await respuesta.json();
+    throw new Error(mensaje ?? "No se pudo guardar el perfil.");
   }
-
-  const datos: UsuarioAPI = await respuesta.json();
-
-  return {
-    id: datos.id,
-    nombre: datos.name,
-    correo: datos.email,
-    telefono: datos.telefono ?? "",
-    distrito: datos.distrito ?? ""
-  };
-};
+  return convertir(await respuesta.json());
+}

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { UsuarioService } from '../../core/services/usuario.service';
+import { Component, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
@@ -8,4 +9,6 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './site-footer.html',
   styleUrl: './site-footer.css'
 })
-export class SiteFooter {}
+export class SiteFooter {
+  protected auth = inject(UsuarioService);
+}

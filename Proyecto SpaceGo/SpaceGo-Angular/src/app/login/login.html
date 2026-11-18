@@ -46,11 +46,11 @@
             <!-- PESTAÑAS -->
             <div class="auth-tabs">
 
-                <button type="button" class="tab-btn" [class.active]="!vistaRegistro" (click)="mostrarLogin()">
+                <button type="button" class="tab-btn" [disabled]="enviando()" [class.active]="!vistaRegistro" (click)="mostrarLogin()">
                     Iniciar Sesión
                 </button>
 
-                <button type="button" class="tab-btn" [class.active]="vistaRegistro" (click)="mostrarRegistro()">
+                <button type="button" class="tab-btn" [disabled]="enviando()" [class.active]="vistaRegistro" (click)="mostrarRegistro()">
                     Registrarse
                 </button>
 
@@ -68,21 +68,6 @@
                     </p>
                 </div>
 
-                <div class="social-login">
-                    <button type="button" class="btn-social btn-google">
-                        <i class="fa-brands fa-google"></i>
-                        Google
-                    </button>
-
-                    <button type="button" class="btn-social btn-facebook">
-                        <i class="fa-brands fa-facebook-f"></i>
-                        Facebook
-                    </button>
-                </div>
-
-                <div class="divider">
-                    <span>o continúa con tu correo</span>
-                </div>
 
                 <!-- CORREO -->
                 <div class="input-field">
@@ -93,7 +78,7 @@
                     <div class="input-wrapper">
                         <i class="fa-regular fa-envelope field-icon"></i>
 
-                        <input type="email" id="login-email" formControlName="email" placeholder="nombre@correo.com">
+                        <input type="email" id="login-email" autocomplete="email" formControlName="email" placeholder="nombre@correo.com">
                     </div>
 
                     @if (loginForm.controls.email.touched &&
@@ -113,7 +98,7 @@
                     <div class="input-wrapper">
                         <i class="fa-solid fa-lock field-icon"></i>
 
-                        <input type="password" id="login-password" formControlName="password" placeholder="••••••••">
+                        <input type="password" id="login-password" autocomplete="current-password" formControlName="password" placeholder="••••••••">
                     </div>
 
                     @if (loginForm.controls.password.touched &&
@@ -131,29 +116,18 @@
                         Recordarme
                     </label>
 
-                    <a href="#" class="forgot-pass">
-                        ¿Olvidaste tu contraseña?
-                    </a>
                 </div>
 
-                <!-- MENSAJE DE LOGIN -->
-                @if (mensajeLogin) {
-                <p class="mensaje-exito">{{ mensajeLogin }}</p>
-                }
-
-                <!-- ENLACE A MI PERFIL -->
-                @if (urlMiPerfil) {
-                <a [href]="urlMiPerfil" class="enlace-perfil">
-                    Ir a Mi perfil
-                </a>
+                @if (mensajeRegistro()) {
+                <p class="mensaje-exito" role="status">{{ mensajeRegistro() }}</p>
                 }
 
                 <!-- ERROR DE LOGIN -->
-                @if (errorLogin) {
-                <p class="mensaje-error">{{ errorLogin }}</p>
+                @if (errorLogin()) {
+                <p class="mensaje-error" role="alert">{{ errorLogin() }}</p>
                 }
 
-                <button type="submit" class="btn-submit">
+                <button type="submit" class="btn-submit" [disabled]="enviando()">
                     Iniciar Sesión
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>
@@ -183,7 +157,7 @@
                     <div class="input-wrapper">
                         <i class="fa-regular fa-user field-icon"></i>
 
-                        <input type="text" id="reg-name" formControlName="name" placeholder="Tu nombre">
+                        <input type="text" id="reg-name" autocomplete="name" formControlName="name" placeholder="Tu nombre">
                     </div>
 
                     @if (registerForm.controls.name.touched &&
@@ -203,7 +177,7 @@
                     <div class="input-wrapper">
                         <i class="fa-regular fa-envelope field-icon"></i>
 
-                        <input type="email" id="reg-email" formControlName="email" placeholder="nombre@correo.com">
+                        <input type="email" id="reg-email" autocomplete="email" formControlName="email" placeholder="nombre@correo.com">
                     </div>
 
                     @if (registerForm.controls.email.touched &&
@@ -223,7 +197,7 @@
                     <div class="input-wrapper">
                         <i class="fa-solid fa-lock field-icon"></i>
 
-                        <input type="password" id="reg-password" formControlName="password"
+                        <input type="password" id="reg-password" autocomplete="new-password" formControlName="password"
                             placeholder="Mínimo 8 caracteres">
                     </div>
 
@@ -243,17 +217,12 @@
                     </label>
                 </div>
 
-                <!-- MENSAJE DE REGISTRO -->
-                @if (mensajeRegistro) {
-                <p class="mensaje-exito">{{ mensajeRegistro }}</p>
-                }
-
                 <!-- ERROR DE REGISTRO -->
-                @if (errorRegistro) {
-                <p class="mensaje-error">{{ errorRegistro }}</p>
+                @if (errorRegistro()) {
+                <p class="mensaje-error" role="alert">{{ errorRegistro() }}</p>
                 }
 
-                <button type="submit" class="btn-submit">
+                <button type="submit" class="btn-submit" [disabled]="enviando()">
                     Crear Cuenta
                     <i class="fa-solid fa-arrow-right"></i>
                 </button>

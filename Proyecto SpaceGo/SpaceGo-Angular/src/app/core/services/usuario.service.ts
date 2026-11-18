@@ -1,51 +1,53 @@
-import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, switchMap, throwError } from 'rxjs';
+import { Injectable, inject, signal } from '@angular/core';
+import { Observable, finalize, map, shareReplay, tap } from 'rxjs';
 import { Usuario } from '../../models/usuario';
 
-@Injectable({
-  providedIn: 'root'
-})
+interface Sesion {
+  usuario: Usuario | null;
+}
+
+@Injectable({ providedIn: 'root' })
 export class UsuarioService {
-
   private http = inject(HttpClient);
+  private sesion = signal<Usuario | null>(null);
+  readonly usuario = this.sesion.asReadonly();
+  private consulta?: Observable<Usuario | null>;
+  private revision = 0;
 
-  private apiUrl = 'http://localhost:3000/usuarios';
+  comprobarSesion(): Observable<Usuario | null> {
+    if (!this.consulta) {
+      const revision = this.revision;
+      this.consulta = this.http.get<Sesion>('/api/auth/sesion').pipe(
+        map(({ usuario }) => {
+          if (revision === this.revision) this.sesion.set(usuario);
+          return this.usuario();
+        }),
+        finalize(() => this.consulta = undefined),
+        shareReplay({ bufferSize: 1, refCount: false }),
+      );
+    }
+    return this.consulta;
+  }
 
-  registrarUsuario(usuario: Omit<Usuario, 'id'>): Observable<Usuario> {
+  registrarUsuario(datos: { name: string; email: string; password: string }): Observable<Usuario> {
+    return this.http.post<Usuario>('/api/auth/registro', datos);
+  }
 
-    const url = `${this.apiUrl}?email=${encodeURIComponent(usuario.email)}`;
-
-    return this.http.get<Usuario[]>(url).pipe(
-      switchMap(usuarios => {
-
-        if (usuarios.length > 0) {
-          return throwError(() => new Error('Este correo ya está registrado.'));
-        }
-
-        return this.http.post<Usuario>(this.apiUrl, usuario);
-      })
+  iniciarSesion(email: string, password: string, remember: boolean): Observable<Usuario | null> {
+    return this.http.post<Sesion>('/api/auth/login', { email, password, remember }).pipe(
+      map(({ usuario }) => usuario),
+      tap(usuario => {
+        this.revision++;
+        this.sesion.set(usuario);
+      }),
     );
   }
-    validarCredenciales(email: string, password: string): Observable<Usuario> {
 
-    const url = `${this.apiUrl}?email=${encodeURIComponent(email)}`;
-
-    return this.http.get<Usuario[]>(url).pipe(
-      switchMap(usuarios => {
-        const usuario = usuarios.find(
-          item => item.password === password
-        );
-
-        if (!usuario) {
-          return throwError(() => new Error('Correo o contraseña incorrectos.'));
-        }
-
-        return new Observable<Usuario>(subscriber => {
-          subscriber.next(usuario);
-          subscriber.complete();
-        });
-      })
-    );
+  cerrarSesion(): Observable<void> {
+    return this.http.post<void>('/api/auth/salir', null).pipe(tap(() => {
+      this.revision++;
+      this.sesion.set(null);
+    }));
   }
 }

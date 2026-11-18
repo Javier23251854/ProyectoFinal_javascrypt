@@ -160,21 +160,23 @@
   "favoritos": [
     {
       "alojamientoId": 99,
-      "id": "yzKxlqpkcro"
+      "id": "yzKxlqpkcro",
+      "usuarioId": "YTNbTA9q35U"
     },
     {
       "alojamientoId": "3",
-      "id": "uRS8Pga1WB4"
+      "id": "uRS8Pga1WB4",
+      "usuarioId": "YTNbTA9q35U"
     }
   ],
   "usuarios": [
     {
       "name": "Jorge David",
       "email": "guti@gmail.com",
-      "password": "gutierrez123",
       "id": "YTNbTA9q35U",
       "telefono": "913327596",
-      "distrito": "Santa anita"
+      "distrito": "Santa anita",
+      "passwordHash": "847dd2325529eee5b20710b77e03515a:2c72a8771df48d40f5916cec365299a7858bcf47dda8504105f41d6965c3a2f75f23cc989f165c940ccf781a999315458d46f7bb6da8b222bb8e490c76c28d33"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

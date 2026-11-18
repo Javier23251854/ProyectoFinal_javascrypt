@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { Alojamiento } from '../../models/alojamiento';
 
 @Injectable({
@@ -11,8 +11,8 @@ export class AlojamientoService {
 
   private http = inject(HttpClient);
 
-  private apiUrl = 'http://localhost:3000/alojamientos';
-  private apiFavoritosUrl = 'http://localhost:3000/favoritos';
+  private apiUrl = '/api/alojamientos';
+  private apiFavoritosUrl = '/api/favoritos';
 
   private fallbackAlojamientos: Alojamiento[] = [
     {
@@ -188,22 +188,8 @@ export class AlojamientoService {
     return this.http.get<{ id: string | number; alojamientoId: string | number }[]>(this.apiFavoritosUrl);
   }
 
-  agregarFavorito(alojamientoId: string | number): Observable<any> {
-    return this.obtenerFavoritos().pipe(
-      switchMap((favoritos) => {
-        const yaExiste = favoritos.some(
-          favorito => String(favorito.alojamientoId) === String(alojamientoId)
-        );
-
-        if (yaExiste) {
-          return of(favoritos.find(
-            favorito => String(favorito.alojamientoId) === String(alojamientoId)
-          ));
-        }
-
-        return this.http.post(this.apiFavoritosUrl, { alojamientoId });
-      })
-    );
+  agregarFavorito(alojamientoId: string | number): Observable<unknown> {
+    return this.http.post(this.apiFavoritosUrl, { alojamientoId });
   }
 
   eliminarFavorito(id: string | number): Observable<void> {

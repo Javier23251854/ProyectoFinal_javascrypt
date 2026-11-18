@@ -1,18 +1,18 @@
 import axios from "axios";
 import type { Alojamiento } from "../models/alojamiento";
 
-// Mismo JSON Server que usa Angular (db.json del proyecto Angular)
+// API compartida con Angular
 const api = axios.create({
-  baseURL: "http://localhost:3000",
+  baseURL: "/api",
   headers: { "Content-Type": "application/json" },
   timeout: 8000
 });
 
-// READ: obtener todos los alojamientos
+// READ: obtener las publicaciones de la cuenta
 export const listarAlojamientos = async (
   signal?: AbortSignal
 ): Promise<Alojamiento[]> => {
-  const { data } = await api.get<Alojamiento[]>("/alojamientos", { signal });
+  const { data } = await api.get<Alojamiento[]>("/alojamientos/mios", { signal });
   return data;
 };
 

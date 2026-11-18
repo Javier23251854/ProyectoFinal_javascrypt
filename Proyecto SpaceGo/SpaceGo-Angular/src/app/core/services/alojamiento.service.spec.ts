@@ -27,7 +27,7 @@ describe('AlojamientoService', () => {
       result = alojamientos;
     });
 
-    const req = httpMock.expectOne('http://localhost:3000/alojamientos');
+    const req = httpMock.expectOne('/api/alojamientos');
     req.flush(null, {
       status: 500,
       statusText: 'Server Error'
@@ -39,14 +39,13 @@ describe('AlojamientoService', () => {
   it('does not substitute the first listing for a nonexistent ID', () => {
     let failed = false;
     service.obtenerAlojamientoPorId('missing').subscribe({ error: () => failed = true });
-    httpMock.expectOne('http://localhost:3000/alojamientos/missing').flush(null, {status: 404, statusText: 'Not Found'});
+    httpMock.expectOne('/api/alojamientos/missing').flush(null, {status: 404, statusText: 'Not Found'});
     expect(failed).toBe(true);
   });
 
   it('saves alphanumeric IDs without coercion', () => {
     service.agregarFavorito('abc123').subscribe();
-    httpMock.expectOne('http://localhost:3000/favoritos').flush([]);
-    const request = httpMock.expectOne('http://localhost:3000/favoritos');
+    const request = httpMock.expectOne('/api/favoritos');
     expect(request.request.body).toEqual({ alojamientoId: 'abc123' });
     request.flush({id: 'f1', alojamientoId: 'abc123'});
   });
@@ -54,8 +53,7 @@ describe('AlojamientoService', () => {
   it('propagates save errors instead of reporting temporary success', () => {
     let failed = false;
     service.agregarFavorito('abc123').subscribe({ error: () => failed = true });
-    httpMock.expectOne('http://localhost:3000/favoritos').flush([]);
-    httpMock.expectOne('http://localhost:3000/favoritos').flush(null, {status: 500, statusText: 'Server Error'});
+    httpMock.expectOne('/api/favoritos').flush(null, {status: 500, statusText: 'Server Error'});
     expect(failed).toBe(true);
   });
 

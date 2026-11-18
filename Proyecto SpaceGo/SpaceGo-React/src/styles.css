@@ -543,3 +543,18 @@ img {
   color: #666;
   font-size: 15px;
 }
+.btn-cerrar-sesion {
+  padding: 8px 14px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  color: var(--vino, #731d32);
+  background: transparent;
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.btn-cerrar-sesion:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}

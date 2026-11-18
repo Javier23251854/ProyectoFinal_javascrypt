@@ -100,7 +100,6 @@ export class Favoritos implements OnInit {
   readonly errorAccion = signal('');
   readonly eliminandoIds = signal<ReadonlySet<string | number>>(new Set<string | number>());
   readonly climaPorZona = signal<Record<string, EstadoClima>>({});
-  readonly menuAbierto = signal(false);
   readonly cantidadFavoritos = computed(() => this.favoritos().length);
 
   // Cache por coordenadas: múltiples alojamientos de una misma zona comparten consulta.
@@ -269,14 +268,6 @@ export class Favoritos implements OnInit {
 
   iconoTipo(tipo: string): string {
     return ICONOS_TIPO[tipo] || 'fa-house';
-  }
-
-  cambiarMenu(): void {
-    this.menuAbierto.update(abierto => !abierto);
-  }
-
-  cerrarMenu(): void {
-    this.menuAbierto.set(false);
   }
 
   climaPara(alojamiento: AlojamientoFavorito): EstadoClima {

@@ -1,4 +1,3 @@
-
 import type { ChangeEvent, FormEvent, RefObject } from "react";
 import { Link } from "react-router-dom";
 import type { Usuario } from "../models/usuario";
@@ -79,14 +78,14 @@ function ProfileForm({
         />
 
         {editando ? (
-          <div>
+          <div key="edicion">
             <button type="submit">Guardar cambios</button>
             <button type="button" onClick={onCancelar}>
               Cancelar
             </button>
           </div>
         ) : (
-          <div className="perfil-acciones">
+          <div key="lectura" className="perfil-acciones">
             <button type="button" onClick={onEditar}>
               Editar perfil
             </button>

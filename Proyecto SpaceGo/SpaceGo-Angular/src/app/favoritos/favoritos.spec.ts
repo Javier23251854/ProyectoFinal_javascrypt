@@ -1,5 +1,6 @@
+import { provideRouter } from '@angular/router';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of, throwError } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 
 import { AlojamientoService } from '../core/services/alojamiento.service';
 import { Favoritos } from './favoritos';
@@ -24,9 +25,9 @@ describe('Favoritos', () => {
 
   let registros: { id: string; alojamientoId: number }[];
   let servicioSimulado: {
-    obtenerAlojamientos: () => ReturnType<typeof of>;
-    obtenerFavoritos: () => ReturnType<typeof of>;
-    eliminarFavorito: (id: string | number) => ReturnType<typeof of>;
+    obtenerAlojamientos: () => Observable<typeof alojamientosPrueba>;
+    obtenerFavoritos: () => Observable<typeof registros>;
+    eliminarFavorito: (id: string | number) => Observable<void>;
   };
 
   beforeEach(async () => {
@@ -36,13 +37,13 @@ describe('Favoritos', () => {
       obtenerFavoritos: () => of([...registros]),
       eliminarFavorito: (id: string | number) => {
         registros = registros.filter(item => item.id !== String(id));
-        return of(null);
+        return of(undefined);
       }
     };
 
     await TestBed.configureTestingModule({
       imports: [Favoritos],
-      providers: [{ provide: AlojamientoService, useValue: servicioSimulado }]
+      providers: [provideRouter([]), { provide: AlojamientoService, useValue: servicioSimulado }]
     }).compileComponents();
 
     fixture = TestBed.createComponent(Favoritos);

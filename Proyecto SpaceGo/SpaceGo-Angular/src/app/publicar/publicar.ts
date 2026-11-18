@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import {
   FormBuilder,
   ReactiveFormsModule,
@@ -21,7 +20,7 @@ interface Departamento {
 @Component({
   selector: 'app-publicar',
   standalone: true,
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [ReactiveFormsModule],
   templateUrl: './publicar.html',
   styleUrl: './publicar.css'
 })
@@ -396,6 +395,9 @@ export class Publicar {
       distrito: datos.distrito || '',
       imagen: '/Imagenes/logo cuarto.png',
       descripcion: datos.descripcion || '',
+      contacto: { telefono: datos.telefono || '', correo: datos.correo || '' },
+      referencia: datos.referencia || '',
+      caracteristicas: datos.caracteristicas || [],
       fecha: new Date().toISOString().split('T')[0]
     };
 

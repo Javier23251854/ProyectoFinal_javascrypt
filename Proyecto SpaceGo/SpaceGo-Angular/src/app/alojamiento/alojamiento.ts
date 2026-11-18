@@ -1,3 +1,4 @@
+import { UsuarioService } from '../core/services/usuario.service';
 import { CurrencyPipe, Location } from '@angular/common';
 import { ChangeDetectorRef, Component, DestroyRef, OnInit, inject } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -18,6 +19,7 @@ type DetalleAlojamiento = AlojamientoModel;
   templateUrl: './alojamiento.html'
 })
 export class Alojamiento implements OnInit {
+  protected auth = inject(UsuarioService);
   private readonly location = inject(Location);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -34,7 +36,6 @@ export class Alojamiento implements OnInit {
   mapaUrl: SafeResourceUrl | null = null;
   mapaTieneCoordenadas = false;
   agregandoFavorito = false;
-  menuAbierto = false;
   favoritoGuardado = false;
   errorFavorito = '';
   volverUrl = '/buscar';
