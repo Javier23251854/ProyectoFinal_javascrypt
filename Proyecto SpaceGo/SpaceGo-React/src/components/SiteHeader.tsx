@@ -70,6 +70,16 @@ export default function SiteHeader() {
             </li>
             <li>
               <NavLink
+                to="/mis-solicitudes"
+                className={({ isActive }) => isActive ? "activo" : ""}
+                onClick={cerrarMenu}
+              >
+                <i className="fa-regular fa-paper-plane" />
+                Mis solicitudes
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to="/mi-perfil"
                 className={({ isActive }) => isActive ? "activo" : ""}
                 onClick={cerrarMenu}
@@ -89,3 +99,4 @@ export default function SiteHeader() {
     </header>
   );
 }
+
