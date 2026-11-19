@@ -1,6 +1,6 @@
 import type { Alojamiento } from "../../models/alojamiento";
 
-export const IMAGEN_POR_DEFECTO = "/Imagenes/logo-cuarto.png";
+export const IMAGEN_POR_DEFECTO = "/Imagenes/logo cuarto.png";
 
 export const TIPOS = [
   { valor: "individual", etiqueta: "Habitación individual" },

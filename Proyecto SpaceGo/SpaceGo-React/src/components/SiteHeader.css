@@ -1,0 +1,146 @@
+.header {
+  width: 100%;
+  background: #ffffff;
+  border-bottom: 1px solid #eeeeee;
+  position: relative;
+  z-index: 1000;
+}
+
+.header .navbar {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 25px;
+}
+
+.header .navbar.container {
+  width: 100%;
+  max-width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.header .logo {
+  flex-shrink: 0;
+}
+
+.header .logo img {
+  width: 145px;
+}
+
+.header .menu {
+  margin-left: auto;
+}
+
+.header .menu ul {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin: 0;
+  padding: 0;
+}
+
+.header .menu a {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #242424;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.header .menu a:hover,
+.header .menu a.activo {
+  color: #9d1730;
+}
+
+.header .menu a.activo {
+  font-weight: 700;
+}
+
+.header .menu .btn-principal {
+  white-space: nowrap;
+  border: 0;
+  border-radius: 8px;
+  padding: 11px 22px;
+  background: #9d1730;
+  color: #ffffff;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.header .menu .btn-principal:hover:not(:disabled) {
+  background: #751126;
+  transform: translateY(-2px);
+}
+
+.header .menu .btn-principal:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.header .menu-icon {
+  display: none;
+  border: none;
+  background: transparent;
+  color: #9d1730;
+  font-size: 25px;
+  cursor: pointer;
+}
+
+@media (min-width: 576px) {
+  .header .navbar.container { max-width: 540px; }
+}
+
+@media (min-width: 768px) {
+  .header .navbar.container { max-width: 720px; }
+}
+
+@media (min-width: 992px) {
+  .header .navbar.container { max-width: 960px; }
+}
+
+@media (min-width: 1200px) {
+  .header .navbar.container { max-width: 1140px; }
+}
+
+@media (min-width: 1400px) {
+  .header .navbar.container { max-width: 1320px; }
+}
+
+@media (max-width: 991px) {
+  .header .menu ul { gap: 15px; }
+  .header .menu a { font-size: 13px; }
+}
+
+@media (max-width: 767px) {
+  .header .navbar { min-height: 68px; }
+  .header .menu-icon { display: block; }
+  .header .menu {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: #ffffff;
+    border-top: 1px solid #e8e3e1;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  }
+  .header .menu.activo { display: block; }
+  .header .menu ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 575px) {
+  .header .logo img { width: 125px; }
+}

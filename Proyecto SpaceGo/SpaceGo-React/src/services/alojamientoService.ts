@@ -1,14 +1,20 @@
 import axios from "axios";
 import type { Alojamiento } from "../models/alojamiento";
 
-// API compartida con Angular
 const api = axios.create({
   baseURL: "/api",
   headers: { "Content-Type": "application/json" },
   timeout: 8000
 });
 
-// READ: obtener las publicaciones de la cuenta
+export async function obtenerAlojamientos(): Promise<{
+  alojamientos: Alojamiento[];
+  modoDemostracion: boolean;
+}> {
+  const { data } = await api.get<Alojamiento[]>("/alojamientos");
+  return { alojamientos: data, modoDemostracion: false };
+}
+
 export const listarAlojamientos = async (
   signal?: AbortSignal
 ): Promise<Alojamiento[]> => {
@@ -16,7 +22,6 @@ export const listarAlojamientos = async (
   return data;
 };
 
-// UPDATE: modificar solo los campos enviados (PATCH)
 export const actualizarAlojamiento = async (
   id: string | number,
   cambios: Partial<Alojamiento>
@@ -28,7 +33,6 @@ export const actualizarAlojamiento = async (
   return data;
 };
 
-// DELETE: eliminar una publicación
 export const eliminarAlojamiento = async (id: string | number): Promise<void> => {
   await api.delete(`/alojamientos/${encodeURIComponent(String(id))}`);
 };

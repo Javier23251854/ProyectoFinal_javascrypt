@@ -9,13 +9,20 @@ export interface Alojamiento {
   imagen: string;
   descripcion: string;
   fecha: string;
-  // Campos que usa la administración de publicaciones.
-  // Si no existen en el registro se asume: activo = true.
+  imagenes?: string[];
+  latitud?: number | string | null;
+  longitud?: number | string | null;
+  capacidad?: string;
+  referencia?: string;
+  servicios?: string[];
+  incluye?: string[];
+  noIncluye?: string[];
+  caracteristicas?: string[];
+  contacto?: { telefono?: string; correo?: string };
   activo?: boolean;
   propietarioId?: string | number;
 }
 
-// Campos que el propietario puede editar desde el panel
 export type CamposEditables = Pick<
   Alojamiento,
   "titulo" | "tipo" | "precio" | "departamento" | "provincia" | "distrito" | "descripcion"

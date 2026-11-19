@@ -558,3 +558,38 @@ img {
   opacity: 0.6;
   cursor: wait;
 }
+
+
+.footer-container.container {
+  width: 100%;
+  max-width: 100%;
+}
+
+.footer-box h3,
+.footer-box li a.pagina-activa {
+  color: #D97886;
+}
+
+.footer-box li a.pagina-activa {
+  font-weight: 700;
+}
+
+@media (min-width: 576px) {
+  .footer-container.container { max-width: 540px; }
+}
+
+@media (min-width: 768px) {
+  .footer-container.container { max-width: 720px; }
+}
+
+@media (min-width: 992px) {
+  .footer-container.container { max-width: 960px; }
+}
+
+@media (min-width: 1200px) {
+  .footer-container.container { max-width: 1140px; }
+}
+
+@media (min-width: 1400px) {
+  .footer-container.container { max-width: 1320px; }
+}

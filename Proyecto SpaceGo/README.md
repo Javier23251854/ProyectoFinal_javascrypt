@@ -37,6 +37,7 @@ Para probar la recuperación de datos, guarda un favorito, actualiza tu nombre e
 | Autorización y navegación | `SpaceGo-Angular/src/app/core/sesion.guard.ts`, `app.html` y `SpaceGo-React/src/App.tsx` | Angular protege sus rutas privadas con `canActivate`. React consulta la sesión antes de mostrar sus páginas. La API valida el acceso a sus operaciones privadas. |
 | Integración entre frameworks | `servidor/index.mjs` y `SpaceGo-React/src/services/usuarioService.ts` | Ambas aplicaciones usan el mismo origen. React consulta `GET /api/auth/sesion` para recibir la identidad y los datos de perfil de la cuenta activa. |
 | Propiedad y persistencia | `servidor/api.mjs` y `SpaceGo-React/src/hooks/usePublicaciones.ts` | El servidor asigna el propietario al publicar y filtra los favoritos por la cuenta de la sesión. React consulta las publicaciones propias para administrarlas. |
+| Comparación de alojamientos | `SpaceGo-React/src/pages/CompararAlojamientos.tsx` y `SpaceGo-React/src/services/alojamientoService.ts` | React obtiene los alojamientos activos desde la API compartida y permite seleccionar hasta tres para comparar sus características. La ruta requiere sesión iniciada. |
 
 El servidor está configurado para ejecución local. El formulario de publicación conserva la imagen predeterminada del proyecto original. Los enlaces de acceso social y recuperación de contraseña del formulario original se retiraron porque eran controles sin servicio asociado.
 
