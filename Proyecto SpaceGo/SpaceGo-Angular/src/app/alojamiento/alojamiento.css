@@ -654,3 +654,88 @@ dt { font-weight: 400; color: #766f75; font-size: 12px; } dd { margin: 5px 0 0; 
 button:focus-visible, a:focus-visible { outline: 3px solid #b54460; outline-offset: 4px; }
 @media(max-width: 900px) { .detalle-grid { grid-template-columns: 1fr; }.resumen { position: static; }.detalle { padding: 20px 18px 40px; } }
 @media(max-width: 480px) { .datos, .servicios { grid-template-columns: 1fr; }.panel, .resumen { padding: 21px; }.foto-principal { aspect-ratio: 4/3; } }
+
+
+/* ================= FORMULARIO DE SOLICITUDES ================= */
+
+.formulario-solicitud {
+  margin-top: 18px;
+  padding: 20px;
+  border: 1px solid #e8e8e8;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.formulario-solicitud h3 {
+  margin-bottom: 18px;
+  color: #061a35;
+  font-size: 19px;
+}
+
+.formulario-solicitud label {
+  display: block;
+  margin: 14px 0 7px;
+  color: #333;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.formulario-solicitud select,
+.formulario-solicitud textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  font: inherit;
+}
+
+.formulario-solicitud textarea {
+  resize: vertical;
+}
+
+.formulario-solicitud select:focus,
+.formulario-solicitud textarea:focus {
+  outline: 2px solid rgba(157, 23, 48, 0.18);
+  border-color: #9d1730;
+}
+
+.formulario-solicitud small {
+  display: block;
+  margin-top: 6px;
+  color: #777;
+  font-size: 12px;
+}
+
+.solicitud-acciones {
+  display: grid;
+  gap: 9px;
+  margin-top: 16px;
+}
+
+.solicitud-acciones button {
+  width: 100%;
+}
+
+.accion.cancelar {
+  border: 1px solid #ddd;
+  background: #fff;
+  color: #555;
+}
+
+.solicitud-exito {
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 8px;
+  background: #edf8f0;
+  color: #216b38;
+  font-size: 14px;
+}
+
+.solicitud-exito a {
+  display: block;
+  margin-top: 6px;
+  color: #216b38;
+  font-weight: 700;
+}
