@@ -63,7 +63,7 @@
     position: relative;
     z-index: 1;
 }
- 
+
 .publicar-hero .hero-etiqueta {
     display: block;
     margin-bottom: 6px;
@@ -72,7 +72,7 @@
     font-weight: 700;
     letter-spacing: 2px;
 }
- 
+
 .publicar-hero h1 {
     position: relative;
     width: fit-content;
@@ -92,25 +92,25 @@
     background: #f2cbd2;
     content: "";
 }
- 
+
 .publicar-hero p {
     margin: 0;
     max-width: 560px;
     color: #f5e3e6;
     font-size: 14px;
 }
- 
+
 /* ---------- SECCIÓN / TARJETA PRINCIPAL ---------- */
- 
+
 .publicar-section {
     margin-top: -25px;
     margin-bottom: 60px;
     position: relative;
     z-index: 2;
 }
- 
+
 /* ---------- STEPPER ---------- */
- 
+
 .stepper-publicar {
     display: flex;
     list-style: none;
@@ -122,12 +122,12 @@
     box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
     overflow-x: auto;
 }
- 
+
 .paso-item {
     flex: 1;
     min-width: 130px;
 }
- 
+
 .paso-btn {
     width: 100%;
     display: flex;
@@ -142,7 +142,7 @@
     font-family: inherit;
     transition: background-color 0.2s ease, transform 0.2s ease;
 }
- 
+
 .paso-btn:hover {
     background: #f8f7f6;
     transform: translateY(-2px);
@@ -154,7 +154,7 @@
     outline: 3px solid rgba(157, 23, 48, 0.28);
     outline-offset: 3px;
 }
- 
+
 .paso-num {
     width: 30px;
     height: 30px;
@@ -169,14 +169,14 @@
     font-size: 13px;
     transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
 }
- 
+
 .paso-label {
     font-size: 12px;
     font-weight: 600;
     color: var(--gris);
     text-align: center;
 }
- 
+
 .paso-item.is-activo .paso-num {
     background: var(--vino);
     border-color: var(--vino);
@@ -191,19 +191,19 @@
 .paso-item.is-activo .paso-label {
     color: var(--vino);
 }
- 
+
 .paso-item.is-completo .paso-num {
     background: #ffffff;
     border-color: var(--vino);
     color: var(--vino);
 }
- 
+
 .paso-item.is-completo .paso-num::after {
     content: "\2713";
 }
- 
+
 /* ---------- FORMULARIO / PANELES ---------- */
- 
+
 .form-publicar {
     position: relative;
     background: #ffffff;
@@ -242,29 +242,29 @@
     background: var(--vino);
     content: "";
 }
- 
+
 .paso-nota {
     margin: 0 0 20px;
     color: var(--gris);
     font-size: 13px;
 }
- 
+
 /* ---------- CAMPOS ---------- */
- 
+
 .campo {
     margin-bottom: 18px;
 }
- 
+
 .campo-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
 }
- 
+
 .campo-grid-3 {
     grid-template-columns: repeat(3, 1fr);
 }
- 
+
 .campo label {
     display: block;
     margin-bottom: 6px;
@@ -272,7 +272,7 @@
     font-size: 13px;
     font-weight: 600;
 }
- 
+
 .campo input[type="text"],
 .campo select,
 .campo textarea {
@@ -286,7 +286,7 @@
     font-family: inherit;
     transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
- 
+
 .campo textarea {
     resize: vertical;
     min-height: 90px;
@@ -297,7 +297,7 @@
 .campo textarea:focus {
     box-shadow: 0 0 0 3px rgba(157, 23, 48, 0.1);
 }
- 
+
 .campo input:focus,
 .campo select:focus,
 .campo textarea:focus {
@@ -305,14 +305,14 @@
     border-color: var(--vino);
     background: #ffffff;
 }
- 
+
 .campo input.campo-invalido,
 .campo select.campo-invalido,
 .campo textarea.campo-invalido {
     border-color: #c0392b;
     background: #fdf1ef;
 }
- 
+
 .campo-prefijo {
     display: flex;
     align-items: center;
@@ -321,35 +321,35 @@
     border-radius: 8px;
     overflow: hidden;
 }
- 
+
 .campo-prefijo span {
     padding: 10px 4px 10px 12px;
     color: var(--gris);
     font-size: 14px;
 }
- 
+
 .campo-prefijo input {
     border: none !important;
     background: transparent !important;
     padding-left: 4px !important;
 }
- 
+
 .campo-prefijo:focus-within {
     border-color: var(--vino);
 }
- 
+
 .campo-pie {
     display: flex;
     justify-content: space-between;
     gap: 10px;
     margin-top: 4px;
 }
- 
+
 .campo-contador {
     font-size: 11px;
     color: var(--gris);
 }
- 
+
 .campo-error {
     display: block;
     min-height: 15px;
@@ -384,42 +384,42 @@
     color: var(--gris);
     font-size: 12px;
 }
- 
+
 .campo-recomendacion {
     margin: 6px 0 0;
     font-size: 12px;
     color: var(--vino);
     min-height: 15px;
 }
- 
+
 .campo-fieldset {
     margin-top: 22px;
     padding: 16px 16px 2px;
     border: 1px dashed var(--borde);
     border-radius: 10px;
 }
- 
+
 .campo-fieldset legend {
     padding: 0 6px;
     font-size: 13px;
     font-weight: 700;
     color: var(--negro);
 }
- 
+
 .campo-nota {
     margin: -4px 0 14px;
     font-size: 12px;
     color: var(--gris);
 }
- 
+
 /* ---------- CARACTERÍSTICAS ---------- */
- 
+
 .caracteristicas-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
 }
- 
+
 .caracteristica {
     display: flex;
     align-items: center;
@@ -438,26 +438,26 @@
     transform: translateY(-2px);
     box-shadow: 0 5px 12px rgba(0, 0, 0, 0.06);
 }
- 
+
 .caracteristica i {
     color: var(--vino);
     width: 16px;
 }
- 
+
 .caracteristica input {
     accent-color: var(--vino);
     width: 15px;
     height: 15px;
 }
- 
+
 .caracteristica:has(input:checked) {
     background: #fbeef0;
     border-color: var(--vino);
     font-weight: 700;
 }
- 
+
 /* ---------- FOTOS ---------- */
- 
+
 .btn-subir-foto {
     display: inline-flex;
     align-items: center;
@@ -473,20 +473,20 @@
     cursor: pointer;
     transition: color 0.2s ease, background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
- 
+
 .btn-subir-foto:hover {
     background: var(--vino);
     color: #ffffff;
     transform: translateY(-2px);
     box-shadow: 0 5px 12px rgba(117, 17, 38, 0.16);
 }
- 
+
 .foto-slots {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 14px;
 }
- 
+
 .foto-slot {
     position: relative;
     aspect-ratio: 4 / 3;
@@ -504,26 +504,26 @@
     border-color: var(--vino);
     box-shadow: 0 5px 14px rgba(0, 0, 0, 0.07);
 }
- 
+
 .foto-slot-label {
     font-size: 12px;
     color: var(--gris);
 }
- 
+
 .foto-slot img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
- 
+
 .foto-slot.tiene-imagen {
     border-style: solid;
 }
- 
+
 .foto-slot.tiene-imagen .foto-slot-label {
     display: none;
 }
- 
+
 .foto-quitar {
     position: absolute;
     top: 6px;
@@ -540,13 +540,13 @@
     font-size: 12px;
     cursor: pointer;
 }
- 
+
 .foto-slot.tiene-imagen .foto-quitar {
     display: flex;
 }
- 
+
 /* ---------- RESUMEN (arreglo bidimensional + Map) ---------- */
- 
+
 .resumen-campos {
     display: grid;
     gap: 8px;
@@ -556,7 +556,7 @@
     border: 1px solid var(--borde);
     border-radius: 10px;
 }
- 
+
 .resumen-fila {
     display: flex;
     justify-content: space-between;
@@ -565,23 +565,23 @@
     border-bottom: 1px dashed var(--borde);
     font-size: 13px;
 }
- 
+
 .resumen-fila:last-child {
     padding-bottom: 0;
     border-bottom: none;
 }
- 
+
 .resumen-fila strong {
     color: var(--negro);
 }
- 
+
 .resumen-fila span {
     color: var(--gris);
     text-align: right;
 }
- 
+
 /* ---------- VISTA PREVIA (PASO 5) ---------- */
- 
+
 .vista-previa {
     display: grid;
     grid-template-columns: 230px 1fr;
@@ -600,7 +600,7 @@
     border-color: rgba(157, 23, 48, 0.28);
     box-shadow: 0 10px 24px rgba(36, 36, 36, 0.08);
 }
- 
+
 .vista-previa-foto {
     aspect-ratio: 4 / 3;
     display: flex;
@@ -612,7 +612,7 @@
     color: var(--gris);
     font-size: 12px;
 }
- 
+
 .vista-previa-foto img {
     width: 100%;
     height: 100%;
@@ -623,7 +623,7 @@
 .vista-previa:hover .vista-previa-foto img {
     transform: scale(1.03);
 }
- 
+
 .vista-previa-tipo {
     display: inline-block;
     margin-bottom: 6px;
@@ -631,36 +631,36 @@
     font-size: 12px;
     font-weight: 700;
 }
- 
+
 .vista-previa-tipo i {
     margin-right: 4px;
 }
- 
+
 .vista-previa-info h3 {
     margin: 0 0 6px;
     color: var(--negro);
     font-size: 18px;
     font-weight: 800;
 }
- 
+
 .vista-previa-ubicacion {
     margin: 0 0 10px;
     color: var(--gris);
     font-size: 13px;
 }
- 
+
 .vista-previa-ubicacion i {
     color: var(--vino);
     margin-right: 4px;
 }
- 
+
 .vista-previa-descripcion {
     margin: 0 0 12px;
     color: var(--gris);
     font-size: 13px;
     line-height: 1.55;
 }
- 
+
 .vista-previa-tags {
     display: flex;
     flex-wrap: wrap;
@@ -669,7 +669,7 @@
     padding: 0;
     list-style: none;
 }
- 
+
 .vista-previa-tags li {
     padding: 4px 10px;
     background: #fbeef0;
@@ -689,13 +689,13 @@
     font-size: 20px;
     font-weight: 800;
 }
- 
+
 .vista-previa-precio small {
     color: var(--gris);
     font-size: 12px;
     font-weight: 400;
 }
- 
+
 .estado-publicacion {
     padding: 12px 16px;
     background: #eefaf1;
@@ -705,13 +705,13 @@
     font-size: 13px;
     font-weight: 600;
 }
- 
+
 .estado-publicacion.es-error {
     background: #fdf1ef;
     border-color: #f1c3ba;
     color: #c0392b;
 }
- 
+
 /* ---------- ACCIONES ---------- */
 
 .mensaje-validacion {
@@ -724,7 +724,7 @@
     color: #c0392b;
     font-size: 13px;
 }
- 
+
 .acciones-formulario {
     display: flex;
     flex-wrap: wrap;
@@ -747,72 +747,72 @@
 .acciones-formulario .btn:active {
     transform: translateY(0);
 }
- 
+
 .acciones-formulario .btn-secundario {
     margin-right: auto;
 }
- 
+
 /* ---------- RESPONSIVE ---------- */
- 
+
 @media (max-width: 991px) {
     .campo-grid-3 {
         grid-template-columns: repeat(2, 1fr);
     }
- 
+
     .caracteristicas-grid {
         grid-template-columns: repeat(3, 1fr);
     }
- 
+
     .vista-previa {
         grid-template-columns: 1fr;
     }
 }
- 
+
 @media (max-width: 767px) {
     .publicar-hero {
         padding: 35px 0;
     }
- 
+
     .publicar-hero h1 {
         font-size: 27px;
     }
- 
+
     .publicar-section {
         margin-top: -15px;
     }
- 
+
     .form-publicar {
         padding: 18px;
     }
- 
+
     .campo-grid,
     .campo-grid-3 {
         grid-template-columns: 1fr;
     }
- 
+
     .caracteristicas-grid {
         grid-template-columns: repeat(2, 1fr);
     }
- 
+
     .paso-label {
         display: none;
     }
 }
- 
+
 @media (max-width: 575px) {
     .caracteristicas-grid {
         grid-template-columns: 1fr;
     }
- 
+
     .acciones-formulario {
         flex-direction: column-reverse;
     }
- 
+
     .acciones-formulario .btn {
         width: 100%;
         text-align: center;
     }
- 
+
     .acciones-formulario .btn-secundario {
         margin-right: 0;
     }
@@ -881,4 +881,116 @@
         transform: none;
     }
 }
- 
+
+/* ---------- PREVISUALIZACIÓN DE FOTOGRAFÍAS ---------- */
+
+.fotos-ayuda {
+    margin: -6px 0 14px;
+    color: var(--gris);
+    font-size: 12px;
+}
+
+.foto-slot {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    min-width: 0;
+    background: #f8f7f6;
+    border: 1px dashed var(--borde);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.foto-slot.tiene-imagen {
+    border-style: solid;
+    border-color: var(--vino);
+}
+
+.foto-previsualizacion {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.foto-slot-label {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 1;
+    padding: 4px 9px;
+    background: rgba(36, 36, 36, 0.72);
+    color: #ffffff;
+    border-radius: 5px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.foto-nombre {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    padding: 8px;
+    overflow: hidden;
+    background: linear-gradient(
+        transparent,
+        rgba(0, 0, 0, 0.78)
+    );
+    color: #ffffff;
+    font-size: 11px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.foto-slot-vacio {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    color: var(--gris);
+    font-size: 13px;
+}
+
+.foto-slot-vacio i {
+    color: var(--vino);
+    font-size: 25px;
+}
+
+.foto-slot-vacio small {
+    font-size: 11px;
+}
+
+.vista-previa-foto img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+@media (max-width: 575px) {
+    .foto-slots {
+        grid-template-columns: 1fr;
+    }
+
+    .foto-slot {
+        aspect-ratio: 16 / 9;
+    }
+}
+
+/* ---------- MEJORAR VISIBILIDAD DEL RESUMEN ---------- */
+
+.resumen-campos p {
+    color: #26352d;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.resumen-campos p strong {
+    color: #176b3a;
+    font-weight: 700;
+}

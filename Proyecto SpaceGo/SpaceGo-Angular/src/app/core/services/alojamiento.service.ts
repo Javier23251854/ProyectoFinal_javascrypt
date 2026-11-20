@@ -1,3 +1,4 @@
+
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
@@ -13,6 +14,7 @@ export class AlojamientoService {
 
   private apiUrl = '/api/alojamientos';
   private apiFavoritosUrl = '/api/favoritos';
+  private apiImagenesUrl = '/api/alojamientos/imagenes';
 
   private fallbackAlojamientos: Alojamiento[] = [
     {
@@ -173,8 +175,6 @@ export class AlojamientoService {
     }
   ];
 
-
-
   obtenerAlojamientos(): Observable<Alojamiento[]> {
     return this.http.get<Alojamiento[]>(this.apiUrl).pipe(
       catchError(() => {
@@ -185,7 +185,9 @@ export class AlojamientoService {
   }
 
   obtenerFavoritos(): Observable<{ id: string | number; alojamientoId: string | number }[]> {
-    return this.http.get<{ id: string | number; alojamientoId: string | number }[]>(this.apiFavoritosUrl);
+    return this.http.get<{ id: string | number; alojamientoId: string | number }[]>(
+      this.apiFavoritosUrl
+    );
   }
 
   agregarFavorito(alojamientoId: string | number): Observable<unknown> {
@@ -193,8 +195,6 @@ export class AlojamientoService {
   }
 
   eliminarFavorito(id: string | number): Observable<void> {
-    // El ID del registro favorito puede ser alfanumérico en JSON Server.
-    // Propagamos errores HTTP para que Favoritos no confunda un fallo con éxito.
     return this.http.delete<void>(
       `${this.apiFavoritosUrl}/${encodeURIComponent(String(id))}`
     );
@@ -203,13 +203,31 @@ export class AlojamientoService {
   obtenerAlojamientoPorId(id: string): Observable<Alojamiento> {
     return this.http.get<Alojamiento>(`${this.apiUrl}/${id}`).pipe(
       catchError(error => {
-        if (error.status !== 0 && error.status < 500) return throwError(() => error);
+        if (error.status !== 0 && error.status < 500) {
+          return throwError(() => error);
+        }
+
         const alojamiento = this.fallbackAlojamientos.find(
           item => String(item.id) === String(id)
         );
 
-        return alojamiento ? of(alojamiento) : throwError(() => new Error("Alojamiento no disponible"));
+        return alojamiento
+          ? of(alojamiento)
+          : throwError(() => new Error('Alojamiento no disponible'));
       })
+    );
+  }
+
+  subirImagenes(imagenes: File[]): Observable<{ imagenes: string[] }> {
+    const formulario = new FormData();
+
+    imagenes.forEach(imagen => {
+      formulario.append('imagenes', imagen, imagen.name);
+    });
+
+    return this.http.post<{ imagenes: string[] }>(
+      this.apiImagenesUrl,
+      formulario
     );
   }
 
@@ -221,6 +239,7 @@ export class AlojamientoService {
       alojamiento
     );
   }
+
   actualizarAlojamiento(
     id: string,
     alojamiento: Partial<Alojamiento>

@@ -1,3 +1,4 @@
+
 import { Component, inject } from '@angular/core';
 import {
   FormBuilder,
@@ -244,6 +245,16 @@ export class Publicar {
 
   fotosSeleccionadas: File[] = [];
 
+  previsualizacionesFotos: string[] = [];
+
+  private limpiarPrevisualizaciones(): void {
+    this.previsualizacionesFotos.forEach(url => {
+      URL.revokeObjectURL(url);
+    });
+
+    this.previsualizacionesFotos = [];
+  }
+
   cambiarDepartamento(nombre: string): void {
     this.departamentoSeleccionado = nombre;
     this.provinciaSeleccionada = '';
@@ -300,7 +311,6 @@ export class Publicar {
     event: Event,
     caracteristica: string
   ): void {
-
     const input = event.target as HTMLInputElement;
 
     if (input.checked) {
@@ -323,12 +333,22 @@ export class Publicar {
       return;
     }
 
+    this.limpiarPrevisualizaciones();
+
     this.fotosSeleccionadas =
       Array.from(input.files).slice(0, 3);
+
+    this.previsualizacionesFotos =
+      this.fotosSeleccionadas.map(foto =>
+        URL.createObjectURL(foto)
+      );
 
     this.formulario.patchValue({
       fotos: this.fotosSeleccionadas
     });
+
+    // Permite volver a seleccionar los mismos archivos.
+    input.value = '';
   }
 
   obtenerUbicacionCompleta(): string {
@@ -378,7 +398,6 @@ export class Publicar {
   }
 
   guardarYPublicar(): void {
-
     if (this.formulario.invalid) {
       this.formulario.markAllAsTouched();
       return;
@@ -386,75 +405,124 @@ export class Publicar {
 
     const datos = this.formulario.value;
 
-    const nuevoAlojamiento = {
-      titulo: datos.titulo || '',
-      tipo: datos.tipo || '',
-      precio: Number(datos.precio) || 0,
-      departamento: datos.departamento || '',
-      provincia: datos.provincia || '',
-      distrito: datos.distrito || '',
-      imagen: '/Imagenes/logo cuarto.png',
-      descripcion: datos.descripcion || '',
-      contacto: { telefono: datos.telefono || '', correo: datos.correo || '' },
-      referencia: datos.referencia || '',
-      caracteristicas: datos.caracteristicas || [],
-      fecha: new Date().toISOString().split('T')[0]
-    };
+    // Primero se suben las fotografías.
+    // Después se crea el alojamiento con sus direcciones.
+    const crearPublicacion = (rutasImagenes: string[]): void => {
 
-    this.alojamientoService
-      .crearAlojamiento(nuevoAlojamiento)
-      .subscribe({
+      const nuevoAlojamiento = {
+        titulo: datos.titulo || '',
+        tipo: datos.tipo || '',
+        precio: Number(datos.precio) || 0,
+        departamento: datos.departamento || '',
+        provincia: datos.provincia || '',
+        distrito: datos.distrito || '',
 
-        next: (respuesta) => {
+        imagen: rutasImagenes[0] || '/Imagenes/logo cuarto.png',
+        imagenes: rutasImagenes,
 
-          console.log(
-            'Alojamiento publicado:',
-            respuesta
-          );
+        descripcion: datos.descripcion || '',
 
-          this.formulario.reset({
-            titulo: '',
-            tipo: '',
-            precio: '',
-            descripcion: '',
-            correo: '',
-            telefono: '',
-            departamento: '',
-            provincia: '',
-            distrito: '',
-            referencia: '',
-            caracteristicas: [],
-            fotos: null
-          });
-
-          this.caracteristicasSeleccionadas.clear();
-          this.fotosSeleccionadas = [];
-          this.departamentoSeleccionado = '';
-          this.provinciaSeleccionada = '';
-          this.distritoSeleccionado = '';
-          this.provinciasDisponibles = [];
-          this.distritosDisponibles = [];
-
-          this.pasoActual = 1;
-          this.pasoMaximo = 1;
-
-          alert(
-            '¡Alojamiento publicado correctamente!'
-          );
+        contacto: {
+          telefono: datos.telefono || '',
+          correo: datos.correo || ''
         },
 
-        error: (error) => {
+        referencia: datos.referencia || '',
+        caracteristicas: datos.caracteristicas || [],
 
-          console.error(
-            'Error al publicar alojamiento:',
-            error
-          );
+        fecha: new Date().toISOString().split('T')[0]
+      };
 
-          alert(
-            'No se pudo publicar el alojamiento.'
-          );
-        }
+      this.alojamientoService
+        .crearAlojamiento(nuevoAlojamiento)
+        .subscribe({
 
-      });
+          next: (respuesta) => {
+            console.log(
+              'Alojamiento publicado:',
+              respuesta
+            );
+
+            this.limpiarFormulario();
+
+            alert(
+              '¡Alojamiento publicado correctamente!'
+            );
+          },
+
+          error: (error) => {
+            console.error(
+              'Error al publicar alojamiento:',
+              error
+            );
+
+            alert(
+              'No se pudo publicar el alojamiento.'
+            );
+          }
+
+        });
+    };
+
+    // Si se seleccionaron fotografías, se suben primero.
+    if (this.fotosSeleccionadas.length > 0) {
+
+      this.alojamientoService
+        .subirImagenes(this.fotosSeleccionadas)
+        .subscribe({
+
+          next: (respuesta) => {
+            crearPublicacion(respuesta.imagenes);
+          },
+
+          error: (error) => {
+            console.error(
+              'Error al subir las fotografías:',
+              error
+            );
+
+            alert(
+              'No se pudieron subir las fotografías. El alojamiento no fue publicado.'
+            );
+          }
+
+        });
+
+    } else {
+      // Si no se seleccionaron fotografías,
+      // se conserva el logo como imagen predeterminada.
+      crearPublicacion([]);
+    }
+  }
+
+  private limpiarFormulario(): void {
+
+    this.formulario.reset({
+      titulo: '',
+      tipo: '',
+      precio: '',
+      descripcion: '',
+      correo: '',
+      telefono: '',
+      departamento: '',
+      provincia: '',
+      distrito: '',
+      referencia: '',
+      caracteristicas: [],
+      fotos: null
+    });
+
+    this.caracteristicasSeleccionadas.clear();
+    this.fotosSeleccionadas = [];
+    this.limpiarPrevisualizaciones();
+    this.departamentoSeleccionado = '';
+    this.provinciaSeleccionada = '';
+    this.distritoSeleccionado = '';
+
+    this.provinciasDisponibles = [];
+    this.distritosDisponibles = [];
+
+    this.pasoActual = 1;
+    this.pasoMaximo = 1;
   }
 }

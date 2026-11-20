@@ -1,5 +1,6 @@
 
 import { useMemo, useState, type FormEvent } from "react";
+import axios from "axios";
 import "./CentroAyuda.css";
 
 type Pregunta = {
@@ -88,6 +89,7 @@ function CentroAyuda() {
 
   const [error, setError] = useState("");
   const [confirmacion, setConfirmacion] = useState("");
+  const [enviando, setEnviando] = useState(false);
 
   const preguntasFiltradas = useMemo(() => {
     const termino = busqueda.trim().toLowerCase();
@@ -106,7 +108,7 @@ function CentroAyuda() {
     });
   }, [busqueda, categoria]);
 
-  function enviarConsulta(event: FormEvent<HTMLFormElement>) {
+  async function enviarConsulta(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     setError("");
@@ -124,31 +126,21 @@ function CentroAyuda() {
       return;
     }
 
-    const consulta = {
-      id: Date.now(),
-      nombre: nombre.trim(),
-      correo: correo.trim(),
-      tipo: tipoConsulta,
-      mensaje: mensaje.trim(),
-      fecha: new Date().toISOString(),
-      estado: "Pendiente"
-    };
+    if (mensaje.trim().length < 10) {
+      setError("Describe tu consulta con al menos 10 caracteres.");
+      return;
+    }
+
+    setEnviando(true);
 
     try {
-      const consultasGuardadas = JSON.parse(
-        localStorage.getItem("spacego_consultas_ayuda") || "[]"
-      );
-
-      if (!Array.isArray(consultasGuardadas)) {
-        throw new Error("Almacenamiento inválido");
-      }
-
-      consultasGuardadas.push(consulta);
-
-      localStorage.setItem(
-        "spacego_consultas_ayuda",
-        JSON.stringify(consultasGuardadas)
-      );
+      await axios.post("/api/solicitudes", {
+        tipo: "ayuda",
+        nombre: nombre.trim(),
+        correo: correo.trim(),
+        categoria: tipoConsulta,
+        mensaje: mensaje.trim()
+      });
 
       setNombre("");
       setCorreo("");
@@ -156,12 +148,23 @@ function CentroAyuda() {
       setMensaje("");
 
       setConfirmacion(
-        "¡Consulta registrada correctamente! Gracias por comunicarte con SpaceGo."
+        "¡Consulta registrada correctamente! Ya puedes verla en Mis solicitudes."
       );
-    } catch {
-      setError(
-        "No se pudo guardar tu consulta. Revisa el almacenamiento del navegador."
-      );
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        setError(
+          "Debes iniciar sesión para enviar una consulta y verla en Mis solicitudes."
+        );
+      } else if (axios.isAxiosError(error)) {
+        setError(
+          error.response?.data?.mensaje ||
+          "No se pudo registrar tu consulta. Inténtalo nuevamente."
+        );
+      } else {
+        setError("Ocurrió un error inesperado al enviar tu consulta.");
+      }
+    } finally {
+      setEnviando(false);
     }
   }
 
@@ -398,9 +401,13 @@ function CentroAyuda() {
               </div>
             )}
 
-            <button type="submit" className="ayuda-enviar">
+            <button
+              type="submit"
+              className="ayuda-enviar"
+              disabled={enviando}
+            >
               <i className="fa-solid fa-paper-plane" />
-              Enviar consulta
+              {enviando ? "Enviando..." : "Enviar consulta"}
             </button>
           </form>
         </div>

@@ -8,7 +8,7 @@ export type EstadoSolicitud =
   | "rechazada"
   | "cancelada";
 
-export type TipoSolicitud = "contacto" | "alquiler";
+export type TipoSolicitud = "contacto" | "alquiler" | "ayuda";
 
 export interface AlojamientoSolicitud {
   id: string | number;
@@ -26,13 +26,18 @@ export interface Solicitud {
   id: string;
   usuarioId: string;
   propietarioId?: string | null;
-  alojamientoId: string | number;
+  alojamientoId?: string | number;
   tipo: TipoSolicitud;
   mensaje: string;
   fecha: string;
   actualizadaEn?: string;
   estado: EstadoSolicitud;
-  alojamiento?: AlojamientoSolicitud;
+  alojamiento?: AlojamientoSolicitud | null;
+
+  // Datos adicionales para consultas del Centro de ayuda
+  nombre?: string;
+  correo?: string;
+  categoria?: string;
 }
 
 const api = axios.create({

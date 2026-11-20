@@ -112,8 +112,14 @@ function MisSolicitudes() {
         alojamiento?.provincia,
         alojamiento?.departamento,
         solicitud.mensaje,
-        solicitud.tipo
-      ].filter(Boolean).join(" ").toLowerCase();
+        solicitud.tipo,
+        solicitud.nombre,
+        solicitud.correo,
+        solicitud.categoria
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
 
       const coincideBusqueda =
         !termino || texto.includes(termino);
@@ -160,8 +166,8 @@ function MisSolicitudes() {
           <h1>Mis solicitudes</h1>
 
           <p>
-            Consulta tus mensajes y sigue el estado de tus solicitudes
-            de alojamiento.
+            Consulta tus solicitudes de alojamiento y las consultas
+            que hayas enviado al Centro de ayuda.
           </p>
         </div>
 
@@ -205,14 +211,16 @@ function MisSolicitudes() {
             type="search"
             value={busqueda}
             onChange={event => setBusqueda(event.target.value)}
-            placeholder="Buscar por alojamiento, ubicación o mensaje..."
+            placeholder="Buscar por alojamiento, categoría o mensaje..."
             aria-label="Buscar solicitudes"
           />
         </div>
 
         <select
           value={filtro}
-          onChange={event => setFiltro(event.target.value as FiltroSolicitud)}
+          onChange={event =>
+            setFiltro(event.target.value as FiltroSolicitud)
+          }
           aria-label="Filtrar por estado"
         >
           <option value="todas">Todos los estados</option>
@@ -250,7 +258,7 @@ function MisSolicitudes() {
 
           <p>
             {solicitudes.length === 0
-              ? "Cuando contactes a un propietario o solicites un alquiler, tus solicitudes aparecerán aquí."
+              ? "Cuando contactes a un propietario, solicites un alquiler o envíes una consulta al Centro de ayuda, aparecerá aquí."
               : "Prueba cambiando el filtro o el texto de búsqueda."}
           </p>
 
@@ -265,21 +273,25 @@ function MisSolicitudes() {
         <div className="solicitudes-lista">
           {solicitudesFiltradas.map(solicitud => {
             const alojamiento = solicitud.alojamiento;
+            const esAyuda = solicitud.tipo === "ayuda";
+
             const imagen =
               alojamiento?.imagen || "/Imagenes/alojamiento.jpg";
 
             return (
               <article className="solicitud-card" key={solicitud.id}>
                 <div className="solicitud-card-contenido">
-                  <img
-                    className="solicitud-imagen"
-                    src={imagen}
-                    alt={alojamiento?.titulo ?? "Alojamiento"}
-                    onError={event => {
-                      event.currentTarget.onerror = null;
-                      event.currentTarget.src = "/Imagenes/alojamiento.jpg";
-                    }}
-                  />
+                  {!esAyuda && (
+                    <img
+                      className="solicitud-imagen"
+                      src={imagen}
+                      alt={alojamiento?.titulo ?? "Alojamiento"}
+                      onError={event => {
+                        event.currentTarget.onerror = null;
+                        event.currentTarget.src = "/Imagenes/alojamiento.jpg";
+                      }}
+                    />
+                  )}
 
                   <div className="solicitud-informacion">
                     <div className="solicitud-superior">
@@ -292,34 +304,66 @@ function MisSolicitudes() {
                       </span>
                     </div>
 
-                    <h2>
-                      {alojamiento?.titulo ?? "Alojamiento no disponible"}
-                    </h2>
+                    {esAyuda ? (
+                      <>
+                        <h2>Consulta del Centro de ayuda</h2>
 
-                    <p className="solicitud-ubicacion">
-                      <i className="fa-solid fa-location-dot" aria-hidden="true"></i>
-                      {[
-                        alojamiento?.distrito,
-                        alojamiento?.provincia,
-                        alojamiento?.departamento
-                      ].filter(Boolean).join(", ") || "Ubicación no disponible"}
-                    </p>
+                        <p className="solicitud-ubicacion">
+                          <i className="fa-solid fa-circle-question" aria-hidden="true"></i>
+                          {solicitud.categoria || "Consulta general"}
+                        </p>
 
-                    <p className="solicitud-precio">
-                      {mostrarPrecio(alojamiento?.precio)}
-                    </p>
+                        {solicitud.nombre && (
+                          <p className="solicitud-tipo">
+                            <strong>Nombre:</strong> {solicitud.nombre}
+                          </p>
+                        )}
 
-                    <div className="solicitud-tipo">
-                      <strong>Tipo de solicitud:</strong>{" "}
-                      {solicitud.tipo === "alquiler"
-                        ? "Interés en alquilar"
-                        : "Solicitud de información"}
-                    </div>
+                        {solicitud.correo && (
+                          <p className="solicitud-tipo">
+                            <strong>Correo:</strong> {solicitud.correo}
+                          </p>
+                        )}
+
+                        <div className="solicitud-tipo">
+                          <strong>Tipo de solicitud:</strong>{" "}
+                          Consulta de ayuda
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <h2>
+                          {alojamiento?.titulo ?? "Alojamiento no disponible"}
+                        </h2>
+
+                        <p className="solicitud-ubicacion">
+                          <i className="fa-solid fa-location-dot" aria-hidden="true"></i>
+                          {[
+                            alojamiento?.distrito,
+                            alojamiento?.provincia,
+                            alojamiento?.departamento
+                          ].filter(Boolean).join(", ") || "Ubicación no disponible"}
+                        </p>
+
+                        <p className="solicitud-precio">
+                          {mostrarPrecio(alojamiento?.precio)}
+                        </p>
+
+                        <div className="solicitud-tipo">
+                          <strong>Tipo de solicitud:</strong>{" "}
+                          {solicitud.tipo === "alquiler"
+                            ? "Interés en alquilar"
+                            : "Solicitud de información"}
+                        </div>
+                      </>
+                    )}
                   </div>
                 </div>
 
                 <div className="solicitud-mensaje">
-                  <strong>Tu mensaje</strong>
+                  <strong>
+                    {esAyuda ? "Tu consulta" : "Tu mensaje"}
+                  </strong>
                   <p>{solicitud.mensaje}</p>
                 </div>
 

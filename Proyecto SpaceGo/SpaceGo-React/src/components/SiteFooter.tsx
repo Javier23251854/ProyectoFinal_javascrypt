@@ -40,19 +40,35 @@ function SiteFooter() {
           <h3>Páginas</h3>
 
           <ul>
-            <li><a href="/">Inicio</a></li>
-            <li><a href="/buscar">Buscar alojamiento</a></li>
-            <li><a href="/publicar">Publicar alojamiento</a></li>
-            <li><a href="/favoritos">Favoritos</a></li>
             <li>
               <NavLink to="/mi-perfil" className={({ isActive }) => isActive ? "pagina-activa" : ""}>
                 Mi perfil
               </NavLink>
             </li>
-            <li><NavLink to="/administrar-publicaciones" className={({ isActive }) => isActive ? "pagina-activa" : ""}>Administrar publicaciones</NavLink></li>
-            <li><NavLink to="/centro-ayuda" className={({ isActive }) => isActive ? "pagina-activa" : ""}>Centro de ayuda</NavLink></li>
-            <li><NavLink to="/comparar-alojamientos" className={({ isActive }) => isActive ? "pagina-activa" : ""}>Comparar alojamientos</NavLink></li>
-            <li><NavLink to="/mis-solicitudes" className={({ isActive }) => isActive ? "pagina-activa" : ""}>Mis solicitudes</NavLink></li>
+
+            <li>
+              <NavLink to="/administrar-publicaciones" className={({ isActive }) => isActive ? "pagina-activa" : ""}>
+                Administrar publicaciones
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/centro-ayuda" className={({ isActive }) => isActive ? "pagina-activa" : ""}>
+                Centro de ayuda
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/comparar-alojamientos" className={({ isActive }) => isActive ? "pagina-activa" : ""}>
+                Comparar alojamientos
+              </NavLink>
+            </li>
+
+            <li>
+              <NavLink to="/mis-solicitudes" className={({ isActive }) => isActive ? "pagina-activa" : ""}>
+                Mis solicitudes
+              </NavLink>
+            </li>
           </ul>
         </div>
 
