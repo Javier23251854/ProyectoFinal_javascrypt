@@ -92,6 +92,16 @@ export default function SiteHeader() {
                 {saliendo ? "Cerrando sesión..." : "Cerrar sesión"}
               </button>
             </li>
+            <li>
+              <NavLink
+                to="/centro-ayuda"
+                className={({ isActive }) => isActive ? "activo" : ""}
+                onClick={cerrarMenu}
+              >
+                <i className="fa-solid fa-circle-question" />
+                Centro de ayuda
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </div>
