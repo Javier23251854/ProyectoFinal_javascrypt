@@ -1,5 +1,6 @@
 
 import { useMemo, useState, type FormEvent } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import "./CentroAyuda.css";
 
@@ -397,7 +398,7 @@ function CentroAyuda() {
             {confirmacion && (
               <div className="ayuda-mensaje-exito" role="status">
                 <i className="fa-solid fa-circle-check" />
-                {confirmacion}
+                <span>{confirmacion} <Link to="/mis-solicitudes">Ver mis solicitudes</Link></span>
               </div>
             )}
 

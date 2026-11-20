@@ -1,52 +1,33 @@
 # SpaceGo
 
-Aplicación académica de búsqueda y publicación de alojamientos. Angular gestiona el catálogo y el ingreso. React gestiona Mi perfil y las demás páginas de la cuenta. Un servidor Node.js entrega ambas aplicaciones y valida el acceso.
+Aplicación académica de búsqueda y publicación de alojamientos. Angular gestiona Inicio, búsqueda, detalle de alojamientos, publicación, favoritos y acceso. React gestiona Mi perfil, administración de publicaciones, Centro de ayuda, Comparar alojamientos y Mis solicitudes. Un servidor Node.js entrega ambas aplicaciones y comparte la API y la sesión.
 
-## Cómo ejecutarlo en VS Code
+## Iniciar SpaceGo en un solo localhost
 
-1. Descomprime el ZIP y abre la carpeta `SpaceGo`, que contiene el `package.json` principal.
-2. Instala **Node.js 24 LTS, versión 24.15 o posterior de la serie 24**, si aún no lo tienes. Comprueba la versión con `node -v`.
-3. Ejecuta lo siguiente desde la terminal de esa carpeta.
+Requisitos: Node.js 24.15 o posterior de la serie 24, o Node.js 26 o posterior. Comprueba la versión con `node -v`.
 
-```bash
-npm run preparar
-npm start
-```
+1. Abre en VS Code la carpeta principal `Proyecto SpaceGo`, donde se encuentra este `package.json`.
+2. La primera vez, o después de eliminar `node_modules`, ejecuta: `npm run preparar`.
+3. Para iniciar la aplicación ejecuta: `npm start`. Este comando compila automáticamente Angular y React antes de levantar el servidor integrado.
+4. Abre `http://localhost:3000`.
 
-4. Abre [http://localhost:3000](http://localhost:3000). Crea una cuenta desde **Iniciar sesión → Registrarse**.
+No ejecutes `npm run api`, `ng serve` ni `npm run dev` para esta modalidad integrada. No necesitas abrir tres terminales. Mantén abierta solamente la terminal donde se ejecuta `npm start`.
 
-`npm run preparar` instala las dependencias de ambos proyectos y los compila. Para volver a ejecutar la aplicación basta con `npm start`. Después de modificar el código, vuelve a compilar con `npm run build`. Si el puerto está ocupado, puedes elegir otro con la variable de entorno `PORT`.
+Cuando modifiques archivos de Angular o React, detén el servidor con Ctrl+C y vuelve a ejecutar `npm start`; las dos aplicaciones se compilan de nuevo antes de iniciar.
 
-## Comportamiento esperado
+## Páginas y navegación
 
-| Estado | Navegación principal |
-| --- | --- |
-| Visitante | Inicio · Buscar alojamiento · Iniciar sesión |
-| Cuenta autenticada | Inicio · Buscar alojamiento · Publicar alojamiento · Favoritos · Mi perfil · Cerrar sesión |
+- Angular: Inicio, Buscar alojamiento, detalle, Login/Registro, Publicar alojamiento y Favoritos.
+- React: Mi perfil, Administrar publicaciones, Centro de ayuda, Comparar alojamientos y Mis solicitudes.
+- Las páginas de React se abren desde los enlaces del footer. El header principal conserva los enlaces originales de SpaceGo.
+- Centro de ayuda y Mis solicitudes requieren una sesión iniciada. Las consultas del Centro de ayuda se guardan como solicitudes y aparecen en Mis solicitudes.
 
-Un visitante puede abrir el detalle de un alojamiento desde el catálogo. Si intenta entrar en una ruta privada, SpaceGo lo lleva al formulario y lo devuelve al destino después de iniciar sesión. Desde el perfil se pueden administrar las publicaciones de la cuenta.
+## Datos y sesión
 
-Para probar la recuperación de datos, guarda un favorito, actualiza tu nombre en Mi perfil y publica un alojamiento. Recarga, cierra sesión y vuelve a entrar. Los datos se guardan en `datos/db.json`, que se crea automáticamente a partir del catálogo y los datos de ejemplo de `SpaceGo-Angular/db.json`. El servidor guarda las sesiones activas en memoria. Al reiniciarlo tendrás que volver a iniciar sesión. **Recordarme** conserva la sesión hasta siete días mientras el servidor siga activo.
+El servidor utiliza `datos/db.json` para guardar los usuarios, alojamientos, favoritos y solicitudes. El archivo se crea a partir de `SpaceGo-Angular/db.json` si todavía no existe. No borres `datos/db.json` si deseas conservar los registros que has creado localmente.
 
-## Qué se implementó
+La sesión se administra desde el servidor mediante una cookie HttpOnly. Las sesiones se mantienen en memoria: al reiniciar el servidor, los usuarios deben volver a iniciar sesión.
 
-| Tema | Dónde revisarlo | Cómo se usa |
-| --- | --- | --- |
-| Formularios reactivos | `SpaceGo-Angular/src/app/login/login.ts` | Angular valida correo y contraseña, envía el formulario y muestra los errores de la API. |
-| Autenticación y sesión compartida | `servidor/api.mjs` y `servidor/datos.mjs` | El servidor verifica la contraseña con scrypt y emite un identificador de sesión aleatorio en una cookie `HttpOnly`. Al salir invalida la sesión y borra la cookie. |
-| Autorización y navegación | `SpaceGo-Angular/src/app/core/sesion.guard.ts`, `app.html` y `SpaceGo-React/src/App.tsx` | Angular protege sus rutas privadas con `canActivate`. React consulta la sesión antes de mostrar sus páginas. La API valida el acceso a sus operaciones privadas. |
-| Integración entre frameworks | `servidor/index.mjs` y `SpaceGo-React/src/services/usuarioService.ts` | Ambas aplicaciones usan el mismo origen. React consulta `GET /api/auth/sesion` para recibir la identidad y los datos de perfil de la cuenta activa. |
-| Propiedad y persistencia | `servidor/api.mjs` y `SpaceGo-React/src/hooks/usePublicaciones.ts` | El servidor asigna el propietario al publicar y filtra los favoritos por la cuenta de la sesión. React consulta las publicaciones propias para administrarlas. |
-| Comparación de alojamientos | `SpaceGo-React/src/pages/CompararAlojamientos.tsx` y `SpaceGo-React/src/services/alojamientoService.ts` | React obtiene los alojamientos activos desde la API compartida y permite seleccionar hasta tres para comparar sus características. La ruta requiere sesión iniciada. |
+## Pruebas
 
-El servidor está configurado para ejecución local. El formulario de publicación conserva la imagen predeterminada del proyecto original. Los enlaces de acceso social y recuperación de contraseña del formulario original se retiraron porque eran controles sin servicio asociado.
-
-## Verificación automatizada
-
-```bash
-npm test
-npm test --prefix SpaceGo-Angular -- --watch=false
-npm run lint --prefix SpaceGo-React
-```
-
-La prueba del servidor crea dos cuentas temporales. Comprueba credenciales incorrectas, rechazo de operaciones privadas sin sesión, aislamiento de favoritos y publicaciones, cierre de sesión y recuperación de datos.
+Desde la carpeta principal puedes ejecutar `npm test` para comprobar autenticación, autorización, publicaciones y favoritos de la API.

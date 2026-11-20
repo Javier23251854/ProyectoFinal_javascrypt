@@ -1,10 +1,13 @@
 {
   "name": "spacego",
   "private": true,
-  "engines": { "node": "^24.15.0 || >=26.0.0" },
+  "engines": {
+    "node": "^24.15.0 || >=26.0.0"
+  },
   "scripts": {
-    "preparar": "npm ci --prefix SpaceGo-Angular && npm ci --prefix SpaceGo-React && npm run build",
+    "preparar": "npm ci --prefix SpaceGo-Angular && npm ci --prefix SpaceGo-React",
     "build": "npm run build --prefix SpaceGo-Angular && npm run build --prefix SpaceGo-React",
+    "prestart": "npm run build",
     "start": "node servidor/index.mjs",
     "test": "node --test servidor/api.test.mjs"
   }

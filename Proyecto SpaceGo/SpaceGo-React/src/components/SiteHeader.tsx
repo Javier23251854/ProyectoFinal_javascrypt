@@ -70,16 +70,6 @@ export default function SiteHeader() {
             </li>
             <li>
               <NavLink
-                to="/mis-solicitudes"
-                className={({ isActive }) => isActive ? "activo" : ""}
-                onClick={cerrarMenu}
-              >
-                <i className="fa-regular fa-paper-plane" />
-                Mis solicitudes
-              </NavLink>
-            </li>
-            <li>
-              <NavLink
                 to="/mi-perfil"
                 className={({ isActive }) => isActive ? "activo" : ""}
                 onClick={cerrarMenu}
@@ -91,16 +81,6 @@ export default function SiteHeader() {
               <button type="button" className="btn-principal" onClick={salir} disabled={saliendo}>
                 {saliendo ? "Cerrando sesión..." : "Cerrar sesión"}
               </button>
-            </li>
-            <li>
-              <NavLink
-                to="/centro-ayuda"
-                className={({ isActive }) => isActive ? "activo" : ""}
-                onClick={cerrarMenu}
-              >
-                <i className="fa-solid fa-circle-question" />
-                Centro de ayuda
-              </NavLink>
             </li>
           </ul>
         </nav>
