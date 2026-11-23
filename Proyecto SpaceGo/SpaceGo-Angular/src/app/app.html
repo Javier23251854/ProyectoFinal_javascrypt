@@ -14,6 +14,8 @@
         @if (auth.usuario()) {
           <li><a routerLink="/publicar" routerLinkActive="activo" (click)="cerrarMenu()">Publicar alojamiento</a></li>
           <li><a routerLink="/favoritos" routerLinkActive="activo" (click)="cerrarMenu()">Favoritos</a></li>
+          <li><a href="/centro-ayuda" (click)="cerrarMenu()">Centro de ayuda</a></li>
+          <li><a href="/mis-solicitudes" (click)="cerrarMenu()">Mis solicitudes</a></li>
           <li><a href="/mi-perfil" (click)="cerrarMenu()">Mi perfil</a></li>
           <li><button type="button" class="btn btn-principal" [disabled]="cerrandoSesion"
                       (click)="cerrarSesion()">Cerrar sesión</button></li>

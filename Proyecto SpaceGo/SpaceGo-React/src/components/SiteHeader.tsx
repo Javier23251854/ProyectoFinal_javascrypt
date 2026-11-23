@@ -70,6 +70,24 @@ export default function SiteHeader() {
             </li>
             <li>
               <NavLink
+                to="/centro-ayuda"
+                className={({ isActive }) => isActive ? "activo" : ""}
+                onClick={cerrarMenu}
+              >
+                Centro de ayuda
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/mis-solicitudes"
+                className={({ isActive }) => isActive ? "activo" : ""}
+                onClick={cerrarMenu}
+              >
+                Mis solicitudes
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
                 to="/mi-perfil"
                 className={({ isActive }) => isActive ? "activo" : ""}
                 onClick={cerrarMenu}
