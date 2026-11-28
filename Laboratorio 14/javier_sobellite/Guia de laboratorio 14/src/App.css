@@ -1,0 +1,503 @@
+
+/* =================================
+   CONFIGURACIÓN GENERAL
+================================= */
+
+#root {
+  min-height: 100vh;
+}
+
+.app {
+  min-height: 100vh;
+  background: #f5f7fb;
+  color: #202b3c;
+}
+
+.site-header {
+  background: #ffffff;
+  border-bottom: 1px solid #e8edf4;
+}
+
+.header-content {
+  width: min(1180px, 90%);
+  min-height: 76px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  background: #2457d6;
+  color: white;
+  font-size: 20px;
+}
+
+.header-label {
+  color: #8490a1;
+  font-size: 13px;
+}
+
+/* =================================
+   PORTADA
+================================= */
+
+.hero {
+  padding: 75px 5%;
+  background: linear-gradient(120deg, #172d59, #2457d6);
+  color: white;
+}
+
+.hero-content {
+  width: min(1180px, 100%);
+  margin: auto;
+}
+
+.eyebrow {
+  display: inline-block;
+  color: #8fb0ff;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.hero h1 {
+  margin: 20px 0;
+  font-size: clamp(32px, 5vw, 48px);
+  line-height: 1.15;
+}
+
+.hero p {
+  max-width: 650px;
+  color: #dce6ff;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.hero-tags span {
+  padding: 9px 14px;
+  border: 1px solid #ffffff45;
+  border-radius: 20px;
+  background: #ffffff15;
+  font-size: 12px;
+}
+
+/* =================================
+   CONTENIDO PRINCIPAL
+================================= */
+
+.main-content {
+  width: min(1180px, 90%);
+  margin: 55px auto;
+}
+
+/* =================================
+   PANEL DE CONTROL
+================================= */
+
+.panel {
+  overflow: hidden;
+  border: 1px solid #e5eaf1;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 8px 25px #1c31510a;
+}
+
+.panel-header {
+  padding: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 25px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.panel-header h2 {
+  margin: 10px 0;
+  font-size: 23px;
+}
+
+.panel-header p {
+  margin: 0;
+  color: #8490a1;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.panel-header .eyebrow {
+  color: #2457d6;
+}
+
+.panel-controls {
+  min-width: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.panel-controls label {
+  color: #536176;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.panel-controls select {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid #dce3ed;
+  border-radius: 8px;
+  background: white;
+  color: #202b3c;
+  font: inherit;
+  font-size: 13px;
+  outline: none;
+}
+
+.panel-controls select:focus {
+  border-color: #2457d6;
+}
+
+.panel-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.panel-actions button,
+.station-workshop button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  background: #2457d6;
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.panel-actions button:hover,
+.station-workshop button:hover {
+  background: #173fa9;
+  transform: translateY(-1px);
+}
+
+.panel-actions button:disabled,
+.station-workshop button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.panel-actions button:last-child {
+  background: #edf1f7;
+  color: #536176;
+}
+
+.panel-content {
+  padding: 25px;
+}
+
+/* =================================
+   ESTACIONES
+================================= */
+
+.stations-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.station-card {
+  min-width: 0;
+  padding: 21px;
+  border: 1px solid #e5eaf1;
+  border-radius: 13px;
+  background: #ffffff;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.station-card:hover {
+  box-shadow: 0 8px 22px #1c315110;
+  transform: translateY(-2px);
+}
+
+.station-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.station-header h3 {
+  margin: 0;
+  font-size: 17px;
+}
+
+.station-status {
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.station-status.success {
+  background: #e5f7ed;
+  color: #16834b;
+}
+
+.station-status.error {
+  background: #fde9e9;
+  color: #c03939;
+}
+
+.station-status.loading {
+  background: #eaf1ff;
+  color: #2457d6;
+}
+
+.station-metrics {
+  margin: 18px 0;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  background: #f5f7fb;
+}
+
+.station-metrics span {
+  color: #8490a1;
+  font-size: 12px;
+}
+
+.station-metrics strong {
+  color: #2457d6;
+  font-size: 15px;
+}
+
+.station-message {
+  color: #8490a1;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.station-error {
+  padding: 12px;
+  border-radius: 8px;
+  background: #fff0f0;
+  color: #c03939;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.station-workshops {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.station-workshop {
+  padding: 13px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #edf0f5;
+  border-radius: 9px;
+}
+
+.station-workshop div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.station-workshop strong {
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.station-workshop span {
+  color: #8490a1;
+  font-size: 11px;
+}
+
+/* =================================
+   RESULTADO DE RESERVAS
+================================= */
+
+.reservation-result {
+  margin-top: 30px;
+  padding: 26px;
+  border: 1px solid #e5eaf1;
+  border-radius: 15px;
+  background: white;
+  box-shadow: 0 8px 25px #1c31510a;
+}
+
+.reservation-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+}
+
+.reservation-heading .eyebrow {
+  color: #2457d6;
+}
+
+.reservation-heading h2 {
+  margin: 10px 0;
+  font-size: 22px;
+}
+
+.reservation-indicator {
+  padding: 8px 12px;
+  border-radius: 20px;
+  background: #eaf1ff;
+  color: #2457d6;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.reservation-message {
+  color: #8490a1;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.reservation-success {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #ccebd8;
+  border-radius: 10px;
+  background: #f0fbf4;
+}
+
+.reservation-success h3 {
+  margin-top: 0;
+  color: #16834b;
+  font-size: 16px;
+}
+
+.reservation-success p {
+  color: #536176;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.reservation-error {
+  padding: 13px;
+  border-radius: 8px;
+  background: #fff0f0;
+  color: #c03939;
+  font-size: 13px;
+}
+
+/* =================================
+   PIE DE PÁGINA
+================================= */
+
+.site-footer {
+  margin-top: 65px;
+  padding: 30px 5%;
+  background: #172d59;
+  color: white;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+  color: #c2cce0;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* =================================
+   DISEÑO RESPONSIVE
+================================= */
+
+@media (max-width: 850px) {
+  .panel-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .panel-controls {
+    width: 100%;
+  }
+
+  .stations-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 550px) {
+  .header-content {
+    padding: 12px 0;
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .header-label {
+    font-size: 11px;
+  }
+
+  .hero {
+    padding: 50px 5%;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .main-content {
+    width: 94%;
+    margin: 30px auto;
+  }
+
+  .panel-header,
+  .panel-content {
+    padding: 17px;
+  }
+
+  .station-card {
+    padding: 15px;
+  }
+
+  .station-workshop {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .reservation-result {
+    padding: 18px;
+  }
+
+  .reservation-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

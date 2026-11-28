@@ -91,3 +91,59 @@ test('sesiones, propiedad de publicaciones y favoritos por cuenta', async t => {
   assert.deepEqual(await (await api('/favoritos', { cookie: nuevaCookie })).json(), [favorito]);
   assert.ok(JSON.parse(readFileSync(archivoDatos)).usuarios.every(usuario => !('password' in usuario)));
 });
+
+test('consultas del Centro de ayuda aparecen en Mis solicitudes y pueden cancelarse', async t => {
+  const directorio = mkdtempSync(join(tmpdir(), 'spacego-solicitudes-'));
+  const archivoDatos = join(directorio, 'db.json');
+  const servidor = await crearServidor({ archivoDatos });
+  servidor.listen(0, '127.0.0.1');
+  await once(servidor, 'listening');
+  t.after(async () => {
+    await new Promise(resolve => servidor.close(resolve));
+    rmSync(directorio, { force: true, recursive: true });
+  });
+
+  const origin = 'http://127.0.0.1:' + servidor.address().port;
+  const api = (ruta, { metodo = 'GET', cuerpo, cookie } = {}) => fetch(origin + '/api' + ruta, {
+    method: metodo,
+    headers: {
+      Origin: origin,
+      ...(cookie ? { Cookie: cookie } : {}),
+      ...(cuerpo ? { 'Content-Type': 'application/json' } : {}),
+    },
+    body: cuerpo && JSON.stringify(cuerpo),
+  });
+
+  assert.equal((await api('/solicitudes', { metodo: 'POST', cuerpo: {
+    tipo: 'ayuda', nombre: 'Usuario de prueba', correo: 'ayuda@example.test',
+    categoria: 'Consulta general', mensaje: 'Necesito ayuda con mi cuenta de SpaceGo.',
+  } })).status, 401);
+
+  await api('/auth/registro', { metodo: 'POST', cuerpo: {
+    name: 'Usuario de prueba', email: 'ayuda@example.test', password: 'PruebaSpaceGo123',
+  } });
+  const acceso = await api('/auth/login', { metodo: 'POST', cuerpo: {
+    email: 'ayuda@example.test', password: 'PruebaSpaceGo123',
+  } });
+  assert.equal(acceso.status, 200);
+  const cookie = acceso.headers.get('set-cookie').split(';')[0];
+
+  const creada = await api('/solicitudes', { metodo: 'POST', cookie, cuerpo: {
+    tipo: 'ayuda', nombre: 'Usuario de prueba', correo: 'ayuda@example.test',
+    categoria: 'Consulta general', mensaje: 'Necesito ayuda con mi cuenta de SpaceGo.',
+  } });
+  assert.equal(creada.status, 201);
+  const solicitud = await creada.json();
+  assert.equal(solicitud.tipo, 'ayuda');
+  assert.equal(solicitud.estado, 'pendiente');
+
+  const lista = await api('/solicitudes', { cookie });
+  assert.equal(lista.status, 200);
+  assert.equal((await lista.json())[0].id, solicitud.id);
+
+  const cancelada = await api('/solicitudes/' + solicitud.id, {
+    metodo: 'PATCH', cookie, cuerpo: { estado: 'cancelada' },
+  });
+  assert.equal(cancelada.status, 200);
+  assert.equal((await cancelada.json()).estado, 'cancelada');
+});
